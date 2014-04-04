@@ -76,6 +76,15 @@ p#hook {
     margin-bottom: 1em;
 }
 
+.navbar-fixed {
+    z-index: 100 !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-top: 0;
+}
+
 .meta {
     color: #aaa;
 }
