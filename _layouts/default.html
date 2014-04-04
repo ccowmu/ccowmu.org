@@ -11,29 +11,39 @@
         <link rel="stylesheet" href="/css/main.css">
     </head>
     <body>
-        <div class="content">
-            <div class="header">
-                <div class="pure-g-r">
-                    <div class="pure-u-1-4">
-                        <img src='/images/logo.png'>
-                    </div>
-                    <div class="pure-u-3-4 links">
-                        <a href="/">Home</a>
-                        <a href="/blog.html">Blog</a>
-                        <a href="/membership.html">Join</a>
-                        <a href="http://whatistheplan.com/"
-                            target="plan">Plan</a>
-                    </div>
+        <div class="header">
+            <div class="pure-g-r">
+                <div class="pure-u-2-5">
+                    <h1>The Computer Club of</h1>
+                </div>
+                <div class="pure-u-1-5">
+                    <img src='/images/logo.png'>
+                </div>
+                <div class="pure-u-2-5">
+                    <h1>Western Michigan University</h1>
                 </div>
             </div>
+        </div>
+        <div class="navbar">
+            <div class="pure-menu pure-menu-open pure-menu-horizontal">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/blog.html">Blog</a></li>
+                    <li><a href="/membership.html">Join</a></li>
+                    <li><a href="http://whatistheplan.com/"
+                        target="plan">PLAN</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="content">
             {{ content }}
             <div class="footer">
-                <div class="left">
+                <div>
                     <ul>
                         <li>CCoWMU</li>
-                        <li><a href="mailto:cclub@yakko.cs.wmich.edu">cclub@yakko.cs.wmich.edu</a></li>
-                        <li><a href="https://github.com/ccowmu">https://github.com/ccowmu</a></li>
-                        <li>Build: {{ site.time | date: "%b %d %y %I:%M:%S" }}</li>
+                        <li><a href="mailto:cclub@yakko.cs.wmich.edu?subject=I saw your nifty site and…">cclub@yakko.cs.wmich.edu</a></li>
+                        <li><a target="ccowmu-github" href="https://github.com/ccowmu">https://github.com/ccowmu</a></li>
+                        <li class="term">Build: {{ site.time | date: "%b %d %y %I:%M:%S" }}</li>
                     </ul>
                 </div>
             </div>

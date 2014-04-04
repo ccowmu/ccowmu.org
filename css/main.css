@@ -14,7 +14,7 @@ html, button, input, select, textarea,
 }
 
 p {
-    padding: 0.5em;
+    padding: 0.3em;
 }
 
 /*****************************************************************************/
@@ -27,6 +27,7 @@ p#hook {
     margin: 0;
     font-size: 2em;
     font-family: 'Droid Sans Mono', monospace;
+    text-align: center;
 }
 
 .posts {
@@ -47,6 +48,10 @@ p#hook {
     text-align: center;
 }
 
+.l-box {
+    padding: 0.5em;
+}
+
 /*****************************************************************************/
 /*
 /* Site
@@ -60,29 +65,15 @@ p#hook {
 }
 
 .header {
-    padding: 1em;
+    margin: 1em;
+    text-align: center;
 }
 
-.header .links {
-    margin-top: 50px;
-}
-
-.header .links a {
-    margin-right: 1em;
-}
-
-.header a {
-    text-decoration: none;
-    font-size: x-large;
-    margin: 0 0.3em;
-    padding: 0.1em;
-}
-.header a,
-.header a:visited {
-    color: #000;
-}
-.header a:hover {
-    border-bottom: 3px solid black;
+.navbar {
+    text-align: center;
+    border-top: 1px solid #999;
+    border-bottom: 1px solid #999;
+    margin-bottom: 1em;
 }
 
 .meta {
@@ -95,11 +86,19 @@ p#hook {
     border-top: 4px solid #ddd;
     margin-top: 2em;
     overflow: hidden;
+    text-align: center;
 }
 
 .footer li {
-    list-style: none;
-    line-height: 1.75em;
+    display: inline;
+}
+
+.footer li::after {
+    content: " ∞ ";
+}
+
+.footer li.term::after {
+    content: none;
 }
 
 .footer a {
