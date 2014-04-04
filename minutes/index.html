@@ -1,0 +1,15 @@
+---
+layout: default
+title: Minutes - Computer Club of Western Michigan University
+---
+
+<div>
+    <h1>Meeting Minutes</h1>
+    <ul class="posts">
+    {% for post in site.posts %}
+        {% if post.categories contains 'minutes' %}
+        <li>&raquo; <a href="{{ post.url }}">{{ post.date | date_to_string }}</a></li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+</div>
