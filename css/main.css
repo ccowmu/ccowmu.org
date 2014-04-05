@@ -17,33 +17,6 @@ p {
     padding: 0.3em;
 }
 
-/*****************************************************************************/
-/*
-/* Home
-/*
-/*****************************************************************************/
-
-p#hook {
-    margin: 0;
-    font-size: 2em;
-    font-family: 'Droid Sans Mono', monospace;
-    text-align: center;
-}
-
-.posts {
-    list-style-type: none;
-    margin-bottom: 2em;
-}
-
-.posts li {
-    line-height: 1.75em;
-}
-
-.posts span {
-    color: #aaa;
-    font-size: 80%;
-}
-
 .center {
     text-align: center;
 }
@@ -54,17 +27,25 @@ p#hook {
 
 /*****************************************************************************/
 /*
-/* Site
+/* Landing
 /*
 /*****************************************************************************/
 
-#headerpush {
-    height: 150px;
+#headerwrap {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #EEE;
+}
+
+#bannerwrap {
+    height: 700px;
 }
 
 #banner {
     width: 100%;
-    height: 350px;
+    height: 700px;
     background-image: url(/images/plan.jpg);
     background-position: 0% 80%;
     background-repeat: no-repeat;
@@ -73,33 +54,41 @@ p#hook {
     z-index: -1;
 }
 
-#bannerpush {
-    height: 350px;
-}
-
-#wrap {
+#contentwrap {
     width: 100%;
-    background-color: #eee;
+    background-color: #EEE;
 }
 
-.content {
+p#hook {
+    margin: 0;
+    font-size: 2em;
+    font-family: 'Droid Sans Mono', monospace;
+    text-align: center;
+}
+
+/*****************************************************************************/
+/*
+/* Site
+/*
+/*****************************************************************************/
+
+.meta {
+    color: #aaa;
+}
+
+#content {
+    padding: 1em;
     text-align: justify;
     max-width: 850px;
     margin: 0 auto;
 }
 
-#headerholder {
-    width: 100%;
-    position: fixed;
-    background-color: #eee;
-}
-
-.header {
-    margin: 1em;
+#header {
+    margin: 0.7em;
     text-align: center;
 }
 
-.navbar {
+#navbar {
     text-align: center;
     border-top: 1px solid #999;
     border-bottom: 1px solid #999;
@@ -114,11 +103,8 @@ p#hook {
     border-top: 0;
 }
 
-.meta {
-    color: #aaa;
-}
-
-.footer {
+/* Footer */
+#footer {
     font-size: 0.8em;
     color: #666;
     border-top: 4px solid #ddd;
@@ -127,19 +113,19 @@ p#hook {
     text-align: center;
 }
 
-.footer li {
+#footer li {
     display: inline;
 }
 
-.footer li::after {
+#footer li::after {
     content: " ∞ ";
 }
 
-.footer li.term::after {
+#footer li.term::after {
     content: none;
 }
 
-.footer a {
+#footer a {
     color: #8085C1;
 }
 
@@ -149,7 +135,22 @@ p#hook {
 /*
 /*****************************************************************************/
 
-/* standard */
+/* List */
+.posts {
+    list-style-type: none;
+    margin-bottom: 2em;
+}
+
+.posts li {
+    line-height: 1.75em;
+}
+
+.posts span {
+    color: #aaa;
+    font-size: 80%;
+}
+
+/* Detail */
 .post pre {
     border: 1px solid #ddd;
     background-color: #eef;
@@ -170,7 +171,7 @@ p#hook {
     border: none;
 }
 
-/* terminal */
+/* Terminal */
 .post pre.terminal {
     border: 1px solid #000;
     background-color: #333;
