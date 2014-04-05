@@ -58,10 +58,40 @@ p#hook {
 /*
 /*****************************************************************************/
 
+#headerpush {
+    height: 150px;
+}
+
+#banner {
+    width: 100%;
+    height: 350px;
+    background-image: url(/images/plan.jpg);
+    background-position: 0% 80%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: fixed;
+    z-index: -1;
+}
+
+#bannerpush {
+    height: 350px;
+}
+
+#wrap {
+    width: 100%;
+    background-color: #eee;
+}
+
 .content {
     text-align: justify;
     max-width: 850px;
     margin: 0 auto;
+}
+
+#headerholder {
+    width: 100%;
+    position: fixed;
+    background-color: #eee;
 }
 
 .header {
@@ -73,7 +103,6 @@ p#hook {
     text-align: center;
     border-top: 1px solid #999;
     border-bottom: 1px solid #999;
-    margin-bottom: 1em;
 }
 
 .navbar-fixed {
