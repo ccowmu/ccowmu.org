@@ -113,6 +113,10 @@ p#hook {
     text-align: center;
 }
 
+#footer ul {
+    padding: 0;
+}
+
 #footer li {
     display: inline;
 }
@@ -121,7 +125,7 @@ p#hook {
     content: " ∞ ";
 }
 
-#footer li.term::after {
+#footer li:last-of-type::after {
     content: none;
 }
 
