@@ -16,4 +16,5 @@ $(window).load(function () {
     };
     $(window).scroll(update_landing_navbar);
     $(window).resize(update_landing_navbar);
+    update_landing_navbar();
 });

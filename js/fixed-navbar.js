@@ -10,4 +10,5 @@ $(window).load(function () {
     };
     $(window).scroll(update_navbar_fixed);
     $(window).resize(update_navbar_fixed);
+    update_navbar_fixed();
 });
