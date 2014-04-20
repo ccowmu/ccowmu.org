@@ -1,3 +1,13 @@
 name: Computer Club of Western Michigan University
 markdown: redcarpet
 pygments: true
+navigation:
+    - text: Blog
+      url: /blog/
+    - text: Minutes
+      url: /minutes/
+    - text: Join
+      url: /membership/
+    - text: Plan
+      url: http://whatistheplan.com/
+      target: plan

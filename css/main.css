@@ -34,7 +34,7 @@ p {
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #FFF;
+    background-color: #000;
 }
 
 #bannerwrap {
@@ -82,14 +82,15 @@ p#hook {
 }
 
 #header {
-    margin: 0.7em;
     text-align: center;
+    padding: 0.7em;
+    color: #FFF;
+    background-color: #000;
 }
 
 #navbar {
     text-align: center;
-    border-top: 1px solid #999;
-    border-bottom: 1px solid #999;
+    background-color: #FFF;
 }
 
 .navbar-fixed {
@@ -98,7 +99,6 @@ p#hook {
     top: 0;
     left: 0;
     width: 100%;
-    border-top: 0;
 }
 
 /* Footer */
