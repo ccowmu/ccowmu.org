@@ -3,14 +3,12 @@
 /* Common
 /*
 /*****************************************************************************/
-@import url(http://fonts.googleapis.com/css?family=Droid+Sans:400,700);
-@import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
 
 html, button, input, select, textarea,
 .pure-g [class *= "pure-u"],
 .pure-g-r [class *= "pure-u"] {
-    font-family: 'Droid Sans', sans-serif;
-    font-size: 1.1em;
+    font-family: 'Helvetica', sans-serif;
+    font-size: 18px;
 }
 
 p {
@@ -36,7 +34,7 @@ p {
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #EEE;
+    background-color: #FFF;
 }
 
 #bannerwrap {
@@ -56,13 +54,13 @@ p {
 
 #contentwrap {
     width: 100%;
-    background-color: #EEE;
+    background-color: #FFF;
 }
 
 p#hook {
     margin: 0;
     font-size: 2em;
-    font-family: 'Droid Sans Mono', monospace;
+    font-family: 'Monaco', monospace;
     text-align: center;
 }
 
@@ -107,7 +105,7 @@ p#hook {
 #footer {
     font-size: 0.8em;
     color: #666;
-    border-top: 4px solid #ddd;
+    border-top: 4px solid #EEE;
     margin-top: 2em;
     overflow: hidden;
     text-align: center;
