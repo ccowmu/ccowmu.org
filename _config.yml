@@ -8,6 +8,9 @@ navigation:
       url: /minutes/
     - text: Join
       url: /membership/
+    - text: Wiki
+      url: /wiki/
+      target: wiki
     - text: Plan
       url: http://whatistheplan.com/
       target: plan
