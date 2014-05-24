@@ -1,6 +1,6 @@
 name: Computer Club of Western Michigan University
 markdown: redcarpet
-pygments: true
+highligher: pygments
 navigation:
     - text: Blog
       url: /blog/
