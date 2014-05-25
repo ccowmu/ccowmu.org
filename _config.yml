@@ -1,6 +1,10 @@
+# Site
 name: Computer Club of Western Michigan University
-markdown: redcarpet
-highligher: pygments
+title: Computer Club of Western Michigan University
+email: cclub@yakko.cs.wmich.edu
+description: "The computer club of western michigan university."
+baseurl: ""
+url: "http://ccowmu.org/"
 navigation:
     - text: Blog
       url: /blog/
@@ -14,3 +18,7 @@ navigation:
     - text: Plan
       url: http://whatistheplan.com/
       target: plan
+
+# Build
+markdown: redcarpet
+highligher: pygments
