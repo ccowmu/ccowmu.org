@@ -18,6 +18,9 @@ navigation:
     - text: Plan
       url: http://whatistheplan.com/
       target: plan
+    - text: Resources
+      url: https://docs.google.com/spreadsheets/d/1xu2KecrYhB7hOrpHmUpcEsCBsClqEET5DPCA5GFhSHg/edit#gid=0
+      target: resources
 
 # Build
 markdown: redcarpet
