@@ -15,7 +15,7 @@
         <ul>
         {% for anchor in site.navigation %}
             <li{% if page.url contains anchor.url %} class="pure-menu-selected"{% endif %}>
-                <a href="{{ anchor.url }}"{% if anchor.target != nil %} target="{{ anchor.target }}"{% endif %}>{{ anchor.text }}</a>
+                <a href="{{ anchor.url }}">{{ anchor.text }}</a>
             </li>
         {% endfor %}
         </ul>
