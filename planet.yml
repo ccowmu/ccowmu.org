@@ -11,6 +11,5 @@ blogs:
     feed: "http://blog.ricardoarturocabral.com/feeds/posts/default"
     url: "http://blog.ricardoarturocabral.com/"
   - author: "A Horse"
-    feed: "https://yakko.cs.wmich.edu/~sphinx/feed.cclub.xml"
-    url: "https://yakko.cs.wmich.edu/~sphinx/"
-    
+    feed: "http://yakko.cs.wmich.edu/~sphinx/feed.cclub.xml"
+    url: "http://yakko.cs.wmich.edu/~sphinx/horse.html"
