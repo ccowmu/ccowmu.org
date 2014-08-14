@@ -7,3 +7,6 @@ blogs:
   - author: "Scott Linder"
     feed: "http://www.scottlinder.com/feed.cclub.xml"
     url: "http://www.scottlinder.com/"
+  - author: "Ricardo Cabral"
+    feed: "http://blog.ricardoarturocabral.com/feeds/posts/default"
+    url: "http://blog.ricardoarturocabral.com/"
