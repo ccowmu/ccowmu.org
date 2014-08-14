@@ -12,4 +12,4 @@ blogs:
     url: "http://blog.ricardoarturocabral.com/"
   - author: "A Horse"
     feed: "http://yakko.cs.wmich.edu/~sphinx/feed.cclub.xml"
-    url: "http://yakko.cs.wmich.edu/~sphinx/horse.html"
+    url: "http://yakko.cs.wmich.edu/~sphinx/"
