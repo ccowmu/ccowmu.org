@@ -16,10 +16,8 @@ navigation:
       url: /projects/
     - text: Wiki
       url: /wiki/
-      target: wiki
     - text: Plan
       url: http://whatistheplan.com/
-      target: plan
 
 # Build
 markdown: redcarpet
