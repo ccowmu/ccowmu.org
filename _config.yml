@@ -12,6 +12,8 @@ navigation:
       url: /minutes/
     - text: Join
       url: /membership/
+    - text: Projects
+      url: /projects/
     - text: Wiki
       url: /wiki/
       target: wiki
