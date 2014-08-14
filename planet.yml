@@ -1,0 +1,9 @@
+planet:
+    posts_directory: planet/_posts/
+    templates_directory: _layouts/planet/
+    whitelisted_tags: []
+
+blogs:
+  - author: "Scott Linder"
+    feed: "http://www.scottlinder.com/feed.cclub.xml"
+    url: "http://www.scottlinder.com/"

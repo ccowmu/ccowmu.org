@@ -1,0 +1,10 @@
+<div class="author">
+    {% if image_url %}<img src="{{ image_url }}" style="width: 96px; height: 96;">{% endif %}
+    <span>
+    {% if twitter_url %}
+        <i>Original post by <a href="{{ twitter_url }}">{{ author }}</a> - check out <a href="{{ blog_url }}">{{ blog_name }}</a></i>
+    {% else %}
+        <i>Original post by {{ author }} - check out <a href="{{ blog_url }}">{{ blog_name }}</a></i>
+    {% endif %}
+    </span>
+</div>
