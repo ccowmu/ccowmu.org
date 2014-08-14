@@ -1,13 +1,14 @@
 ---
 layout: default
-title: Blog
+title: Planet CCoWMU
 ---
 
 <div>
-    <h1>Blog Posts</h1>
+    <h1>Planet CCoWMU</h1>
+    <h2>Member Blogs</h2>
     <ul class="posts">
     {% for post in site.posts %}
-        {% if post.categories contains 'blog' %}
+        {% if post.categories contains 'planet' %}
         <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
         {% endif %}
     {% endfor %}

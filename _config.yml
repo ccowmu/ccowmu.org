@@ -6,8 +6,8 @@ description: "The computer club of western michigan university."
 baseurl: ""
 url: "http://ccowmu.org/"
 navigation:
-    - text: Blog
-      url: /blog/
+    - text: Planet
+      url: /planet/
     - text: Minutes
       url: /minutes/
     - text: Join
@@ -18,9 +18,6 @@ navigation:
     - text: Plan
       url: http://whatistheplan.com/
       target: plan
-    - text: Resources
-      url: https://docs.google.com/spreadsheets/d/1xu2KecrYhB7hOrpHmUpcEsCBsClqEET5DPCA5GFhSHg/edit#gid=0
-      target: resources
 
 # Build
 markdown: redcarpet
