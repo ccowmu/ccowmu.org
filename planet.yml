@@ -13,3 +13,6 @@ blogs:
   - author: "A Horse"
     feed: "http://yakko.cs.wmich.edu/~sphinx/feed.cclub.xml"
     url: "http://yakko.cs.wmich.edu/~sphinx/"
+  - author: "Jack Lewis"
+    feed: "http://rhinoceraptor.info/rss"
+    url: "http://rhinoceraptor.info/"
