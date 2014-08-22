@@ -2,6 +2,7 @@ planet:
     posts_directory: planet/_posts/
     templates_directory: _layouts/planet/
     whitelisted_tags: []
+    sanitize_html: true
 
 blogs:
   - author: "Scott Linder"
