@@ -17,6 +17,10 @@ html, button, input, select, textarea,
     font-size: 18px;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    margin: 1em 0;
+}
+
 body {
     background-color: white;
     color: black;
@@ -37,6 +41,7 @@ p {
 
 .c-box {
     margin: 0 auto;
+    text-align: center;
 }
 
 /*****************************************************************************/
@@ -71,13 +76,6 @@ p {
 #contentwrap {
     width: 100%;
     background-color: #FFF;
-}
-
-p#hook {
-    margin: 0;
-    font-size: 2em;
-    font-family: 'Monaco', monospace;
-    text-align: center;
 }
 
 /*****************************************************************************/
@@ -115,6 +113,12 @@ p#hook {
     top: 0;
     left: 0;
     width: 100%;
+}
+
+.big {
+    display: block;
+    font-size: 1.8em;
+    padding: 1em 0;
 }
 
 /* Footer */
