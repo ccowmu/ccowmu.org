@@ -115,6 +115,12 @@ p {
     width: 100%;
 }
 
+.big {
+    display: block;
+    font-size: 1.8em;
+    padding: 1em 0;
+}
+
 /* Footer */
 #footer {
     font-size: 0.8em;
