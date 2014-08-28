@@ -3,50 +3,39 @@ layout: landing
 title: Home
 ---
 <div id="home">
-    <div class="pure-g-r">
-        <div class="pure-u-1">
-            <div class="l-box">
-                <p id='hook'>
-                <h align:='center'> Let us introduce ourselves </h>
-                </p>
-            </div>
-        </div>
-        <div class="pure-u-1">
-            <div class="l-box">
-                <p align='center'> We are an organic, laid back learning environment, and WMU's resident hackerspace. </p>
-
-                <p align='center'>We value curiosity as much as we do knowledge and time has shown that everyone has something to offer.</p> 
-
-                <p align='center'> Even with our own office and the resources in it, our greatest resource remains our people, and after almost 40 years at WMU we've gained hundreds of great members doing remarkable things at companies like Apple, Linkedin, and RDIO. </p>
-
-                <p align='center'>Regardless of what we knew, and who we were before we joined, we have grown and learned a tremendous amount from one another.</p>
-
-                <p align='center'> We hope you'll come by for one of our weekly meetings. </p>
-                 <h2 align='center'> Kohrman 2225 Thursdays at 6pm</h>
-
-
-                <a href="https://www.google.com/calendar/embed?src=cclubwmu@gmail.com&ctz=America/New_York">
-                    <p align='center'>office hours</a></p>
-            </div>
-        </div>
-        <div class="pure-u-1">
-            <div class="l-box">
-                <h2 class="center">Want to learn more?</h2>
-                <p align='center'> The best way to see if we're the right fit is by coming by the space and seeing if we're a good fit.
-                <p align='center'> If you're even a little interested in security, programming, hardware, electronics or have an idea for your own project then chances are you'll find a friend in us </p>
-
-                <p align='center'>Our members give presentations and do write-ups about
-                interesting work they do; you can read about it on our blog aggregator
-                <a href="http://www.ccowmu.org/planet/">Planet CCoWMU</a>
-                or see what a meeting might entail by checking out our
-                <a href="http://www.ccowmu.org/minutes/">meeting minutes</a>.</p>
-                <p align='center'> Want to get in touch? Email <a href="mailto:cclub@yakko.cs.wmich.edu?Subject=Hello%20Cclub!" target="_top">
-us</a> or contact the <a href="mailto:cclub@yakko.cs.wmich.edu?Subject=Hello%20Cclub!" target="_top"> president</a> directly</p></p>
-
-
-
-
-            </div>
-        </div>
+    <div class="c-box">
+        <h1>Let us introduce ourselves</h1>
+        <p>We are an organic, laid back learning environment, and WMU's
+        resident hackerspace.</p>
+        <p>We value curiosity as much as we do knowledge and time has
+        shown that everyone has something to offer.</p> 
+        <p>Even with our own office and the resources in it, our
+        greatest resource remains our people, and after almost 40 years
+        at WMU we've gained hundreds of great members doing remarkable
+        things at companies like Apple, Linkedin, and RDIO.</p>
+        <p>Regardless of what we knew, and who we were before we
+        joined, we have grown and learned a tremendous amount from one
+        another.</p>
+        <p>We hope you'll come by for one of our weekly meetings on
+        <strong>Thursdays at 6PM, 2225 Kohrman Hall</strong>, or drop by during
+        our <a href="{{ site.office_hours }}">office hours</a>.</p>
+    </div>
+    <div class="c-box">
+        <h2>Want to learn more?</h2>
+        <p>The best way to see if we're the right fit is by coming by
+        the space and seeing for yourself.</p>
+        <p>If you're even a little interested in security, programming,
+        hardware, electronics or have an idea for your own
+        <a href="{{ "/projects/" | prepend: site.baseurl }}">project</a>
+        then chances are you'll find a friend in us.</p>
+        <p>Our members give presentations and do write-ups about interesting
+        work they do; you can read about it on our blog aggregator
+        <a href="{{ "/planet/" | prepend: site.baseurl }}">Planet CCoWMU</a>
+        or see what a meeting might entail by checking out our
+        <a href="{{ "/minutes/" | prepend: site.baseurl }}">meeting minutes</a>.</p>
+        <p>Want to get in touch?
+        Email <a href="mailto:{{ site.email }}?Subject=Hello%20Cclub!" target="_top">us</a>
+        or contact the <a href="mailto:ccpresident@yakko.cs.wmich.edu?Subject=Hello%20Cclub!" target="_top">president</a>
+        directly.</p>
     </div>
 </div>
