@@ -11,9 +11,7 @@ blogs:
   - author: "Ricardo Cabral"
     feed: "http://blog.ricardoarturocabral.com/feeds/posts/default"
     url: "http://blog.ricardoarturocabral.com/"
-  - author: "A Horse"
-    feed: "http://yakko.cs.wmich.edu/~sphinx/feed.cclub.xml"
-    url: "http://yakko.cs.wmich.edu/~sphinx/"
   - author: "Jack Lewis"
     feed: "http://rhinoceraptor.info/rss"
     url: "http://rhinoceraptor.info/"
+
