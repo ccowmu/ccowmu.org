@@ -5,7 +5,6 @@ email: "cclub@yakko.cs.wmich.edu"
 description: "The computer club of western michigan university."
 baseurl: ""
 url: "http://ccowmu.org/"
-office_hours: "https://www.google.com/calendar/embed?src=cclubwmu@gmail.com&ctz=America/New_York"
 navigation:
     - text: Planet
       url: /planet/
