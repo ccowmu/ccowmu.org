@@ -7,3 +7,12 @@ layout: default
 <div class="post">
 {{ content }}
 </div>
+
+{% if page.previous or page.next %}
+<div class="post-nav c-box">
+    <ul>
+        {% if page.previous %}<li><a href="{{ page.previous.url }}">← prev</a></li>{% endif %}
+        {% if page.next %}<li><a href="{{ page.next.url }}">next →</a></li>{% endif %}
+    </ul>
+</div>
+{% endif %}

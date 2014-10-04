@@ -203,3 +203,19 @@ p {
 .post pre.terminal code {
     background-color: #333;
 }
+
+.post-nav ul {
+    padding: 0;
+}
+
+.post-nav li {
+    display: inline;
+}
+
+.post-nav li::after {
+    content: " | ";
+}
+
+.post-nav li:last-of-type::after {
+    content: none;
+}
