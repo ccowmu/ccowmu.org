@@ -14,4 +14,6 @@ blogs:
   - author: "Jack Lewis"
     feed: "http://rhinoceraptor.info/rss"
     url: "http://rhinoceraptor.info/"
-
+  - author: "Chris"
+    feed: "http://ethertubes.com/feed/"
+    url: "http://ethertubes.com/"
