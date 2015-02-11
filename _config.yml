@@ -18,6 +18,8 @@ navigation:
       url: /wiki/
     - text: Plan
       url: http://whatistheplan.com/
+    - text: Events
+      url: /events/
 
 # Build
 markdown: redcarpet
