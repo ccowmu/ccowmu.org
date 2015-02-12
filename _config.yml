@@ -21,7 +21,7 @@ navigation:
     - text: Events
       url: /events/
 
-keep_files: [agenda.html]
+keep_files: [minutes/agenda.html]
 
 # Build
 markdown: redcarpet
