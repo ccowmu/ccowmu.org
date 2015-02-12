@@ -17,7 +17,7 @@ title: Minutes
 
     <div class="pure-u-1-2">
         <h1>Agenda</h1>
-        <ol>
+        <ol start="0">
             <!--#include virtual="agenda.html" -->
         </ol>
     </div>
