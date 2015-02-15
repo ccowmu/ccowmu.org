@@ -14,12 +14,12 @@ navigation:
       url: /membership/
     - text: Projects
       url: /projects/
+    - text: Events
+      url: /events/
     - text: Wiki
       url: /wiki/
     - text: Plan
       url: http://whatistheplan.com/
-    - text: Events
-      url: /events/
 
 keep_files: [minutes/agenda.html]
 
