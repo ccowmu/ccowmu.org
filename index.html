@@ -1,49 +1,53 @@
 ---
-layout: landing
+layout: base
 title: Home
 ---
-<div class="c-box">
-    <h1>Let us introduce ourselves</h1>
-    <p>We are an organic, laid back learning environment, and WMU's
-    resident hackerspace.</p>
-    <p>We value curiosity as much as we do knowledge and time has
-    shown that everyone has something to offer.</p> 
-    <p>Even with our own office and the resources in it, our
-    greatest resource remains our people, and after almost 40 years
-    at WMU we've gained hundreds of great members doing remarkable
-    things at companies like Apple, Linkedin, and RDIO.</p>
-    <p>Regardless of what we knew, and who we were before we
-    joined, we have grown and learned a tremendous amount from one
-    another.</p>
-    <p>We hope you'll come by for one of our weekly meetings on
-    <strong class="big">Thursdays at 6PM, 2225 Kohrman Hall</strong> or drop by during
-    our <a href="{{ "/wiki/Office_Hours" | prepend: site.baseurl }}">office hours</a>.</p>
+{% include header.html %}
+<div class="content">
+    <div class="c-box">
+        <h1>Let us introduce ourselves</h1>
+        <p>We are an organic, laid back learning environment, and WMU's
+        resident hackerspace.</p>
+        <p>We value curiosity as much as we do knowledge and time has
+        shown that everyone has something to offer.</p>
+        <p>Even with our own office and the resources in it, our
+        greatest resource remains our people, and after almost 40 years
+        at WMU we've gained hundreds of great members doing remarkable
+        things at companies like Apple, Linkedin, and RDIO.</p>
+        <p>Regardless of what we knew, and who we were before we
+        joined, we have grown and learned a tremendous amount from one
+        another.</p>
+        <p>We hope you'll come by for one of our weekly meetings on
+        <strong class="big">Thursdays at 6PM, 2225 Kohrman Hall</strong> or drop by during
+        our <a href="{{ "/wiki/Office_Hours" | prepend: site.baseurl }}">office hours</a>.</p>
+    </div>
 </div>
-<div class="c-box">
-    <h2>Want to learn more?</h2>
-    <p>The best way to see if we're the right fit is by coming by
-    the space and seeing for yourself.</p>
-    <p>If you're even a little interested in security, programming,
-    hardware, electronics or have an idea for your own
-    <a href="{{ "/projects/" | prepend: site.baseurl }}">project</a>
-    then chances are you'll find a friend in us.</p>
-    <p>Our members give presentations and do write-ups about interesting
-    work they do; you can read about it on our blog aggregator
-    <a href="{{ "/planet/" | prepend: site.baseurl }}">Planet CCoWMU</a>
-    or see what a meeting might entail by checking out our
-    <a href="{{ "/minutes/" | prepend: site.baseurl }}">meeting minutes</a>.</p>
-    <p>Want to get in touch?
-    Email <a href="mailto:{{ site.email }}?Subject=Hello%20Cclub!" target="_top">us</a>
-    or contact the <a href="mailto:ccpresident@yakko.cs.wmich.edu?Subject=Hello%20Cclub!" target="_top">president</a>
-    directly.</p>
-<p>
-</p>
-<p>If you want to help, feel free to <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-<input type="hidden" name="cmd" value="_s-xclick">
-<input type="hidden" name="hosted_button_id" value="WURTC84Y57JZY">
-<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-</form>
-Either through paypal or through equipment and tools
-</p>
+<img id="landing-img" src="/images/plan.jpg" alt="Image of PLAN">
+<div class="content">
+    <div class="c-box">
+        <h2>Want to learn more?</h2>
+        <p>The best way to see if we're the right fit is by coming by
+        the space and seeing for yourself.</p>
+        <p>If you're even a little interested in security, programming,
+        hardware, electronics or have an idea for your own
+        <a href="{{ "/projects/" | prepend: site.baseurl }}">project</a>
+        then chances are you'll find a friend in us.</p>
+        <p>Our members give presentations and do write-ups about interesting
+        work they do; you can read about it on our blog aggregator
+        <a href="{{ "/planet/" | prepend: site.baseurl }}">Planet CCoWMU</a>
+        or see what a meeting might entail by checking out our
+        <a href="{{ "/minutes/" | prepend: site.baseurl }}">meeting minutes</a>.</p>
+        <p>Want to get in touch?
+        Email <a href="mailto:{{ site.email }}?Subject=Hello%20Cclub!" target="_top">us</a>
+        or contact the <a href="mailto:ccpresident@yakko.cs.wmich.edu?Subject=Hello%20Cclub!" target="_top">president</a>
+        directly.</p>
+        <p>If you want to help, feel free to <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+        <input type="hidden" name="cmd" value="_s-xclick">
+        <input type="hidden" name="hosted_button_id" value="WURTC84Y57JZY">
+        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+        <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+        </form>
+        Either through paypal or through equipment and tools
+        </p>
+    {% include footer.html %}
 </div>

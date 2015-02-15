@@ -44,6 +44,10 @@ p {
     text-align: center;
 }
 
+.indent {
+    text-indent: 2em;
+}
+
 /*****************************************************************************/
 /*
 /* Landing
@@ -68,8 +72,8 @@ p {
     color: #aaa;
 }
 
-#content {
-    padding: 1em;
+.content {
+    padding: 0em 1em 1em 1em;
     text-align: justify;
     max-width: 850px;
     margin: 0 auto;
