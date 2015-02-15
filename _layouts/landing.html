@@ -1,16 +1,9 @@
 ---
 layout: base
 ---
-<script src="/js/landing-navbar.js"></script>
-<div id="headerwrap">
-    {% include header.html %}
-</div>
-<div id="bannerwrap">
-    <div id="banner"></div>
-</div>
-<div id="contentwrap">
-    <div id="content">
-        {{ content }}
-        {% include footer.html %}
-    </div>
+{% include header.html %}
+<img id="landing-img" src="/images/plan.jpg" alt="Image of PLAN">
+<div id="content">
+    {{ content }}
+    {% include footer.html %}
 </div>

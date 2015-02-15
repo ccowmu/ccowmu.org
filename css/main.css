@@ -50,32 +50,12 @@ p {
 /*
 /*****************************************************************************/
 
-#headerwrap {
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #000;
-}
-
-#bannerwrap {
-    height: 700px;
-}
-
-#banner {
-    width: 100%;
-    height: 700px;
-    background-image: url(/images/plan.jpg);
-    background-position: 0% 80%;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: fixed;
-    z-index: -1;
-}
-
-#contentwrap {
-    width: 100%;
-    background-color: #FFF;
+#landing-img {
+    top: -100px;
+    display: inline-block;
+    vertical-align: center;
+    max-width: 100%;
+    clip: rect(100px,100px, 200px, 200px);
 }
 
 /*****************************************************************************/
@@ -105,14 +85,6 @@ p {
 #navbar {
     text-align: center;
     background-color: #FFF;
-}
-
-.navbar-fixed {
-    z-index: 100 !important;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
 }
 
 .big {
