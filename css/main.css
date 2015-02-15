@@ -195,3 +195,23 @@ p {
 .post-nav li:last-of-type::after {
     content: none;
 }
+
+/* Drop-down menu */
+#navbar ul ul {
+    /* This height is arbitrary, but the best we can do without javascript.
+     * We want it to be the height of the navbar itself. */
+    top: 40px;
+    left: 0;
+}
+
+#navbar ul li:hover > ul {
+    visibility: visible;
+}
+
+#navbar li > a:after {
+    content: ' »';
+}
+
+#navbar li > a:only-child:after {
+    content: '';
+}

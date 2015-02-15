@@ -20,6 +20,13 @@ navigation:
       url: /wiki/
     - text: Plan
       url: http://whatistheplan.com/
+    - text: Dropdown
+      url: '#'
+      drop:
+        - text: Foo
+          url: //example.com/
+        - text: Bar
+          url: //example.org/
 
 keep_files: [minutes/agenda.html]
 
