@@ -91,6 +91,10 @@ p {
     background-color: #FFF;
 }
 
+#navbar-items{
+    border-bottom: 1px solid lightgrey;
+}
+
 .big {
     display: block;
     font-size: 1.8em;
@@ -200,8 +204,16 @@ p {
 #navbar ul ul {
     /* This height is arbitrary, but the best we can do without javascript.
      * We want it to be the height of the navbar itself. */
-    top: 40px;
+    top: 41px;
     left: 0;
+    width: 100%;
+    text-align: left;
+    border-left: 1px solid lightgrey;
+}
+
+#navbar ul ul li{
+    /* Give each drop down item a bottom border */
+    border-bottom: 1px solid lightgrey;
 }
 
 #navbar ul li:hover > ul {

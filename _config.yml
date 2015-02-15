@@ -20,7 +20,7 @@ navigation:
       url: /wiki/
     - text: Plan
       url: http://whatistheplan.com/
-    - text: Dropdown
+    - text: Other
       url: '#'
       drop:
         - text: Foo
