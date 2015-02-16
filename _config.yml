@@ -16,6 +16,8 @@ navigation:
       url: /projects/
     - text: Events
       url: /events/
+    - text: Talks
+      url: /talks/
     - text: Wiki
       url: /wiki/
     - text: Plan
