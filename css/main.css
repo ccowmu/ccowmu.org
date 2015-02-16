@@ -203,3 +203,7 @@ video {
 .icon {
     width: 50px;
 }
+
+.date {
+    font-family: monospace;
+}
