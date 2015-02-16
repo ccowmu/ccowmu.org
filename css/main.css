@@ -194,3 +194,8 @@ p {
 .post-nav li:last-of-type::after {
     content: none;
 }
+
+/* Video */
+video {
+    max-width: 100%;
+}
