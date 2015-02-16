@@ -114,11 +114,11 @@ p {
     display: inline;
 }
 
-#footer li::after {
+#footer ul.sep li::after {
     content: " ∞ ";
 }
 
-#footer li:last-of-type::after {
+#footer ul.sep li:last-of-type::after {
     content: none;
 }
 
@@ -198,4 +198,8 @@ p {
 /* Video */
 video {
     max-width: 100%;
+}
+
+.icon {
+    width: 50px;
 }
