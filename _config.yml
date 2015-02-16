@@ -22,6 +22,15 @@ navigation:
       url: /wiki/
     - text: Plan
       url: http://whatistheplan.com/
+    - text: More
+      url: '#'
+      drop:
+        - text: Bounty
+          url: '#'
+        - text: Youtube
+          url: https://www.youtube.com/user/wmucclub
+        - text: Resources
+        - text: Affiliates
 
 keep_files: [minutes/agenda.html]
 
