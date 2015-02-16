@@ -12,6 +12,8 @@ navigation:
       url: /minutes/
     - text: Join
       url: /membership/
+    - text: Bounty
+      url: /bounty/
     - text: Projects
       url: /projects/
     - text: Events
@@ -23,7 +25,7 @@ navigation:
     - text: Plan
       url: http://whatistheplan.com/
 
-keep_files: [minutes/agenda.html]
+keep_files: [minutes/agenda.html, bounty/bounty.html]
 
 # Build
 markdown: redcarpet
