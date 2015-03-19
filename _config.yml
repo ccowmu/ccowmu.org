@@ -16,8 +16,6 @@ navigation:
       url: /membership/
     - text: Bounty
       url: /bounty/
-    - text: Projects
-      url: /projects/
     - text: Events
       url: /events/
     - text: Talks
