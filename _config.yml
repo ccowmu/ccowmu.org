@@ -10,8 +10,6 @@ navigation:
       url: /planet/
     - text: Minutes
       url: /minutes/
-    - text: Officers
-      url: /officers/
     - text: Join
       url: /membership/
     - text: Events
