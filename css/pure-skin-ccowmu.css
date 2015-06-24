@@ -725,7 +725,20 @@ striping:
     /* height: 2.4em; removed for Skin Builder */
 }
 
-.pure-skin-ccowmu .pure-menu li a { padding: 0.35em 1.4em; }
+
+/* Nav bar button seperators */
+.pure-skin-ccowmu .pure-menu li {
+    border-left: 1px solid #cfcfcf;
+}
+
+.pure-skin-ccowmu .pure-menu li:first-child{
+    border-left: none;
+}
+
+.pure-skin-ccowmu .pure-menu li a {
+    padding: 0.35em 1.4em;
+    min-width: 115px;
+}
 
 .pure-skin-ccowmu .pure-menu-can-have-children > .pure-menu-label:after {
     content: '\25B8';
