@@ -18,6 +18,8 @@ navigation:
       url: /talks/
     - text: Wiki
       url: /wiki/
+    - text: Sponsor
+      url: /sponsors/
     - text: Plan
       url: http://whatistheplan.com/
 
