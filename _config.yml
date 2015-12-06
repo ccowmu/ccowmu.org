@@ -6,12 +6,14 @@ description: "The computer club of western michigan university."
 baseurl: ""
 url: "http://ccowmu.org/"
 navigation:
-    - text: Planet
-      url: /planet/
     - text: Minutes
       url: /minutes/
+    - text: Planet
+      url: /planet/
     - text: Join
       url: /membership/
+#    - text: Members
+#      url: /members/
     - text: Events
       url: /events/
     - text: Talks
@@ -20,7 +22,7 @@ navigation:
       url: /wiki/
     - text: Sponsor
       url: /sponsors/
-    - text: Plan
+    - text: PLAN
       url: http://whatistheplan.com/
 
 keep_files: [minutes/agenda.html, bounty/bounty.html]
