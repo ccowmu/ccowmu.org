@@ -23,3 +23,6 @@ blogs:
   - author: "Rob (mobyte)"
     feed: "http://mobyte.me/feed.xml"
     url: "http://mobyte.me/"
+  - author: "veggiespam"
+    feed: "https://veggiespam.com/feed/"
+    url: "https://veggiespam.com/"
