@@ -1,19 +1,21 @@
 # Site
 name: CCoWMU
 title: Computer Club of Western Michigan University
-email: "cclub@yakko.cs.wmich.edu"
+email: "cclub_rso@wmich.edu"
 description: "The computer club of western michigan university."
 baseurl: ""
 url: "http://ccowmu.org/"
 navigation:
+    - text: Office
+      url: /office/
     - text: Minutes
       url: /minutes/
     - text: Planet
       url: /planet/
     - text: Join
       url: /membership/
-#    - text: Members
-#      url: /members/
+    - text: Chat
+      url: https://cclub.cs.wmich.edu/riot
     - text: Events
       url: /events/
     - text: Talks
