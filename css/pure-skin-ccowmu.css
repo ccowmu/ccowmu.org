@@ -2,7 +2,7 @@
  * Generated at: http://yui.github.io/skinbuilder/?mode=pureindex.html?opt=ccowmu,000000,ffffff,1,1,10,1.5&h=180,-40,30&n=180,-40,70&l=180,-40,80&b=180,-30,90&mode=pure
  */
 body {
-    background-color: #ffffff:
+    background-color: #ffffff;
 }
 
 /* from PURE buttons-core.css */
@@ -538,11 +538,11 @@ Forms Core
 }
 .pure-skin-ccowmu .pure-form .pure-group input:first-child {
     top: 1px;
-    border-radius: 4px 4px 0px 0px;
+    border-radius: 4px 4px 0 0;
 }
 .pure-skin-ccowmu .pure-form .pure-group input:last-child {
     top: -2px;
-    border-radius: 0px 0px 4px 4px;
+    border-radius: 0 0 4px 4px;
 }
 .pure-skin-ccowmu .pure-form .pure-group button {
     margin: 0.35em 0;
@@ -861,10 +861,10 @@ margin: 7px 2px;
     /*color: #C0C1C3; allow .pure-button to color text*/
 }
 .pure-skin-ccowmu .pure-paginator .prev {
-    border-radius: 4px 0px 0px 4px;
+    border-radius: 4px 0 0 4px;
 }
 .pure-skin-ccowmu .pure-paginator .next {
-    border-radius: 0px 4px 4px 0px;
+    border-radius: 0 4px 4px 0;
 }
 /* end from PURE menu-paginator.css ******************************/
 /* from PURE menu.css *******************************************/
