@@ -19,3 +19,8 @@ contributor and merge your own PR.
 The site is only deployed from the master branch, so feel free to push any
 other topic branches freely. Once a commit is merged into master it should show
 up on the site soon thereafter.
+
+## Prototyping ##
+You can work locally on the website by cloning the repository then serving using 'jekyll serve --watch'
+The --watch flag will automatically regenerate the page whenever changes are made.
+
