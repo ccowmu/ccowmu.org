@@ -6,16 +6,14 @@ description: "The computer club of western michigan university."
 baseurl: ""
 url: "http://ccowmu.org/"
 navigation:
-    - text: Office
-      url: /office/
+    - text: Chat
+      url: https://cclub.cs.wmich.edu/riot
     - text: Minutes
       url: /minutes/
     - text: Planet
       url: /planet/
     - text: Join
       url: /membership/
-    - text: Chat
-      url: https://cclub.cs.wmich.edu/riot
     - text: Events
       url: /events/
     - text: Talks
