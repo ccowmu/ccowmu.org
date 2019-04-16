@@ -14,15 +14,4 @@ title: Minutes
         {% endfor %}
         </ul>
     </div>
-
-    <div class="pure-u-1-2">
-        <h1>Officer Minutes</h1>
-        <ul class="posts">
-        {% for post in site.posts %}
-            {% if post.categories contains 'officers' %}
-            <li>&raquo; <a href="{{ post.url }}">{{ post.date | date_to_string }}</a></li>
-            {% endif %}
-        {% endfor %}
-        </ul>
-    </div>
 </div>
