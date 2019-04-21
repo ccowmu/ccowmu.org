@@ -1,10 +1,10 @@
 # Site
-name: CCoWMU
-title: Computer Club of Western Michigan University
+name: CCaWMU
+title: Computer Club at Western Michigan University
 email: "rso-computerclub@wmich.edu"
-description: "The computer club of western michigan university."
+description: "The Computer Club at Western Michigan University."
 baseurl: ""
-url: "http://ccowmu.org/"
+url: "https://cclub.cs.wmich.edu/"
 navigation:
     - text: Office
       url: /office/
