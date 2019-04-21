@@ -10,18 +10,18 @@ navigation:
       url: /office/
     - text: Chat
       url: https://cclub.cs.wmich.edu/riot
+    - text: Wiki
+      url: /wiki/
     - text: Minutes
       url: /minutes/
     - text: Planet
       url: /planet/
     - text: Join
       url: /membership/
+    - text: Gitlab
+      url: https://dot.cs.wmich.edu
     - text: Events
       url: /events/
-    - text: Talks
-      url: /talks/
-    - text: Wiki
-      url: /wiki/
     - text: Sponsor
       url: /sponsors/
     - text: PLAN
