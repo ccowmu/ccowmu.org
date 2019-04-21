@@ -6,6 +6,8 @@ description: "The computer club of western michigan university."
 baseurl: ""
 url: "http://ccowmu.org/"
 navigation:
+    - text: Office
+      url: /office/
     - text: Chat
       url: https://cclub.cs.wmich.edu/riot
     - text: Minutes
