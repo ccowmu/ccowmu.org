@@ -18,14 +18,10 @@ navigation:
       url: /planet/
     - text: Join
       url: /membership/
-    - text: Gitlab
-      url: https://dot.cs.wmich.edu
     - text: Events
       url: /events/
     - text: Sponsor
       url: /sponsors/
-    - text: PLAN
-      url: http://whatistheplan.com/
 
 keep_files: [minutes/agenda.html, bounty/bounty.html]
 
