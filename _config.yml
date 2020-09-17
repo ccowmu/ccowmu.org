@@ -6,8 +6,6 @@ description: "The Computer Club at Western Michigan University."
 baseurl: ""
 url: "https://cclub.cs.wmich.edu/"
 navigation:
-    - text: Office
-      url: /office/
     - text: Chat
       url: https://cclub.cs.wmich.edu/riot
     - text: Wiki
@@ -20,8 +18,6 @@ navigation:
       url: /membership/
     - text: Events
       url: /events/
-    - text: Sponsor
-      url: /sponsors/
 
 keep_files: [minutes/agenda.html, bounty/bounty.html]
 

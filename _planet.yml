@@ -17,3 +17,6 @@ blogs:
   - author: "veggiespam"
     feed: "https://veggiespam.com/feed/"
     url: "https://veggiespam.com/"
+  - author: "flay"
+    feed: "https://flay.io"
+    url: "https://flay.io"
