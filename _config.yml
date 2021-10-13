@@ -1,25 +1,21 @@
 # Site
 name: CCaWMU
 title: Computer Club at Western Michigan University
-email: "rso-computerclub@wmich.edu"
+email: "rso-cclub@wmich.edu"
 description: "The Computer Club at Western Michigan University."
 baseurl: ""
 url: "https://cclub.cs.wmich.edu/"
 navigation:
+    - text: Join
+      url: /membership/
+    - text: Guide
+      url: /guide/
     - text: Chat
       url: https://cclub.cs.wmich.edu/chat
     - text: Wiki
       url: /wiki/
     - text: Minutes
       url: /minutes/
-    - text: Planet
-      url: /planet/
-    - text: Join
-      url: /membership/
-    - text: Events
-      url: /events/
-    - text: Guide
-      url: /guide/
 
 keep_files: [minutes/agenda.html, bounty/bounty.html]
 
