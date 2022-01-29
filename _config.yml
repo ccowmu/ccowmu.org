@@ -20,5 +20,5 @@ navigation:
 keep_files: [minutes/agenda.html, bounty/bounty.html]
 
 # Build
-markdown: redcarpet
+markdown: kramdown
 highligher: pygments
