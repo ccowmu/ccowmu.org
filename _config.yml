@@ -16,6 +16,8 @@ navigation:
       url: /wiki/
     - text: Minutes
       url: /minutes/
+    - text: Hackathon
+      url: /hackathon/
 
 keep_files: [minutes/agenda.html, bounty/bounty.html]
 
