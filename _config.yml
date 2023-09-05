@@ -18,6 +18,8 @@ navigation:
       url: /minutes/
     - text: Hackathon
       url: /hackathon/
+    - text: Game Jam
+      url: https://itch.io/jam/ccaw-jam-7
 
 keep_files: [minutes/agenda.html, bounty/bounty.html]
 
