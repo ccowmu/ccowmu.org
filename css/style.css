@@ -1483,28 +1483,33 @@ body {
     height: 16px;
     vertical-align: middle;
     transition: filter 0.3s ease;
+    display: inline-block;
 }
 
-/* Make non-white icons white for dark footer */
-.footer-icon[src*="mail.png"],
-.footer-icon[src*="telephone.png"],
-.footer-icon[src*="logo-mark-primary.svg"] {
-    filter: brightness(0) invert(1);
+/* Dark mode (default) - make colored icons white */
+:root .footer-icon[src*="mail.png"],
+:root .footer-icon[src*="telephone.png"],
+:root .footer-icon[src*="logo-mark-primary.svg"] {
+    filter: invert(1) brightness(2);
 }
 
-/* GitHub icon is already white, no filter needed */
-.footer-icon[src*="github-mark-white.png"] {
+/* GitHub icon is already white */
+:root .footer-icon[src*="github-mark-white.png"] {
     filter: none;
 }
 
-.footer-button:hover .footer-icon[src*="mail.png"],
-.footer-button:hover .footer-icon[src*="telephone.png"],
-.footer-button:hover .footer-icon[src*="logo-mark-primary.svg"] {
-    filter: brightness(0) invert(1) drop-shadow(0 0 5px rgba(74, 158, 255, 0.8));
+/* Light mode - make icons dark */
+[data-theme="light"] .footer-icon {
+    filter: invert(1) brightness(0.5) !important;
 }
 
-.footer-button:hover .footer-icon[src*="github-mark-white.png"] {
-    filter: drop-shadow(0 0 5px rgba(74, 158, 255, 0.8));
+/* Hover effects */
+.footer-button:hover .footer-icon {
+    filter: invert(1) brightness(2) drop-shadow(0 0 5px rgba(74, 158, 255, 0.8)) !important;
+}
+
+[data-theme="light"] .footer-button:hover .footer-icon {
+    filter: invert(1) brightness(0.5) drop-shadow(0 0 5px rgba(74, 158, 255, 0.8)) !important;
 }
 
 /* ===== FOOTER ===== */
@@ -1624,6 +1629,14 @@ body {
 .button-icon {
     font-size: 1.2em;
     flex-shrink: 0;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Ensure button-icon images display properly */
+.button-icon img {
+    display: inline-block;
+    vertical-align: middle;
 }
 
 /* Footer Bottom */
