@@ -1498,9 +1498,9 @@ body {
     filter: none;
 }
 
-/* Light mode - make icons dark */
+/* Light mode - make icons dark with good contrast */
 [data-theme="light"] .footer-icon {
-    filter: invert(1) brightness(0.5) !important;
+    filter: invert(1) brightness(0.2) contrast(2) !important;
 }
 
 /* Hover effects */
@@ -1509,7 +1509,7 @@ body {
 }
 
 [data-theme="light"] .footer-button:hover .footer-icon {
-    filter: invert(1) brightness(0.5) drop-shadow(0 0 5px rgba(74, 158, 255, 0.8)) !important;
+    filter: invert(1) brightness(0.2) contrast(2) drop-shadow(0 0 5px rgba(74, 158, 255, 0.8)) !important;
 }
 
 /* ===== FOOTER ===== */
