@@ -1486,30 +1486,17 @@ body {
     display: inline-block;
 }
 
-/* Dark mode (default) - make colored icons white */
-:root .footer-icon[src*="mail.png"],
-:root .footer-icon[src*="telephone.png"],
-:root .footer-icon[src*="logo-mark-primary.svg"] {
-    filter: invert(1) brightness(2);
-}
-
-/* GitHub icon is already white */
-:root .footer-icon[src*="github-mark-white.png"] {
+/* No filters - keep original colors */
+.footer-icon[src*="mail.png"],
+.footer-icon[src*="telephone.png"],
+.footer-icon[src*="logo-mark-primary.svg"],
+.footer-icon[src*="github-mark-white.png"] {
     filter: none;
 }
 
-/* Light mode - make icons dark with good contrast */
-[data-theme="light"] .footer-icon {
-    filter: invert(1) brightness(0.2) contrast(2) !important;
-}
-
-/* Hover effects */
+/* Hover effects - just add glow, keep original colors */
 .footer-button:hover .footer-icon {
-    filter: invert(1) brightness(2) drop-shadow(0 0 5px rgba(74, 158, 255, 0.8)) !important;
-}
-
-[data-theme="light"] .footer-button:hover .footer-icon {
-    filter: invert(1) brightness(0.2) contrast(2) drop-shadow(0 0 5px rgba(74, 158, 255, 0.8)) !important;
+    filter: drop-shadow(0 0 5px rgba(74, 158, 255, 0.8));
 }
 
 /* ===== FOOTER ===== */
