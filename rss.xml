@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CCOWMU - Computer Club of Western Michigan University</title>
+    <description>Latest updates from the Computer Club of Western Michigan University</description>
+    <link>https://ccowmu.org</link>
+    <atom:link href="https://ccowmu.org/rss.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language>
+    <lastBuildDate>Sat, 12 Jul 2025 00:00:00 GMT</lastBuildDate>
+    <generator>CCOWMU Static Site</generator>
+    <webMaster>contact@ccowmu.org (CCOWMU)</webMaster>
+    <managingEditor>contact@ccowmu.org (CCOWMU)</managingEditor>
+    <image>
+      <url>https://ccowmu.org/images/logo-mark-primary.svg</url>
+      <title>CCOWMU</title>
+      <link>https://ccowmu.org</link>
+    </image>
+
+    <!-- Example items - update these manually when you add content -->
+    <item>
+      <title>New Meeting Minutes Available - July 2025</title>
+      <description>Meeting minutes from our July 2025 general meeting are now available.</description>
+      <link>https://ccowmu.org/minutes.html</link>
+      <guid>https://ccowmu.org/minutes.html#july-2025</guid>
+      <pubDate>Sat, 12 Jul 2025 19:00:00 GMT</pubDate>
+      <category>Minutes</category>
+    </item>
+
+    <item>
+      <title>Election Night 2025 Results</title>
+      <description>Check out the results and photos from our 2025 election night event.</description>
+      <link>https://ccowmu.org/events.html</link>
+      <guid>https://ccowmu.org/events.html#election-2025</guid>
+      <pubDate>Fri, 11 Jul 2025 20:00:00 GMT</pubDate>
+      <category>Events</category>
+    </item>
+
+    <item>
+      <title>Join Our Matrix Chat Server</title>
+      <description>Connect with fellow club members on our new Matrix chat server for real-time discussions.</description>
+      <link>https://ccowmu.org/chat.html</link>
+      <guid>https://ccowmu.org/chat.html</guid>
+      <pubDate>Mon, 08 Jul 2025 12:00:00 GMT</pubDate>
+      <category>Announcements</category>
+    </item>
+  </channel>
+</rss>

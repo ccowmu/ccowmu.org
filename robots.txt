@@ -3,3 +3,6 @@ User-agent: *
 Disallow: /harming/humans
 Disallow: /ignoring/human/orders
 Disallow: /harm/to/self
+
+# RSS Feed
+Sitemap: https://ccowmu.org/rss.xml
