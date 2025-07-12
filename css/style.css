@@ -1481,13 +1481,30 @@ body {
 .footer-icon {
     width: 16px;
     height: 16px;
-    filter: brightness(0) invert(1); /* Makes images white to match footer theme */
     vertical-align: middle;
     transition: filter 0.3s ease;
 }
 
-.footer-button:hover .footer-icon {
+/* Make non-white icons white for dark footer */
+.footer-icon[src*="mail.png"],
+.footer-icon[src*="telephone.png"],
+.footer-icon[src*="logo-mark-primary.svg"] {
+    filter: brightness(0) invert(1);
+}
+
+/* GitHub icon is already white, no filter needed */
+.footer-icon[src*="github-mark-white.png"] {
+    filter: none;
+}
+
+.footer-button:hover .footer-icon[src*="mail.png"],
+.footer-button:hover .footer-icon[src*="telephone.png"],
+.footer-button:hover .footer-icon[src*="logo-mark-primary.svg"] {
     filter: brightness(0) invert(1) drop-shadow(0 0 5px rgba(74, 158, 255, 0.8));
+}
+
+.footer-button:hover .footer-icon[src*="github-mark-white.png"] {
+    filter: drop-shadow(0 0 5px rgba(74, 158, 255, 0.8));
 }
 
 /* ===== FOOTER ===== */
