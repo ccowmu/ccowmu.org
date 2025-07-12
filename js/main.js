@@ -262,7 +262,7 @@ function initGroupPhotoClick() {
     const groupPhoto = document.querySelector('.window-frame[data-window="group-photo"] .image-placeholder');
     if (groupPhoto) {
         groupPhoto.addEventListener('click', function() {
-            window.open('https://www.flickr.com/photos/129058274@N06/', '_blank');
+            window.open('https://www.flickr.com/photos/ccawmu/', '_blank');
         });
     }
 }
