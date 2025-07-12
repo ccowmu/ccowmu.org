@@ -1,51 +1,260 @@
----
-layout: base
-title: Home
----
-{% include header.html %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer Club @ WMU | CCaWMU</title>
+    <meta name="description" content="Western Michigan University's Computer Club - Established tradition of technical excellence">
+    
+    <!-- Favicon and Icons -->
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/icon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/images/icon-48x48.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/icon.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="/images/icon-192x192.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="/images/icon-512x512.png">
+    
+    <!-- Critical CSS inline for above-the-fold content -->
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}:root{--bg-primary:#0a0a0a;--bg-secondary:#1a1a1a;--bg-tertiary:#2a2a2a;--bg-window:#1e1e1e;--text-primary:#e0e0e0;--text-secondary:#b0b0b0;--text-muted:#808080;--accent-primary:#4a9eff;--border-color:#404040;--font-mono:'JetBrains Mono','Consolas','Monaco',monospace;--font-body:'Inter','Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;--container-max:1400px;--header-height:70px;--transition-medium:0.3s ease}[data-theme="light"]{--bg-primary:#f5f7fa;--bg-secondary:#ffffff;--text-primary:#212529;--text-secondary:#495057;--border-color:#dee2e6}body{font-family:var(--font-body);background:var(--bg-primary);color:var(--text-primary);line-height:1.6;overflow-x:hidden;transition:background-color var(--transition-medium)}.container{max-width:var(--container-max);margin:0 auto;padding:0 2rem}.main-content{margin-top:var(--header-height)}.site-header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,10,10,0.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border-color)}[data-theme="light"] .site-header{background:rgba(255,255,255,0.95)}.navbar{height:var(--header-height)}.hero{padding:4rem 0;text-align:center}.main-title{font-size:3rem;margin-bottom:1rem;font-weight:600}.hero-subtitle{font-size:1.2rem;color:var(--text-secondary);margin-bottom:2rem}
+    </style>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#4a9eff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="CCaWMU">
+    
+    <!-- DNS Prefetch for performance -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="dns-prefetch" href="//player.twitch.tv">
+    <link rel="dns-prefetch" href="//www.twitch.tv">
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://player.twitch.tv">
+    <link rel="preconnect" href="https://www.twitch.tv">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="js/main.js" as="script">
+    <link rel="preload" href="includes/header.html" as="fetch" crossorigin>
+    <link rel="preload" href="includes/footer.html" as="fetch" crossorigin>
+    <link rel="preload" href="images/group_photo_2025.webp" as="image">
+    <link rel="preload" href="css/style.css" as="style">
+    <link rel="preload" href="favicon.ico" as="image" type="image/x-icon">
+    
+    <!-- Prefetch other pages for faster navigation -->
+    <link rel="prefetch" href="join.html">
+    <link rel="prefetch" href="chat.html">
+    
+    <!-- Load non-critical CSS asynchronously -->
+    <link rel="preload" href="css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="css/style.css"></noscript>
+    
+    <!-- Load fonts with display=swap for better performance -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
+</head>
+<body>
+    <!-- Include header -->
+    <div id="header-container"></div>
 
-<a data-flickr-embed="true" href="https://www.flickr.com/photos/129058274@N06/albums/72157648511414994" title="Landing"><img src="https://live.staticflickr.com/65535/51583944297_c988c58014_z.jpg" 
-    width="100%" height="500" alt="Landing"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="main-title">Computer Club at Western Michigan University</h1>
+                    <p class="hero-subtitle">Est. 1976 • Advancing computational excellence through tradition</p>
+                    <div class="hero-actions">
+                        <a href="join.html" class="join-button">Join Our Ranks</a>
+                        <div class="meeting-info">
+                            <span class="meeting-time">Thursdays 6:00 PM • 2225 Kohrman Hall</span>
+                            <span class="meeting-note">All are welcome • $10/year dues</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-<div class="content">
-    <div style="text-align: center;" class="c-box">
-        <h1>Let us introduce ourselves</h1>
+        <!-- Windows Grid -->
+        <section class="windows-section">
+            <div class="container">
+                <div class="windows-grid">
+                    <!-- Group Photo Window -->
+                    <div class="window-frame large triple-wide" data-window="group-photo">
+                        <div class="window-header">
+                            <span class="window-title">group_photo_2025.jpg</span>
+                            <div class="window-controls">
+                                <span class="control minimize"></span>
+                                <span class="control maximize"></span>
+                                <span class="control close"></span>
+                            </div>
+                        </div>
+                        <div class="window-content">
+                            <div class="image-placeholder">
+                                <picture>
+                                    <source srcset="images/group_photo_2025.webp" type="image/webp">
+                                    <img src="images/group_photo_2025.png" alt="CCaWMU Group Photo 2025" loading="eager" decoding="async" width="2934" height="1486">
+                                </picture>
+                                <div class="image-overlay">
+                                    <span class="image-caption">Spring 2025 Hackathon • Kohrman Hall</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-        <p>We are an organic, laid-back learning environment and WMU's resident
-            hackerspace. We value curiosity as much as we do knowledge, and time has
-            shown that everyone has something to offer.</p>
+                    <!-- Terminal About -->
+                    <div class="window-frame medium" data-window="about">
+                        <div class="window-header">
+                            <span class="window-title">about.sh</span>
+                            <div class="window-controls">
+                                <span class="control minimize"></span>
+                                <span class="control maximize"></span>
+                                <span class="control close"></span>
+                            </div>
+                        </div>
+                        <div class="window-content terminal">
+                            <div class="terminal-line">
+                                <span class="prompt">cc@wmu:~$</span> cat about.txt
+                            </div>
+                            <div class="terminal-output">
+                                <p>Founded in 1976, the Computer Club at WMU has been fostering computational excellence for nearly five decades.</p>
+                                <br>
+                                <p>We maintain a proud tradition of technical innovation, collaborative learning, and professional development.</p>
+                                <br>
+                                <p>Current focus areas:</p>
+                                <p>• Software development & engineering</p>
+                                <p>• Hardware projects & embedded systems</p>
+                                <p>• Cybersecurity & network administration</p>
+                                <p>• Professional development & industry connections</p>
+                                <p>• Drinking Monster Energy</p>
+                                <br>
+                                <p>Read our <a href="/constitution.pdf" style="color: #4a9eff; text-decoration: underline;">constitution</a></p>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="prompt">cc@wmu:~$</span> <span class="cursor">█</span>
+                            </div>
+                        </div>
+                    </div>
 
-        <p>With our own office and the resources in it, our greatest
-            resource remains our people. After 50+ years at WMU, we've
-            gained hundreds of great members doing remarkable things at companies
-            like Google, Apple, Amazon, and many others.</p>
+                    <!-- Twitch Stream Window -->
+                    <div class="window-frame large double-wide" data-window="stream">
+                        <div class="window-header">
+                            <span class="window-title">live_stream.html</span>
+                            <div class="window-controls">
+                                <span class="control minimize"></span>
+                                <span class="control maximize"></span>
+                                <span class="control close"></span>
+                            </div>
+                        </div>
+                        <div class="window-content stream-content">
+                            <div class="stream-placeholder">
+                                <div class="stream-status">
+                                    <span class="status-indicator offline"></span>
+                                    <span class="status-text">Stream Offline</span>
+                                </div>
+                                <p>Live streams during meetings and special events</p>
+                                <p><a href="https://www.twitch.tv/ccawmu" target="_blank" style="color: #4a9eff; text-decoration: underline;">Follow us on Twitch</a></p>
+                            </div>
+                            <!-- Uncomment when streaming:
+                            <iframe 
+                                src="https://player.twitch.tv/?channel=ccawmu&parent=CCaWMU.org" 
+                                frameborder="0" 
+                                allowfullscreen="true" 
+                                scrolling="no" 
+                                height="100%" 
+                                width="100%">
+                            </iframe>
+                            -->
+                        </div>
+                    </div>
 
-        <p>Regardless of what we know or who we are before
-            joining, we grow and learn a tremendous amount from each other.
-        </p>
+                    <!-- Election Night Photo -->
+                    <div class="window-frame large double-wide" data-window="election-night">
+                        <div class="window-header">
+                            <span class="window-title">election_night_2025.jpg</span>
+                            <div class="window-controls">
+                                <span class="control minimize"></span>
+                                <span class="control maximize"></span>
+                                <span class="control close"></span>
+                            </div>
+                        </div>
+                        <div class="window-content">
+                            <div class="image-placeholder">
+                                <picture>
+                                    <source srcset="images/election_night_2025.webp" type="image/webp">
+                                    <img src="images/election_night_2025.jpg" alt="Election Night 2025" loading="lazy" decoding="async" width="3648" height="2736">
+                                </picture>
+                                <div class="image-overlay">
+                                    <span class="image-caption">Executive Board Election Night • November 2025</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-        <p>We hope you'll come by for one of our weekly meetings at
-            <strong class="big">6 pm on Thursdays in 2225 Kohrman Hall.</a> </strong>
-            If you can't make it in person, check out our Linktree below for a link to our Twitch account, where we'll be streaming the meeting weekly!
-        </p>
+                    <!-- System Status -->
+                    <div class="window-frame small" data-window="status">
+                        <div class="window-header">
+                            <span class="window-title">system_status.log</span>
+                            <div class="window-controls">
+                                <span class="control minimize"></span>
+                                <span class="control maximize"></span>
+                                <span class="control close"></span>
+                            </div>
+                        </div>
+                        <div class="window-content terminal">
+                            <div class="status-display">
+                                <div class="status-line terminal-line">
+                                    <span class="status-label">Club Status:</span>
+                                    <span class="status-value active">
+                                        <span class="status-indicator-dot active"></span>ACTIVE
+                                    </span>
+                                </div>
+                                <div class="status-line terminal-line">
+                                    <span class="status-label">Members:</span>
+                                    <span class="status-value members" id="member-count">86</span>
+                                </div>
+                                <div class="status-line terminal-line">
+                                    <span class="status-label">Uptime:</span>
+                                    <span class="status-value uptime">49 years</span>
+                                </div>
+                                <div class="status-line terminal-line">
+                                    <span class="status-label">Next Meeting:</span>
+                                    <span class="status-value meeting" id="next-meeting">Thu, Jul 17</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-        <h2>Want to learn more?</h2>
+    <!-- Include footer -->
+    <div id="footer-container"></div>
 
-        <p>
-            Check out our <a href="https://linktr.ee/ccawmu">linktree</a> for other places to find us.
-        </p>
-
-        <p>The best way to see if we're the right fit is to stop by
-            a meeting to see for yourself.</p>
-
-        <p>If you're even a little interested in security, programming,
-            hardware, electronics, or have an idea for your own project, then chances
-            are you'll find a friend in us. See what a meeting might entail by checking
-            out our <a href="{{ "/minutes/" | prepend: site.baseurl }}">meeting minutes</a>.</p>
-
-        <p>Want to get in touch?
-            <a href="mailto:{{ site.email }}?Subject=Hello%20Cclub!" target="_top">Email us</a>!</p>
-    </div>
-
-    {% include footer.html %}
-</div>
+    <!-- Load JavaScript asynchronously -->
+    <script src="js/main.js" async></script>
+    <script src="js/clock.js" defer></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(registrationError => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
