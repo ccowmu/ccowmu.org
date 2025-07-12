@@ -7,13 +7,13 @@
     <meta name="description" content="Western Michigan University's Computer Club - Established tradition of technical excellence">
     
     <!-- Favicon and Icons -->
-    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32">
-    <link rel="icon" type="image/png" sizes="16x16" href="/images/icon-16x16.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/images/icon-32x32.png">
-    <link rel="icon" type="image/png" sizes="48x48" href="/images/icon-48x48.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/images/icon.png">
-    <link rel="apple-touch-icon" sizes="192x192" href="/images/icon-192x192.png">
-    <link rel="apple-touch-icon" sizes="512x512" href="/images/icon-512x512.png">
+    <link rel="icon" href="favicon.ico" sizes="16x16 32x32">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/icon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="images/icon-48x48.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="images/icon.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="images/icon-192x192.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="images/icon-512x512.png">
     
     <!-- Critical CSS inline for above-the-fold content -->
     <style>
@@ -21,9 +21,9 @@
     </style>
     
     <!-- PWA Manifest -->
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#4a9eff">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="CCaWMU">
     
@@ -45,7 +45,7 @@
     <link rel="preload" href="includes/footer.html" as="fetch" crossorigin>
     <link rel="preload" href="images/group_photo_2025.webp" as="image">
     <link rel="preload" href="css/style.css" as="style">
-    <link rel="preload" href="favicon.ico" as="image" type="image/x-icon">
+    <link rel="preload" href="favicon.ico" as="image">
     
     <!-- Prefetch other pages for faster navigation -->
     <link rel="prefetch" href="join.html">
@@ -134,7 +134,7 @@
                                 <p>• Professional development & industry connections</p>
                                 <p>• Drinking Monster Energy</p>
                                 <br>
-                                <p>Read our <a href="/constitution.pdf" style="color: #4a9eff; text-decoration: underline;">constitution</a></p>
+                                <p>Read our <a href="constitution.pdf" style="color: #4a9eff; text-decoration: underline;">constitution</a></p>
                             </div>
                             <div class="terminal-line">
                                 <span class="prompt">cc@wmu:~$</span> <span class="cursor">█</span>
@@ -246,7 +246,7 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
+                navigator.serviceWorker.register('sw.js')
                     .then(registration => {
                         console.log('SW registered: ', registration);
                     })
