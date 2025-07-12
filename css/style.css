@@ -1477,6 +1477,19 @@ body {
     vertical-align: middle;
 }
 
+/* Footer icon styles */
+.footer-icon {
+    width: 16px;
+    height: 16px;
+    filter: brightness(0) invert(1); /* Makes images white to match footer theme */
+    vertical-align: middle;
+    transition: filter 0.3s ease;
+}
+
+.footer-button:hover .footer-icon {
+    filter: brightness(0) invert(1) drop-shadow(0 0 5px rgba(74, 158, 255, 0.8));
+}
+
 /* ===== FOOTER ===== */
 .site-footer {
     background: var(--bg-secondary);
