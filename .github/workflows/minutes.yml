@@ -37,7 +37,9 @@ jobs:
         # Only create hugo.toml if it doesn't exist or needs updating
         if [ ! -f "hugo.toml" ]; then
           cat > hugo.toml << 'EOF'
-        baseURL = 'https://ccowmu.org/minutes'
+        baseURL = '/minutes'
+        relativeURLs = true
+        canonifyURLs = false
         languageCode = 'en-us'
         title = 'CCaWMU Meeting Minutes'
         theme = 'minutes-theme'

@@ -1,4 +1,6 @@
-baseURL = 'https://ccowmu.org/minutes'
+baseURL = '/minutes'
+relativeURLs = true
+canonifyURLs = false
 languageCode = 'en-us'
 title = 'CCaWMU Meeting Minutes'
 theme = 'minutes-theme'
