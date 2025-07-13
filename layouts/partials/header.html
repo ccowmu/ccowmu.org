@@ -1,0 +1,21 @@
+<header class="site-header">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="{{ .Site.BaseURL }}" class="brand-link">
+                    <span class="brand-text">{{ .Site.Title }}</span>
+                </a>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                {{ range .Site.Menus.main }}
+                <li class="nav-item">
+                    <a href="{{ .URL }}" class="nav-link">{{ .Name }}</a>
+                </li>
+                {{ end }}
+            </ul>
+            <div class="nav-controls">
+                <a href="/join.html" class="nav-join-btn">Join</a>
+            </div>
+        </div>
+    </nav>
+</header>

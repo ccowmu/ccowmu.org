@@ -1,0 +1,14 @@
+baseURL = "https://ccowmu.org/"
+languageCode = "en-us"
+title = "CCOWMU"
+theme = "ananke"
+
+[params]
+  description = "CMU's student government for the College of Engineering"
+  
+[menu]
+  [[menu.main]]
+    identifier = "minutes"
+    name = "Minutes"
+    url = "/minutes/"
+    weight = -110
