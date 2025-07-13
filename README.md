@@ -14,6 +14,9 @@
 
 The club maintains an extensive archive of meeting minutes dating back to 1996. This system has been migrated from Jekyll to Hugo for better performance and maintainability.
 
+quick test
+
+
 ### Features
 - **Meeting Minutes**: Complete archive from 1996-Now
 - **Automated Pagination**: 20 minutes per pag
