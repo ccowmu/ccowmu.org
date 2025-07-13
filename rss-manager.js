@@ -21,14 +21,14 @@ class RSSManager {
         this.siteData = {
             title: "CCOWMU - Computer Club of Western Michigan University",
             description: "Latest updates from the Computer Club of Western Michigan University",
-            link: "https://ccowmu.org",
+            link: "/",
             language: "en-us",
             webMaster: "contact@ccowmu.org (CCOWMU)",
             managingEditor: "contact@ccowmu.org (CCOWMU)",
             image: {
-                url: "https://ccowmu.org/images/logo-mark-primary.svg",
+                url: "images/logo-mark-primary.svg",
                 title: "CCOWMU",
-                link: "https://ccowmu.org"
+                link: "/"
             }
         };
     }
@@ -209,7 +209,7 @@ class RSSManager {
         const questions = [
             'Title: ',
             'Description: ',
-            'Link (relative to https://ccowmu.org): ',
+            'Link (relative path): ',
             'Category (optional): '
         ];
 
@@ -227,7 +227,7 @@ class RSSManager {
                 rl.close();
                 
                 const [title, description, linkPath, category] = answers;
-                const link = linkPath.startsWith('http') ? linkPath : `https://ccowmu.org/${linkPath.replace(/^\//, '')}`;
+                const link = linkPath.startsWith('http') ? linkPath : linkPath.replace(/^\//, '');
                 
                 this.addItem({
                     title,

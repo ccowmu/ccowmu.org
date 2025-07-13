@@ -5,4 +5,4 @@ Disallow: /ignoring/human/orders
 Disallow: /harm/to/self
 
 # RSS Feed
-Sitemap: https://ccowmu.org/rss.xml
+Sitemap: /rss.xml
