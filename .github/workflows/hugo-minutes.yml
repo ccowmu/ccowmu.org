@@ -38,12 +38,6 @@ jobs:
           hugo-version: 'latest'
           extended: true
       
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-      
       - name: Checkout minutes repository
         uses: actions/checkout@v4
         with:
@@ -117,12 +111,6 @@ jobs:
           mv temp_years.json data/years.json
           
           echo "Generated years data: $(cat data/years.json)"
-      
-      - name: Install dependencies
-        run: |
-          if [ -f package.json ]; then
-            npm ci
-          fi
       
       - name: Build Hugo site
         env:
