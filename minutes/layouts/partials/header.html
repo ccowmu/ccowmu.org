@@ -1,50 +1,79 @@
-<header class="site-header">
-    <nav class="navbar">
-        <div class="nav-container">
-            <!-- Logo/Brand -->
-            <div class="nav-brand">
-                <a href="/index.html" class="brand-link">
-                    <span class="brand-text">CCaWMU</span>
-                </a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ if .Title }}{{ .Title }} | {{ end }}Meeting Minutes | CCaWMU</title>
+    <meta name="description" content="{{ if .Description }}{{ .Description }}{{ else }}Computer Club at WMU meeting minutes and documentation{{ end }}">
+    
+    <!-- Favicon and Icons -->
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/icon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/images/icon-48x48.png">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#4a9eff">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <!-- Theme support -->
+    <script>
+        if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <!-- Logo/Brand -->
+                <div class="nav-brand">
+                    <a href="/" class="brand-link">
+                        <span class="brand-text">CCaWMU</span>
+                    </a>
+                </div>
+
+                <!-- Navigation Links -->
+                <ul class="nav-menu" id="nav-menu">
+                    <li class="nav-item">
+                        <a href="/" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/minutes/" class="nav-link {{ if eq .Section "minutes" }}nav-link-active{{ end }}">Minutes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/chat.html" class="nav-link">Chat</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://experiencewmu.wmich.edu/organization/computer-club-at-wmu/events" class="nav-link">Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://cclub.cs.wmich.edu/wiki/Main_Page" class="nav-link">Wiki</a>
+                    </li>
+                </ul>
+
+                <!-- Controls -->
+                <div class="nav-controls">
+                    <!-- Theme Toggle -->
+                    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                        <span class="theme-icon light">☀</span>
+                        <span class="theme-icon dark">☾</span>
+                    </button>
+
+                    <!-- Join Button -->
+                    <a href="/join.html" class="nav-join-btn">Join</a>
+                </div>
+
+                <!-- Mobile Menu Toggle -->
+                <div class="nav-toggle" id="nav-toggle">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
             </div>
-
-            <!-- Navigation Links -->
-            <ul class="nav-menu" id="nav-menu">
-                <li class="nav-item">
-                    <a href="/index.html" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a href="/minutes/" class="nav-link">Minutes</a>
-                </li>
-                <li class="nav-item">
-                    <a href="/chat.html" class="nav-link">Chat</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://experiencewmu.wmich.edu/organization/computer-club-at-wmu/events" class="nav-link">Events</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://cclub.cs.wmich.edu/wiki/Main_Page" class="nav-link">Wiki</a>
-                </li>
-            </ul>
-
-            <!-- Controls -->
-            <div class="nav-controls">
-                <!-- Theme Toggle -->
-                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-                    <span class="theme-icon light">☀</span>
-                    <span class="theme-icon dark">☾</span>
-                </button>
-
-                <!-- Join Button -->
-                <a href="/join.html" class="nav-join-btn">Join</a>
-            </div>
-
-            <!-- Mobile Menu Toggle -->
-            <div class="nav-toggle" id="nav-toggle">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-        </div>
-    </nav>
-</header>
+        </nav>
+    </header>

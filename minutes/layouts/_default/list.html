@@ -1,24 +1,174 @@
-{{ partial "header.html" . }}
-<main class="container">
-    <h1>Meeting Minutes</h1>
-    <input id="search" type="text" placeholder="Search minutes">
-    <select id="year-filter">
-        <option value="all">All Years</option>
-        {{ $years := slice }}
-        {{ range .Pages }}
-            {{ $years = $years | append (.Date.Format "2006") }}
-        {{ end }}
-        {{ range $y := uniq (sort $years) }}
-            <option value="{{ $y }}">{{ $y }}</option>
-        {{ end }}
-    </select>
-    <p id="result-count"></p>
-    <ul id="minutes-list">
-        {{ range .Pages.ByDate.Reverse }}
-            <li data-year="{{ .Date.Format "2006" }}"><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
-        {{ end }}
-    </ul>
-</main>
-<script src="/js/flexsearch.min.js"></script>
-<script src="/minutes/js/search.js"></script>
-{{ partial "footer.html" . }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting Minutes | CCaWMU</title>
+    <meta name="description" content="Browse all Computer Club at WMU meeting minutes. Search by date, topic, or content.">
+    
+    <!-- Favicon and Icons -->
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/icon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/images/icon-48x48.png">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#4a9eff">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <!-- Theme support -->
+    <script>
+        if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
+    </script>
+</head>
+<body>
+    {{ partial "header.html" . }}
+    
+    <main class="main-content">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="minutes-hero">
+                <div class="hero-content">
+                    <h1 class="hero-title">Meeting Minutes</h1>
+                    <p class="hero-subtitle">
+                        Explore our club's history through detailed meeting minutes. 
+                        Search by topic, date, or content to find what you're looking for.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Search & Filter Section -->
+            <section class="minutes-controls">
+                <div class="search-container">
+                    <div class="search-input-wrapper">
+                        <input 
+                            id="search" 
+                            type="text" 
+                            placeholder="Search minutes by topic, content, or keywords..." 
+                            class="search-input"
+                            autocomplete="off"
+                        >
+                        <button class="search-clear" id="search-clear" aria-label="Clear search">×</button>
+                    </div>
+                </div>
+                
+                <div class="filters-container">
+                    <div class="filter-group">
+                        <label for="year-filter" class="filter-label">Year</label>
+                        <select id="year-filter" class="filter-select">
+                            <option value="all">All Years</option>
+                            {{ $years := slice }}
+                            {{ range .Pages }}
+                                {{ $years = $years | append (.Date.Format "2006") }}
+                            {{ end }}
+                            {{ range $y := sort (uniq $years) }}
+                                <option value="{{ $y }}">{{ $y }}</option>
+                            {{ end }}
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="view-toggle" class="filter-label">View</label>
+                        <div class="view-toggle" id="view-toggle">
+                            <button class="view-button active" data-view="card" aria-label="Card view">
+                                <span class="view-icon">⊞</span>
+                            </button>
+                            <button class="view-button" data-view="list" aria-label="List view">
+                                <span class="view-icon">☰</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="results-info">
+                    <p id="result-count" class="result-count">
+                        Showing <span id="visible-count">{{ len .Pages }}</span> of <span id="total-count">{{ len .Pages }}</span> meetings
+                    </p>
+                </div>
+            </section>
+
+            <!-- Minutes List/Grid -->
+            <section class="minutes-section">
+                <div id="minutes-container" class="minutes-grid">
+                    {{ range .Pages.ByDate.Reverse }}
+                    <article class="minutes-card" data-year="{{ .Date.Format "2006" }}" data-title="{{ .Title | lower }}" data-content="{{ .Plain | lower }}">
+                        <div class="card-header">
+                            <time datetime="{{ .Date.Format "2006-01-02" }}" class="card-date">
+                                <span class="date-day">{{ .Date.Format "02" }}</span>
+                                <span class="date-month">{{ .Date.Format "Jan" }}</span>
+                                <span class="date-year">{{ .Date.Format "2006" }}</span>
+                            </time>
+                            {{ if .Params.meeting_type }}
+                            <span class="meeting-type-badge">{{ .Params.meeting_type }}</span>
+                            {{ end }}
+                        </div>
+                        
+                        <div class="card-content">
+                            <h2 class="card-title">
+                                <a href="{{ .RelPermalink }}" class="card-link">{{ .Title }}</a>
+                            </h2>
+                            
+                            <div class="card-excerpt">
+                                {{ if .Summary }}
+                                    {{ .Summary | truncate 120 }}
+                                {{ else }}
+                                    {{ .Plain | truncate 120 }}
+                                {{ end }}
+                            </div>
+                            
+                            <div class="card-meta">
+                                {{ if .Params.attendees }}
+                                <span class="meta-item">
+                                    <span class="meta-icon">👥</span>
+                                    <span>{{ len .Params.attendees }} attendees</span>
+                                </span>
+                                {{ end }}
+                                
+                                <span class="meta-item">
+                                    <span class="meta-icon">📝</span>
+                                    <span>{{ .WordCount }} words</span>
+                                </span>
+                                
+                                <span class="meta-item">
+                                    <span class="meta-icon">⏱</span>
+                                    <span>{{ .ReadingTime }} min read</span>
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="card-footer">
+                            <a href="{{ .RelPermalink }}" class="read-more-btn">
+                                <span>Read Minutes</span>
+                                <span class="btn-icon">→</span>
+                            </a>
+                        </div>
+                    </article>
+                    {{ end }}
+                </div>
+                
+                <!-- No Results Message -->
+                <div id="no-results" class="no-results" style="display: none;">
+                    <div class="no-results-content">
+                        <div class="no-results-icon">🔍</div>
+                        <h3>No meetings found</h3>
+                        <p>Try adjusting your search terms or filters.</p>
+                        <button id="clear-filters" class="clear-filters-btn">Clear All Filters</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    {{ partial "footer.html" . }}
+    
+    <!-- Search functionality -->
+    <script src="/js/flexsearch.min.js"></script>
+    <script src="/minutes/js/search.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+</html>

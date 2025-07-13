@@ -5,6 +5,6 @@ disableKinds = ["taxonomy", "RSS", "sitemap"]
     [markup.goldmark.renderer]
       unsafe = true
 [permalinks]
-  minutes = "/:slug/"
+  minutes = "/:contentbasename/"
 [outputs]
 home = ["HTML", "JSON"]

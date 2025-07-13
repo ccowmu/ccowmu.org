@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="generator" content="Hugo 0.148.1"><script src="///minutes/livereload.js?mindelay=10&amp;v=2&amp;port=1314&amp;path=//minutes/livereload" data-no-instant defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting Minutes | CCaWMU</title>
+    <meta name="description" content="Browse all Computer Club at WMU meeting minutes. Search by date, topic, or content.">
+    
+    
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/icon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/images/icon-48x48.png">
+    
+    
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#4a9eff">
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    
+    <script>
+        if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
+    </script>
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting Minutes | Meeting Minutes | CCaWMU</title>
+    <meta name="description" content="Computer Club at WMU meeting minutes and documentation">
+    
+    
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/icon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/images/icon-48x48.png">
+    
+    
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#4a9eff">
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    
+    <script>
+        if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+            <div class="nav-container">
+                
+                <div class="nav-brand">
+                    <a href="/" class="brand-link">
+                        <span class="brand-text">CCaWMU</span>
+                    </a>
+                </div>
+
+                
+                <ul class="nav-menu" id="nav-menu">
+                    <li class="nav-item">
+                        <a href="/" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/minutes/" class="nav-link ">Minutes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/chat.html" class="nav-link">Chat</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://experiencewmu.wmich.edu/organization/computer-club-at-wmu/events" class="nav-link">Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://cclub.cs.wmich.edu/wiki/Main_Page" class="nav-link">Wiki</a>
+                    </li>
+                </ul>
+
+                
+                <div class="nav-controls">
+                    
+                    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                        <span class="theme-icon light">☀</span>
+                        <span class="theme-icon dark">☾</span>
+                    </button>
+
+                    
+                    <a href="/join.html" class="nav-join-btn">Join</a>
+                </div>
+
+                
+                <div class="nav-toggle" id="nav-toggle">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    
+    <main class="main-content">
+        <div class="container">
+            
+            <section class="minutes-hero">
+                <div class="hero-content">
+                    <h1 class="hero-title">Meeting Minutes</h1>
+                    <p class="hero-subtitle">
+                        Explore our club's history through detailed meeting minutes. 
+                        Search by topic, date, or content to find what you're looking for.
+                    </p>
+                </div>
+            </section>
+
+            
+            <section class="minutes-controls">
+                <div class="search-container">
+                    <div class="search-input-wrapper">
+                        <input 
+                            id="search" 
+                            type="text" 
+                            placeholder="Search minutes by topic, content, or keywords..." 
+                            class="search-input"
+                            autocomplete="off"
+                        >
+                        <button class="search-clear" id="search-clear" aria-label="Clear search">×</button>
+                    </div>
+                </div>
+                
+                <div class="filters-container">
+                    <div class="filter-group">
+                        <label for="year-filter" class="filter-label">Year</label>
+                        <select id="year-filter" class="filter-select">
+                            <option value="all">All Years</option>
+                            
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                            
+                                <option value="2024">2024</option>
+                            
+                                <option value="2025">2025</option>
+                            
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="view-toggle" class="filter-label">View</label>
+                        <div class="view-toggle" id="view-toggle">
+                            <button class="view-button active" data-view="card" aria-label="Card view">
+                                <span class="view-icon">⊞</span>
+                            </button>
+                            <button class="view-button" data-view="list" aria-label="List view">
+                                <span class="view-icon">☰</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="results-info">
+                    <p id="result-count" class="result-count">
+                        Showing <span id="visible-count">4</span> of <span id="total-count">4</span> meetings
+                    </p>
+                </div>
+            </section>
+
+            
+            <section class="minutes-section">
+                <div id="minutes-container" class="minutes-grid">
+                    
+                    <article class="minutes-card" data-year="2025" data-title="weekly meeting - january 15, 2025" data-content="meeting minutes - january 15, 2025 attendees alice johnson (president) bob smith (vice president) charlie davis (treasurer) diana wilson (secretary) eva chen (member) agenda items 1. upcoming hackathon planning discussion: planning for the spring 2025 hackathon details: target date: march 15-16, 2025 venue: wmu engineering building expected participants: 50-75 students action items: alice to contact sponsors by january 30 bob to reserve venue spaces charlie to finalize budget proposal 2. new member orientation discussion: improving the onboarding process for new members proposals: create a welcome packet with club resources schedule monthly &amp;ldquo;new member&amp;rdquo; sessions assign mentors for first-time attendees decision: approved unanimously 3. server maintenance discussion: scheduled maintenance for club servers details: maintenance window: january 25, 2:00-4:00 am services affected: wiki, git repositories, chat server expected downtime: 30 minutes maximum action: eva to send notification to all members old business server upgrade project: 75% complete constitution update: under review by university alumni networking event: postponed to fall 2025 new business proposal for arduino workshop series discussion of conference attendance budget room booking system improvements next meeting date: january 22, 2025
+time: 6:00 pm
+location: rood hall 1010
+meeting adjourned at 7:30 pm.
+">
+                        <div class="card-header">
+                            <time datetime="2025-01-15" class="card-date">
+                                <span class="date-day">15</span>
+                                <span class="date-month">Jan</span>
+                                <span class="date-year">2025</span>
+                            </time>
+                            
+                            <span class="meeting-type-badge">Regular Meeting</span>
+                            
+                        </div>
+                        
+                        <div class="card-content">
+                            <h2 class="card-title">
+                                <a href="/minutes/20250115/" class="card-link">Weekly Meeting - January 15, 2025</a>
+                            </h2>
+                            
+                            <div class="card-excerpt">
+                                
+                                    Discussion of upcoming hackathon, new member orientation, and server maintenance schedule.
+                                
+                            </div>
+                            
+                            <div class="card-meta">
+                                
+                                <span class="meta-item">
+                                    <span class="meta-icon">👥</span>
+                                    <span>5 attendees</span>
+                                </span>
+                                
+                                
+                                <span class="meta-item">
+                                    <span class="meta-icon">📝</span>
+                                    <span>192 words</span>
+                                </span>
+                                
+                                <span class="meta-item">
+                                    <span class="meta-icon">⏱</span>
+                                    <span>1 min read</span>
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="card-footer">
+                            <a href="/minutes/20250115/" class="read-more-btn">
+                                <span>Read Minutes</span>
+                                <span class="btn-icon">→</span>
+                            </a>
+                        </div>
+                    </article>
+                    
+                    <article class="minutes-card" data-year="2025" data-title="weekly meeting - january 15, 2025" data-content="meeting minutes - january 15, 2025 attendees alice johnson (president) bob smith (vice president) charlie davis (treasurer) diana wilson (secretary) eva chen (member) agenda items 1. upcoming hackathon planning discussion: planning for the spring 2025 hackathon details: target date: march 15-16, 2025 venue: wmu engineering building expected participants: 50-75 students action items: alice to contact sponsors by january 30 bob to reserve venue spaces charlie to finalize budget proposal 2. new member orientation discussion: improving the onboarding process for new members proposals: create a welcome packet with club resources schedule monthly &amp;ldquo;new member&amp;rdquo; sessions assign mentors for first-time attendees decision: approved unanimously 3. server maintenance discussion: scheduled maintenance for club servers details: maintenance window: january 25, 2:00-4:00 am services affected: wiki, git repositories, chat server expected downtime: 30 minutes maximum action: eva to send notification to all members old business server upgrade project: 75% complete constitution update: under review by university alumni networking event: postponed to fall 2025 new business proposal for arduino workshop series discussion of conference attendance budget room booking system improvements next meeting date: january 22, 2025
+time: 6:00 pm
+location: rood hall 1010
+meeting adjourned at 7:30 pm.
+">
+                        <div class="card-header">
+                            <time datetime="2025-01-15" class="card-date">
+                                <span class="date-day">15</span>
+                                <span class="date-month">Jan</span>
+                                <span class="date-year">2025</span>
+                            </time>
+                            
+                            <span class="meeting-type-badge">Regular Meeting</span>
+                            
+                        </div>
+                        
+                        <div class="card-content">
+                            <h2 class="card-title">
+                                <a href="/minutes/2025-01-15-weekly-meeting/" class="card-link">Weekly Meeting - January 15, 2025</a>
+                            </h2>
+                            
+                            <div class="card-excerpt">
+                                
+                                    Discussion of upcoming hackathon, new member orientation, and server maintenance schedule.
+                                
+                            </div>
+                            
+                            <div class="card-meta">
+                                
+                                <span class="meta-item">
+                                    <span class="meta-icon">👥</span>
+                                    <span>5 attendees</span>
+                                </span>
+                                
+                                
+                                <span class="meta-item">
+                                    <span class="meta-icon">📝</span>
+                                    <span>192 words</span>
+                                </span>
+                                
+                                <span class="meta-item">
+                                    <span class="meta-icon">⏱</span>
+                                    <span>1 min read</span>
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="card-footer">
+                            <a href="/minutes/2025-01-15-weekly-meeting/" class="read-more-btn">
+                                <span>Read Minutes</span>
+                                <span class="btn-icon">→</span>
+                            </a>
+                        </div>
+                    </article>
+                    
+                    <article class="minutes-card" data-year="2024" data-title="weekly meeting - december 10, 2024" data-content="meeting minutes - december 10, 2024 attendees alice johnson (president) bob smith (vice president) charlie davis (treasurer) frank miller (member) end of semester wrap-up completed projects website redesign: successfully launched new club website workshop series: completed 8 workshops with 120&#43; attendees total hackathon: fall 2024 hackathon had 45 participants financial summary current balance: $2,847.50 expenses this semester: $1,200 (mostly workshop supplies) income: $800 (membership dues and fundraising) holiday party planning date: december 18, 2024 location: student center conference room b time: 6:00 pm - 9:00 pm activities: pizza, games, year-in-review presentation budget: $150 approved spring semester preparation first meeting: january 15, 2025 officer elections scheduled for february new workshop series planning begins in january meeting adjourned at 7:15 pm.
+">
+                        <div class="card-header">
+                            <time datetime="2024-12-10" class="card-date">
+                                <span class="date-day">10</span>
+                                <span class="date-month">Dec</span>
+                                <span class="date-year">2024</span>
+                            </time>
+                            
+                            <span class="meeting-type-badge">Regular Meeting</span>
+                            
+                        </div>
+                        
+                        <div class="card-content">
+                            <h2 class="card-title">
+                                <a href="/minutes/20241210/" class="card-link">Weekly Meeting - December 10, 2024</a>
+                            </h2>
+                            
+                            <div class="card-excerpt">
+                                
+                                    End of semester wrap-up, holiday party planning, and spring semester preparation.
+                                
+                            </div>
+                            
+                            <div class="card-meta">
+                                
+                                <span class="meta-item">
+                                    <span class="meta-icon">👥</span>
+                                    <span>4 attendees</span>
+                                </span>
+                                
+                                
+                                <span class="meta-item">
+                                    <span class="meta-icon">📝</span>
+                                    <span>119 words</span>
+                                </span>
+                                
+                                <span class="meta-item">
+                                    <span class="meta-icon">⏱</span>
+                                    <span>1 min read</span>
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="card-footer">
+                            <a href="/minutes/20241210/" class="read-more-btn">
+                                <span>Read Minutes</span>
+                                <span class="btn-icon">→</span>
+                            </a>
+                        </div>
+                    </article>
+                    
+                    <article class="minutes-card" data-year="2024" data-title="general meeting - november 5, 2024" data-content="meeting minutes - november 5, 2024 attendees alice johnson (president) bob smith (vice president) charlie davis (treasurer) diana wilson (secretary) eva chen (member) frank miller (member) grace park (member) henry lee (guest speaker) guest speaker: cybersecurity in 2024 speaker: henry lee, senior security engineer at microsoft
+key points covered current threat landscape: rise in ai-powered attacks best practices: multi-factor authentication, zero-trust architecture career paths: security roles in tech companies q&amp;amp;a session: 30 minutes of student questions feedback: excellent presentation, members requested follow-up workshop
+conference discussion conference: great lakes computer science conference date: march 2025 proposal: send 3-4 club members as representatives budget: $1,200 for travel and registration decision: approved pending final cost estimates new project proposals 1. raspberry pi club kit proposed by: eva chen concept: lending library of pi kits for members budget: $500 for 5 complete kits status: approved for pilot program 2. open source contribution initiative proposed by: grace park concept: coordinated effort to contribute to oss projects timeline: start in spring 2025 status: approved, grace to lead upcoming events november 12: git/github workshop november 19: no meeting (thanksgiving break) december 3: end of semester social event meeting adjourned at 8:00 pm.
+">
+                        <div class="card-header">
+                            <time datetime="2024-11-05" class="card-date">
+                                <span class="date-day">05</span>
+                                <span class="date-month">Nov</span>
+                                <span class="date-year">2024</span>
+                            </time>
+                            
+                            <span class="meeting-type-badge">General Meeting</span>
+                            
+                        </div>
+                        
+                        <div class="card-content">
+                            <h2 class="card-title">
+                                <a href="/minutes/20241105/" class="card-link">General Meeting - November 5, 2024</a>
+                            </h2>
+                            
+                            <div class="card-excerpt">
+                                
+                                    Guest speaker presentation on cybersecurity, upcoming conference discussion, and new project proposals.
+                                
+                            </div>
+                            
+                            <div class="card-meta">
+                                
+                                <span class="meta-item">
+                                    <span class="meta-icon">👥</span>
+                                    <span>8 attendees</span>
+                                </span>
+                                
+                                
+                                <span class="meta-item">
+                                    <span class="meta-icon">📝</span>
+                                    <span>195 words</span>
+                                </span>
+                                
+                                <span class="meta-item">
+                                    <span class="meta-icon">⏱</span>
+                                    <span>1 min read</span>
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="card-footer">
+                            <a href="/minutes/20241105/" class="read-more-btn">
+                                <span>Read Minutes</span>
+                                <span class="btn-icon">→</span>
+                            </a>
+                        </div>
+                    </article>
+                    
+                </div>
+                
+                
+                <div id="no-results" class="no-results" style="display: none;">
+                    <div class="no-results-content">
+                        <div class="no-results-icon">🔍</div>
+                        <h3>No meetings found</h3>
+                        <p>Try adjusting your search terms or filters.</p>
+                        <button id="clear-filters" class="clear-filters-btn">Clear All Filters</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+    <div class="footer-scanlines"></div>
+    <div class="container">
+        <div class="footer-content">
+            
+            <div class="footer-section footer-buttons-section">
+                <h3>Connect With Us</h3>
+                <div class="footer-buttons">
+                    <a href="mailto:rso_cclub@wmich.edu" class="footer-button">
+                        <span class="button-icon"><img src="/images/mail.png" alt="Email" class="footer-icon"></span>
+                        <span>Email Us</span>
+                    </a>
+                    <a href="tel:+16165041337" class="footer-button">
+                        <span class="button-icon"><img src="/images/telephone.png" alt="Phone" class="footer-icon"></span>
+                        <span>Call Us</span>
+                    </a>
+                    <a href="https://github.com/ccowmu" class="footer-button" target="_blank" rel="noopener">
+                        <span class="button-icon"><img src="/images/github-mark-white.png" alt="GitHub" class="footer-icon"></span>
+                        <span>GitHub</span>
+                    </a>
+                    <a href="https://www.flickr.com/photos/ccawmu/" class="footer-button" target="_blank" rel="noopener">
+                        <span class="button-icon"><img src="/images/flickr.png" alt="Flickr" class="footer-icon"></span>
+                        <span>Flickr</span>
+                    </a>
+                    <a href="https://linktr.ee/ccawmu" class="footer-button" target="_blank" rel="noopener">
+                        <span class="button-icon"><img src="/images/linktree.png" alt="Linktree" class="footer-icon"></span>
+                        <span>Linktree</span>
+                    </a>
+                    <a href="/chat.html" class="footer-button">
+                        <span class="button-icon"><img src="/images/logo-mark-primary.svg" alt="Matrix Chat" class="footer-icon"></span>
+                        <span>Matrix Chat</span>
+                    </a>
+                </div>
+            </div>
+
+            
+            <div class="footer-section footer-buttons-section">
+                <h3>Quick Links</h3>
+                <div class="footer-buttons">
+                    <a href="/minutes/" class="footer-button">
+                        <span class="button-icon">📋</span>
+                        <span>Meeting Minutes</span>
+                    </a>
+                    <a href="/events.html" class="footer-button">
+                        <span class="button-icon">📅</span>
+                        <span>Upcoming Events</span>
+                    </a>
+                    <a href="/wiki.html" class="footer-button">
+                        <span class="button-icon">📚</span>
+                        <span>Club Wiki</span>
+                    </a>
+                    <a href="/rss.xml" class="footer-button" target="_blank" rel="noopener">
+                        <span class="button-icon">📡</span>
+                        <span>RSS Feed</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="footer-bottom">
+            <div class="footer-text">
+                <p>&copy; 2025 Computer Club at Western Michigan University</p>
+                <p class="footer-motto">Built with ❤️, caffeine, and way too many late nights</p>
+            </div>
+            <div class="footer-ascii">
+                <pre class="ascii-art">
+ ██████╗ ██████╗ █████╗ ██╗    ██╗███╗   ███╗██╗   ██╗
+██╔════╝██╔════╝██╔══██╗██║    ██║████╗ ████║██║   ██║
+██║     ██║     ███████║██║ █╗ ██║██╔████╔██║██║   ██║
+██║     ██║     ██╔══██║██║███╗██║██║╚██╔╝██║██║   ██║
+╚██████╗╚██████╗██║  ██║╚███╔███╔╝██║ ╚═╝ ██║╚██████╔╝
+ ╚═════╝ ╚═════╝╚═╝  ╚═╝ ╚══╝╚══╝ ╚═╝     ╚═╝ ╚═════╝ 
+                                                                
+                </pre>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    
+    
+    <script src="/js/flexsearch.min.js"></script>
+    <script src="/minutes/js/search.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+</html>
