@@ -91,10 +91,11 @@ jobs:
       run: |
         cd hugo-minutes
         
-        # Only create templates if they don't exist to avoid overwriting customizations
-        if [ ! -f "themes/minutes-theme/layouts/_default/baseof.html" ]; then
-          # Create base template
-          cat > themes/minutes-theme/layouts/_default/baseof.html << 'EOF'
+        # Always recreate templates to ensure latest enhancements are applied
+        echo "Creating Hugo templates with enhanced search functionality..."
+        
+        # Create base template
+        cat > themes/minutes-theme/layouts/_default/baseof.html << 'EOF'
         <!DOCTYPE html>
         <html lang="{{ .Site.LanguageCode }}">
         <head>
@@ -129,11 +130,9 @@ jobs:
         </body>
         </html>
         EOF
-        fi
         
-        # Create list template (for minutes index) if it doesn't exist
-        if [ ! -f "themes/minutes-theme/layouts/_default/list.html" ]; then
-          cat > themes/minutes-theme/layouts/_default/list.html << 'EOF'
+        # Create list template (for minutes index) with enhanced search
+        cat > themes/minutes-theme/layouts/_default/list.html << 'EOF'
         {{ define "title" }}Meeting Minutes - {{ .Site.Title }}{{ end }}
         
         {{ define "main" }}
@@ -633,11 +632,9 @@ jobs:
         </script>
         {{ end }}
         EOF
-        fi
         
-        # Create single template (for individual minutes) if it doesn't exist
-        if [ ! -f "themes/minutes-theme/layouts/_default/single.html" ]; then
-          cat > themes/minutes-theme/layouts/_default/single.html << 'EOF'
+        # Create single template (for individual minutes) with enhanced styling
+        cat > themes/minutes-theme/layouts/_default/single.html << 'EOF'
         {{ define "title" }}{{ .Title }} - {{ .Site.Title }}{{ end }}
         
         {{ define "main" }}
@@ -714,7 +711,6 @@ jobs:
         </style>
         {{ end }}
         EOF
-        fi
         
     - name: Convert and copy minutes
       run: |
@@ -782,11 +778,12 @@ jobs:
       run: |
         cd hugo-minutes
         
-        # Clean any previous build artifacts
+        # Clean any previous build artifacts and Hugo cache
         rm -rf public/*
+        rm -rf resources/
         
-        echo "Building Hugo site..."
-        hugo --minify
+        echo "Building Hugo site with enhanced search functionality..."
+        hugo --minify --cleanDestinationDir
         
         # Check if build was successful
         if [ ! -d "public" ] || [ ! -f "public/index.html" ]; then
@@ -846,8 +843,9 @@ jobs:
           echo "Changes detected, committing updates"
           # Get count of minutes for commit message
           minute_count=$(find minutes -name "*.html" -path "*/20*" | wc -l || echo "unknown")
+          timestamp=$(date '+%Y-%m-%d %H:%M:%S UTC')
           
-          git commit -m "Update minutes site - $minute_count meeting records [skip ci]"
+          git commit -m "Update minutes site with enhanced search - $minute_count records - $timestamp [skip ci]"
           git push
           echo "Changes committed and pushed successfully"
         fi
