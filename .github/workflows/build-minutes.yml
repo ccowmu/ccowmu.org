@@ -31,16 +31,22 @@ jobs:
       - name: Copy assets
         run: |
           mkdir -p minutes/static
-          ln -sf ../../css minutes/static/css
-          ln -sf ../../js minutes/static/js
-          ln -sf ../../images minutes/static/images
+          cp -r css minutes/static/
+          cp -r js minutes/static/
+          cp -r images minutes/static/
+          cp favicon.ico minutes/static/
+          cp manifest.json minutes/static/
           cp includes/header.html minutes/layouts/partials/header.html
           cp includes/footer.html minutes/layouts/partials/footer.html
       - name: Fix paths
         run: |
-          sed -i 's#/ccowmu.org##g' minutes/layouts/partials/header.html minutes/layouts/partials/footer.html
-          sed -i 's#\.\./#/#g' minutes/layouts/partials/footer.html
-          sed -i 's#\./images#/images#g' minutes/layouts/partials/footer.html
+          # Update header and footer to use correct paths for GitHub Pages deployment
+          sed -i 's#href="/#href="/ccowmu.org/minutes/public/#g' minutes/layouts/partials/header.html
+          sed -i 's#href="/#href="/ccowmu.org/minutes/public/#g' minutes/layouts/partials/footer.html
+          sed -i 's#src="/#src="/ccowmu.org/minutes/public/#g' minutes/layouts/partials/header.html
+          sed -i 's#src="/#src="/ccowmu.org/minutes/public/#g' minutes/layouts/partials/footer.html
+          # Fix any remaining relative paths
+          sed -i 's#\./images#/ccowmu.org/minutes/public/images#g' minutes/layouts/partials/footer.html
       - name: Build
         uses: peaceiris/actions-hugo@v3
         with:

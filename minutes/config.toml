@@ -1,4 +1,4 @@
-baseURL = "/minutes/public/"
+baseURL = "/ccowmu.org/minutes/public/"
 disableKinds = ["taxonomy", "RSS", "sitemap"]
 [markup]
   [markup.goldmark]
