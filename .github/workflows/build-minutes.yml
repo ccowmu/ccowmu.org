@@ -8,7 +8,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Pull minutes markdown
         run: |
           git clone https://github.com/ccowmu/minutes.git minutes_src
@@ -42,12 +42,14 @@ jobs:
           sed -i 's#\.\./#/#g' minutes/layouts/partials/footer.html
           sed -i 's#\./images#/images#g' minutes/layouts/partials/footer.html
       - name: Build
-        uses: peaceiris/actions-hugo@v2
+        uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: 'latest'
-          args: --minify -s minutes
+          extended: true
+      - name: Build site
+        run: hugo --minify -s minutes
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: minutes-site
           path: minutes/public
