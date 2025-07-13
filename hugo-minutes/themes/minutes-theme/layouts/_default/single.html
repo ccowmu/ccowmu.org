@@ -1,0 +1,19 @@
+{{ define "title" }}{{ .Title }} - {{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+<div class="container">
+    <article class="minute-article">
+        <header class="article-header">
+            <h1>{{ .Title }}</h1>
+            <div class="article-meta">
+                <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+                <a href="{{ .Site.BaseURL }}" class="back-link">← Back to All Minutes</a>
+            </div>
+        </header>
+        
+        <div class="article-content">
+            {{ .Content }}
+        </div>
+    </article>
+</div>
+{{ end }}

@@ -1,0 +1,16 @@
+baseURL: '/minutes'
+languageCode: 'en-us'
+title: 'CCaWMU Meeting Minutes'
+theme: 'minutes-theme'
+
+paginate: 20
+paginatePath: 'page'
+
+params:
+  clubName: 'Computer Club at WMU'
+  description: 'Meeting minutes archive for CCaWMU'
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
