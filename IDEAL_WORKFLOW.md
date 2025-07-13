@@ -144,4 +144,4 @@ Main Site → Minutes Section → Search/Browse → Individual Meeting → Back
 - **Content Discovery**: Users find relevant minutes easily
 - **Mobile Excellent**: Better experience than desktop
 
-This is the vision: a minutes system that's so well-designed and automated that it becomes invisible infrastructure - users get what they need instantly, content creators just add files and everything else happens automatically, and maintainers see green checkmarks and happy users.
+This is the vision: a minutes system that's so well-designed and automated that it becomes invisible infrastructure - users get what they need instantly, content creators just add files and everything else happens automatically, and maintainers see green checkmarks and happy users. Make sure github wont use jekl, and this all runs inside a github worker.

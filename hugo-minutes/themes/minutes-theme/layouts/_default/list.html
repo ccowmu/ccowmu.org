@@ -1,9 +1,0 @@
-{{ define "title" }}Meeting Minutes - {{ .Site.Title }}{{ end }}
-{{ define "main" }}
-<h1>Meeting Minutes</h1>
-<ul>
-  {{ range .Pages }}
-    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a> - {{ .Date.Format "Jan 2, 2006" }}</li>
-  {{ end }}
-</ul>
-{{ end }}
