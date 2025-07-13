@@ -30,12 +30,16 @@ jobs:
           done
       - name: Copy assets
         run: |
+          # Remove any existing static directory and recreate it
+          rm -rf minutes/static
           mkdir -p minutes/static
-          cp -r css minutes/static/
-          cp -r js minutes/static/
-          cp -r images minutes/static/
-          cp favicon.ico minutes/static/
-          cp manifest.json minutes/static/
+          # Copy assets from repo root to minutes/static
+          cp -r css minutes/static/css
+          cp -r js minutes/static/js
+          cp -r images minutes/static/images
+          cp favicon.ico minutes/static/favicon.ico
+          cp manifest.json minutes/static/manifest.json
+          # Copy layout partials
           cp includes/header.html minutes/layouts/partials/header.html
           cp includes/footer.html minutes/layouts/partials/footer.html
       - name: Fix paths
