@@ -44,8 +44,8 @@ async function loadHeaderAndFooter() {
         
         // Load header and footer in parallel for better performance
         const [headerResponse, footerResponse] = await Promise.all([
-            fetch('includes/header.html'),
-            fetch('includes/footer.html')
+            fetch('/ccowmu.org/includes/header.html'),
+            fetch('/ccowmu.org/includes/footer.html')
         ]);
         
         const [headerHtml, footerHtml] = await Promise.all([
