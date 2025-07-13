@@ -42,5 +42,3 @@ To work on minutes locally:
 If you see 404 errors for images when testing locally, make sure you're serving the site from a local server rather than opening the HTML file directly in your browser.
 
 Keep it simple!
-
-build fix
