@@ -1,0 +1,10 @@
+{{ partial "header.html" . }}
+<main class="container">
+    <article>
+        <h1>{{ .Title }}</h1>
+        <p><time datetime="{{ .Date }}">{{ .Date.Format "Jan 2, 2006" }}</time></p>
+        {{ .Content }}
+    </article>
+    <p><a href="/minutes/">Back to Minutes</a></p>
+</main>
+{{ partial "footer.html" . }}
