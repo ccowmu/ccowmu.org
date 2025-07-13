@@ -446,7 +446,7 @@ jobs:
         rm -rf public/*
         
         echo "Building Hugo site..."
-        hugo --minify --verbose
+        hugo --minify
         
         # Check if build was successful
         if [ ! -d "public" ] || [ ! -f "public/index.html" ]; then
