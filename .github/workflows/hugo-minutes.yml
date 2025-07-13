@@ -1,4 +1,4 @@
-name: Hugo Minutes Generator
+name: Hugo Minutes Content Generator
 
 on:
   # Daily at 6 AM UTC
@@ -13,17 +13,10 @@ on:
     branches: [ main, master ]
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# Allow only one concurrent deployment
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  contents: write  # Need write access to commit generated content
 
 jobs:
-  build-and-deploy:
+  generate-minutes:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main repository
@@ -112,124 +105,35 @@ jobs:
           
           echo "Generated years data: $(cat data/years.json)"
       
-      - name: Build Hugo site
-        env:
-          HUGO_ENVIRONMENT: production
+      - name: Commit generated content
         run: |
-          hugo \
-            --gc \
-            --minify \
-            --baseURL "https://ccowmu.org"
-      
-      - name: Generate search index
-        run: |
-          # Create search index for fast client-side search
-          mkdir -p public/api
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
           
-          # Generate JSON search index
-          cat > public/api/search.json << 'EOF'
-          {
-            "minutes": [
-          EOF
+          # Add the generated content
+          git add content/minutes/ data/years.json
           
-          first=true
-          find content/minutes -name "*.md" | while read file; do
-            # Extract frontmatter and content
-            title=$(grep "^title:" "$file" | sed 's/title: "\(.*\)"/\1/')
-            date=$(grep "^date:" "$file" | sed 's/date: //')
+          # Check if there are changes to commit
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto-update minutes content from ccowmu/minutes repo
             
-            # Get content without frontmatter
-            content=$(sed '1,/^---$/d; /^---$/,$d' "$file" | head -c 500)
+            - Processed $(find content/minutes -name "*.md" | wc -l) minutes files
+            - Updated years data: $(cat data/years.json)
+            - Generated on $(date)"
             
-            # Get relative URL
-            basename=$(basename "$file" .md)
-            url="/minutes/$basename/"
-            
-            if [ "$first" = false ]; then
-              echo "," >> public/api/search.json
-            fi
-            
-            # Add to JSON (escape quotes)
-            title_escaped=$(echo "$title" | sed 's/"/\\"/g')
-            content_escaped=$(echo "$content" | sed 's/"/\\"/g' | tr '\n' ' ')
-            
-            cat >> public/api/search.json << EOF
-              {
-                "title": "$title_escaped",
-                "date": "$date",
-                "url": "$url",
-                "content": "$content_escaped"
-              }
-          EOF
-            first=false
-          done
-          
-          echo "" >> public/api/search.json
-          echo "    ]" >> public/api/search.json
-          echo "}" >> public/api/search.json
-      
-      - name: Optimize images
-        run: |
-          # Optimize any images if they exist
-          if command -v optipng &> /dev/null; then
-            find public -name "*.png" -exec optipng -o2 {} \;
+            git push
+            echo "✅ Minutes content updated and committed"
           fi
       
-      - name: Generate RSS feed
+      - name: Generate build statistics
         run: |
-          # Hugo automatically generates RSS, but let's ensure it's optimized
-          if [ -f public/minutes/index.xml ]; then
-            echo "RSS feed generated successfully"
-          fi
-      
-      - name: Create .nojekyll file
-        run: |
-          # Prevent GitHub Pages from using Jekyll
-          touch public/.nojekyll
-          echo "Created .nojekyll file to prevent Jekyll processing"
-      
-      - name: Setup Pages
-        id: pages
-        uses: actions/configure-pages@v5
-      
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./public
-      
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-      
-      - name: Post-deployment verification
-        run: |
-          echo "Deployment completed successfully!"
-          echo "Minutes site available at: ${{ steps.deployment.outputs.page_url }}"
-          
-          # Log build statistics
+          echo "Content generation completed!"
           echo "Build statistics:"
           echo "- Total minutes processed: $(find content/minutes -name "*.md" | wc -l)"
-          echo "- Total pages generated: $(find public -name "*.html" | wc -l)"
-          echo "- Site size: $(du -sh public | cut -f1)"
-          
-          # Check critical files
-          if [ -f public/index.html ]; then
-            echo "✓ Main index page generated"
-          else
-            echo "✗ Main index page missing"
-          fi
-          
-          if [ -f public/minutes/index.html ]; then
-            echo "✓ Minutes index page generated"
-          else
-            echo "✗ Minutes index page missing"
-          fi
-          
-          if [ -f public/api/search.json ]; then
-            echo "✓ Search index generated"
-          else
-            echo "✗ Search index missing"
-          fi
+          echo "- Years available: $(cat data/years.json)"
+          echo "- Content ready for Hugo build"
       
       - name: Notify on failure
         if: failure()
