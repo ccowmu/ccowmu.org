@@ -1,4 +1,4 @@
-baseURL = "/minutes/"
+baseURL = "/minutes/public/"
 disableKinds = ["taxonomy", "RSS", "sitemap"]
 [markup]
   [markup.goldmark]
