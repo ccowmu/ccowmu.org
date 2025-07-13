@@ -1,43 +1,60 @@
 {{ define "title" }}Meeting Minutes - {{ .Site.Title }}{{ end }}
 
 {{ define "main" }}
-<div class="container">
-    <header class="page-header">
-        <h1>Meeting Minutes</h1>
-        <p class="page-description">{{ .Site.Params.description }}</p>
-        <div class="stats">
+<div class="container" style="margin-top: var(--header-height); padding: 4rem 2rem;">
+    <header class="page-header" style="text-align: center; margin-bottom: 3rem;">
+        <h1 style="font-size: 3rem; color: var(--text-primary); margin-bottom: 1rem;">Meeting Minutes</h1>
+        <p style="color: var(--text-secondary); font-size: 1.2rem; margin-bottom: 2rem;">{{ .Site.Params.description }}</p>
+        <div class="stats" style="display: flex; justify-content: center; gap: 2rem; color: var(--text-muted); font-size: 1rem;">
             <span class="total-count">{{ len .Site.RegularPages }} total meetings</span>
             <span class="current-page">Page {{ .Paginator.PageNumber }} of {{ .Paginator.TotalPages }}</span>
         </div>
     </header>
     
-    <div class="search-box">
-        <input type="text" id="search" placeholder="Search minutes by date or content..." />
-        <div class="search-results" id="search-results" style="display: none;"></div>
+    <div class="search-controls" style="max-width: 800px; margin: 0 auto 3rem; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+        <div class="search-box" style="flex: 1; min-width: 300px;">
+            <input type="text" id="search" placeholder="Search minutes by date or content..." 
+                   style="width: 100%; padding: 1rem; border: 1px solid var(--border-color); border-radius: 8px; 
+                          background: var(--bg-secondary); color: var(--text-primary); font-size: 1rem;" />
+        </div>
+        <div class="year-filter" style="min-width: 200px;">
+            <select id="year-filter" 
+                    style="width: 100%; padding: 1rem; border: 1px solid var(--border-color); border-radius: 8px; 
+                           background: var(--bg-secondary); color: var(--text-primary); font-size: 1rem;">
+                <option value="">All years</option>
+            </select>
+        </div>
     </div>
     
-    <div class="year-filter">
-        <label>Filter by year:</label>
-        <select id="year-filter">
-            <option value="">All years</option>
-            <!-- Years will be populated by JavaScript -->
-        </select>
-    </div>
-    
-    <div class="minutes-grid" id="minutes-list">
+    <div class="minutes-grid" id="minutes-list" 
+         style="display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
         {{ range .Paginator.Pages }}
-        <article class="minute-card" data-title="{{ .Title }}" data-date="{{ .Date.Format "2006-01-02" }}" data-year="{{ .Date.Year }}">
-            <header class="minute-header">
-                <h2><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
-                <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+        <article class="minute-card" data-title="{{ .Title }}" data-date="{{ .Date.Format "2006-01-02" }}" data-year="{{ .Date.Year }}"
+                 style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; 
+                        padding: 2rem; transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;"
+                 onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 32px rgba(74, 158, 255, 0.2)'"
+                 onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+            <header class="minute-header" style="margin-bottom: 1rem;">
+                <h2 style="margin-bottom: 0.5rem;">
+                    <a href="{{ .RelPermalink }}" style="color: var(--accent-primary); text-decoration: none; font-size: 1.4rem;">
+                        {{ .Title }}
+                    </a>
+                </h2>
+                <time datetime="{{ .Date.Format "2006-01-02" }}" style="color: var(--text-muted); font-size: 0.95rem;">
+                    {{ .Date.Format "January 2, 2006" }}
+                </time>
             </header>
             {{ if .Summary }}
-            <div class="minute-summary">
-                {{ .Summary | truncate 150 }}
+            <div class="minute-summary" style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem;">
+                {{ .Summary | truncate 200 }}
             </div>
             {{ end }}
             <footer class="minute-footer">
-                <a href="{{ .Permalink }}" class="read-more">Read Minutes →</a>
+                <a href="{{ .RelPermalink }}" class="read-more" 
+                   style="color: var(--accent-primary); text-decoration: none; font-weight: 600; 
+                          display: inline-flex; align-items: center; gap: 0.5rem;">
+                    Read Minutes <span style="font-size: 1.2rem;">→</span>
+                </a>
             </footer>
         </article>
         {{ end }}
@@ -45,23 +62,39 @@
     
     <!-- Pagination -->
     {{ if gt .Paginator.TotalPages 1 }}
-    <nav class="pagination">
+    <nav class="pagination" style="display: flex; justify-content: center; align-items: center; gap: 1rem; margin: 3rem 0;">
         {{ if .Paginator.HasPrev }}
-        <a href="{{ .Paginator.Prev.URL }}" class="pagination-link prev">← Previous</a>
+        <a href="{{ .Paginator.Prev.URL }}" class="pagination-link prev" 
+           style="padding: 0.75rem 1.5rem; background: var(--bg-secondary); border: 1px solid var(--border-color); 
+                  border-radius: 8px; text-decoration: none; color: var(--accent-primary); font-weight: 600;">
+            ← Previous
+        </a>
         {{ end }}
         
-        <div class="pagination-numbers">
+        <div class="pagination-numbers" style="display: flex; gap: 0.5rem;">
             {{ range .Paginator.Pagers }}
             {{ if eq . $.Paginator }}
-            <span class="pagination-current">{{ .PageNumber }}</span>
+            <span class="pagination-current" 
+                  style="padding: 0.75rem 1rem; background: var(--accent-primary); color: white; 
+                         border-radius: 8px; font-weight: bold;">
+                {{ .PageNumber }}
+            </span>
             {{ else }}
-            <a href="{{ .URL }}" class="pagination-link">{{ .PageNumber }}</a>
+            <a href="{{ .URL }}" class="pagination-link" 
+               style="padding: 0.75rem 1rem; background: var(--bg-secondary); border: 1px solid var(--border-color); 
+                      border-radius: 8px; text-decoration: none; color: var(--accent-primary);">
+                {{ .PageNumber }}
+            </a>
             {{ end }}
             {{ end }}
         </div>
         
         {{ if .Paginator.HasNext }}
-        <a href="{{ .Paginator.Next.URL }}" class="pagination-link next">Next →</a>
+        <a href="{{ .Paginator.Next.URL }}" class="pagination-link next" 
+           style="padding: 0.75rem 1.5rem; background: var(--bg-secondary); border: 1px solid var(--border-color); 
+                  border-radius: 8px; text-decoration: none; color: var(--accent-primary); font-weight: 600;">
+            Next →
+        </a>
         {{ end }}
     </nav>
     {{ end }}
@@ -69,8 +102,7 @@
 
 <!-- JavaScript for search and filtering -->
 <script>
-// Build search index from all pages (lazy loaded)
-let searchIndex = [];
+// Build search index from all pages
 let allYears = new Set();
 
 // Initialize year filter
@@ -103,7 +135,7 @@ document.getElementById('year-filter').addEventListener('change', function(e) {
     });
 });
 
-// Search functionality (client-side for current page)
+// Search functionality
 document.getElementById('search').addEventListener('input', function(e) {
     const searchTerm = e.target.value.toLowerCase();
     const cards = document.querySelectorAll('.minute-card');

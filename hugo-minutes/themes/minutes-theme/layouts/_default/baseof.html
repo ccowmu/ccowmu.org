@@ -4,25 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ block "title" . }}{{ .Site.Title }}{{ end }}</title>
+    <meta name="description" content="{{ .Site.Params.description }}">
+    
+    <!-- Favicon and Icons -->
+    <link rel="icon" href="{{ "favicon.ico" | relURL }}" sizes="16x16 32x32">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ "images/icon-16x16.png" | relURL }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ "images/icon-32x32.png" | relURL }}">
+    <link rel="icon" type="image/png" sizes="48x48" href="{{ "images/icon-48x48.png" | relURL }}">
+    
+    <!-- CSS -->
     <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+    <link rel="stylesheet" href="{{ "css/style.min.css" | relURL }}">
 </head>
 <body>
-    <header class="site-header">
-        <div class="container">
-            <h1><a href="{{ .Site.BaseURL }}">{{ .Site.Params.clubName }}</a></h1>
-            <nav>
-                <a href="{{ .Site.BaseURL }}">All Minutes</a>
-                <a href="https://ccawmu.org">Main Site</a>
-            </nav>
-        </div>
-    </header>
+    <!-- Use the main site header -->
+    {{ partial "header.html" . }}
+    
     <main class="main-content">
         {{ block "main" . }}{{ end }}
     </main>
-    <footer class="site-footer">
-        <div class="container">
-            <p>&copy; {{ now.Year }} {{ .Site.Params.clubName }}</p>
-        </div>
-    </footer>
+    
+    <!-- Use the main site footer -->
+    {{ partial "footer.html" . }}
+    
+    <!-- JavaScript -->
+    <script src="{{ "js/main.js" | relURL }}" async></script>
 </body>
 </html>
