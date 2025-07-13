@@ -1,0 +1,99 @@
+name: Build Minutes
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main repo
+        uses: actions/checkout@v4
+
+      - name: Checkout minutes source
+        uses: actions/checkout@v4
+        with:
+          repository: ccowmu/minutes
+          path: minutes-src
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.120.4'
+          extended: true
+
+      - name: Prepare site
+        run: |
+          mkdir -p hugo-minutes/content
+          rsync -av --delete minutes-src/minutes/ hugo-minutes/content/
+          cat > hugo-minutes/hugo.toml <<'CONF'
+baseURL = "/minutes/"
+relativeURLs = true
+canonifyURLs = false
+languageCode = "en-us"
+title = "CCaWMU Meeting Minutes"
+theme = "minutes-theme"
+paginate = 20
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+CONF
+          mkdir -p hugo-minutes/themes/minutes-theme/layouts/_default
+          mkdir -p hugo-minutes/themes/minutes-theme/layouts/partials
+          cp includes/header.html hugo-minutes/themes/minutes-theme/layouts/partials/
+          cp includes/footer.html hugo-minutes/themes/minutes-theme/layouts/partials/
+          cat > hugo-minutes/themes/minutes-theme/layouts/_default/baseof.html <<'CONF'
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ block "title" . }}{{ .Site.Title }}{{ end }}</title>
+  <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+</head>
+<body>
+  {{ partial "header.html" . }}
+  <main>
+    {{ block "main" . }}{{ end }}
+  </main>
+  {{ partial "footer.html" . }}
+  <script src="{{ "js/main.js" | relURL }}"></script>
+</body>
+</html>
+CONF
+          cat > hugo-minutes/themes/minutes-theme/layouts/_default/list.html <<'CONF'
+{{ define "title" }}Meeting Minutes - {{ .Site.Title }}{{ end }}
+{{ define "main" }}
+<h1>Meeting Minutes</h1>
+<ul>
+  {{ range .Pages }}
+    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a> - {{ .Date.Format "Jan 2, 2006" }}</li>
+  {{ end }}
+</ul>
+{{ end }}
+CONF
+          cat > hugo-minutes/themes/minutes-theme/layouts/_default/single.html <<'CONF'
+{{ define "title" }}{{ .Title }} - {{ .Site.Title }}{{ end }}
+{{ define "main" }}
+<article>
+  <h1>{{ .Title }}</h1>
+  <time>{{ .Date.Format "January 2, 2006" }}</time>
+  {{ .Content }}
+</article>
+{{ end }}
+CONF
+
+      - name: Build site
+        run: |
+          hugo -s hugo-minutes -d ../minutes --minify
+
+      - name: Commit minutes
+        run: |
+          git config user.name "GitHub Action"
+          git config user.email "action@github.com"
+          git add minutes hugo-minutes
+          git commit -m "Automated minutes update" || echo "No changes"
+          git push

@@ -154,12 +154,12 @@ No build process required for the main site - all files are production-ready.
 The Hugo minutes system deploys automatically via GitHub Actions:
 - **Trigger**: Daily at 6 AM UTC, or manual workflow dispatch
 - **Source**: Latest content from `ccowmu/minutes` repository
-- **Output**: Static files generated in `hugo-minutes/public/`
+- **Output**: Static files generated in `minutes/`
 - **Integration**: Seamlessly integrated with main site at `/minutes`
 
 To manually deploy minutes:
-1. Run `hugo --minify` in `hugo-minutes/` directory
-2. Copy `public/` contents to your web server's `/minutes` directory
+1. Run `hugo --minify -s hugo-minutes -d ../minutes`
+2. Copy the generated `minutes/` directory to your web server
 
 ## 📝 Content Management
 
