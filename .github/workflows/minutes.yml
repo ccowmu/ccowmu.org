@@ -65,15 +65,25 @@ jobs:
           mkdir -p themes/minutes-theme/static/images
         fi
         
-        # Copy main site assets to Hugo theme
-        cp -r ../css/* themes/minutes-theme/static/css/ 2>/dev/null || true
-        cp -r ../js/* themes/minutes-theme/static/js/ 2>/dev/null || true
-        cp -r ../images/* themes/minutes-theme/static/images/ 2>/dev/null || true
-        cp ../favicon.ico themes/minutes-theme/static/ 2>/dev/null || true
+        # Always copy main site assets to Hugo theme (overwrite existing)
+        echo "Copying main site assets to Hugo theme..."
+        mkdir -p themes/minutes-theme/static/{css,js,images}
+        cp -r ../css/* themes/minutes-theme/static/css/ || echo "Warning: CSS files not found"
+        cp -r ../js/* themes/minutes-theme/static/js/ || echo "Warning: JS files not found"
+        cp -r ../images/* themes/minutes-theme/static/images/ || echo "Warning: Image files not found"
+        cp ../favicon.ico themes/minutes-theme/static/ || echo "Warning: Favicon not found"
         
-        # Copy includes as partials
-        cp ../includes/header.html themes/minutes-theme/layouts/partials/ 2>/dev/null || true
-        cp ../includes/footer.html themes/minutes-theme/layouts/partials/ 2>/dev/null || true
+        # Always copy includes as partials (overwrite existing)
+        echo "Copying header and footer includes..."
+        cp ../includes/header.html themes/minutes-theme/layouts/partials/ || echo "Warning: Header not found"
+        cp ../includes/footer.html themes/minutes-theme/layouts/partials/ || echo "Warning: Footer not found"
+        
+        # Verify assets were copied
+        echo "Verifying copied assets:"
+        ls -la themes/minutes-theme/static/ || echo "Static directory not found"
+        ls -la themes/minutes-theme/static/css/ || echo "CSS directory not found"
+        ls -la themes/minutes-theme/static/js/ || echo "JS directory not found"
+        ls -la themes/minutes-theme/static/images/ || echo "Images directory not found"
         
     - name: Create Hugo templates
       run: |
@@ -446,6 +456,13 @@ jobs:
         
         echo "Hugo build completed successfully"
         
+        # Verify assets are in the built site
+        echo "Verifying assets in built site:"
+        ls -la public/css/ || echo "Built CSS not found"
+        ls -la public/js/ || echo "Built JS not found"  
+        ls -la public/images/ || echo "Built images not found"
+        ls -la public/favicon.ico || echo "Built favicon not found"
+        
     - name: Deploy to minutes folder
       run: |
         # Backup existing minutes folder if it exists
@@ -479,6 +496,7 @@ jobs:
         git add minutes/
         git add hugo-minutes/hugo.toml
         git add hugo-minutes/content/
+        git add hugo-minutes/themes/
         git add .gitignore
         
         # Check if there are any changes to commit
