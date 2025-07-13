@@ -1,4 +1,11 @@
 # Hugo build artifacts
+/public/
+/minutes-site/
+/.hugo_build.lock
+/hugo_stats.json
+/resources/_gen/
+
+# Legacy Hugo paths
 hugo-minutes/public/
 hugo-minutes/.hugo_build.lock
 
