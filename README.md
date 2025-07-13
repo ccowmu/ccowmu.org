@@ -1,4 +1,48 @@
-# Computer Club at Western Michigan University (CCoWMU) Website
+# Computer Club at Western Michigan Univers## 🌟 Features
+
+- **Asymmetrical Windows Layout**: Modern, sophisticated design that flows naturally
+- **Light/Dark Theme Toggle**: Automatic theme switching with localStorage persistence
+- **Real-time Clock**: Live updating time display in navigation
+- **Responsive Design**: Works seamlessly on all device sizes
+- **Terminal Aesthetics**: Professional computing club vibe with monospace fonts
+- **Live Stats**: Dynamic member count and system status
+- **Clickable Group Photo**: Links to club's Flickr gallery
+- **External Integrations**: Links to GitHub minutes, WMU events, and club wiki
+- **Hugo Minutes System**: Automated meeting minutes archive with search and pagination
+
+## 📝 Meeting Minutes System
+
+The club maintains an extensive archive of meeting minutes dating back to 1996. This system has been migrated from Jekyll to Hugo for better performance and maintainability.
+
+### Features
+- **791 Meeting Minutes**: Complete archive from 1996-2025
+- **Automated Pagination**: 20 minutes per page (40 total pages)
+- **Search Functionality**: Search by date, content, or keywords
+- **Year Filtering**: Filter minutes by specific years
+- **Responsive Design**: Mobile-friendly interface
+- **RSS Feed**: Stay updated with new minutes
+- **Automated Deployment**: GitHub Actions workflow for daily updates
+
+### Technical Details
+- **Built with Hugo**: Static site generator for fast, reliable performance
+- **Source Repository**: Pulls from `ccowmu/minutes` repository daily
+- **Custom Theme**: Designed to match the main site aesthetic
+- **Markdown Content**: All minutes stored as structured Markdown files
+- **Client-side Search**: Fast filtering without server requests
+
+### Accessing Minutes
+- **Main Interface**: Available at `/minutes` on the live site
+- **Local Development**: Run `hugo server` in the `hugo-minutes/` directory
+- **Source Files**: Original minutes in the `ccowmu/minutes` repository
+
+### GitHub Actions Workflow
+The minutes system automatically updates daily via GitHub Actions:
+1. Pulls latest minutes from the `ccowmu/minutes` repository
+2. Builds the Hugo site with updated content
+3. Commits generated static files to the main repository
+4. Deploys updates to the live site
+
+This ensures the minutes archive stays current without manual intervention.U) Website
 
 A sophisticated, modern website for the Computer Club at WMU, featuring a window-based interface and professional aesthetic.
 
@@ -28,9 +72,17 @@ ccawmu.org/
 │   ├── main.js         # Core functionality & navigation
 │   ├── clock.js        # Real-time clock widget
 │   └── stats.js        # Animated counters
-└── includes/
-    ├── header.html     # Shared header component
-    └── footer.html     # Shared footer component
+├── includes/
+│   ├── header.html     # Shared header component
+│   └── footer.html     # Shared footer component
+├── hugo-minutes/       # Hugo-powered minutes system
+│   ├── content/        # Markdown minutes files (791 files)
+│   ├── themes/         # Custom minutes theme
+│   ├── public/         # Generated static site
+│   └── hugo.toml       # Hugo configuration
+└── .github/
+    └── workflows/
+        └── minutes.yml # Automated minutes deployment
 ```
 
 ## � Features
@@ -51,11 +103,20 @@ ccawmu.org/
 2. Open `index.html` in a web browser
 3. For development, use a local server (VS Code Live Server, Python's `http.server`, etc.)
 
+### Minutes System Development
+To work on the Hugo minutes system:
+1. Install Hugo: `brew install hugo` (macOS) or download from [gohugo.io](https://gohugo.io)
+2. Navigate to `hugo-minutes/` directory
+3. Run `hugo server` for live development
+4. Edit templates in `themes/minutes-theme/layouts/`
+5. Build with `hugo --minify` for production
+
 ### Making Changes
 - **Content**: Edit the HTML files directly
 - **Styling**: All CSS is in `css/style.css` with clear sections
 - **Functionality**: JavaScript is split across three files in `js/`
 - **Header/Footer**: Shared components in `includes/`
+- **Minutes**: Hugo templates in `hugo-minutes/themes/minutes-theme/`
 
 ### File Organization
 - CSS is organized with clear section comments (`/* ===== SECTION ===== */`)
@@ -96,7 +157,18 @@ This is a static site that can be hosted anywhere:
 - **Vercel**: Fast global CDN
 - **Traditional hosting**: Just upload files
 
-No build process required - all files are production-ready.
+No build process required for the main site - all files are production-ready.
+
+### Minutes System Deployment
+The Hugo minutes system deploys automatically via GitHub Actions:
+- **Trigger**: Daily at 6 AM UTC, or manual workflow dispatch
+- **Source**: Latest content from `ccowmu/minutes` repository
+- **Output**: Static files generated in `hugo-minutes/public/`
+- **Integration**: Seamlessly integrated with main site at `/minutes`
+
+To manually deploy minutes:
+1. Run `hugo --minify` in `hugo-minutes/` directory
+2. Copy `public/` contents to your web server's `/minutes` directory
 
 ## 📝 Content Management
 
@@ -148,6 +220,10 @@ This site is built by students, for students. When making changes:
 
 - [ ] More interactive animations
 - [ ] Performance optimizations
+- [ ] Enhanced minutes search with full-text indexing
+- [ ] Minutes system mobile app
+- [ ] Integration with club Discord for meeting notifications
+- [ ] Automated meeting minute templates
 
 ---
 
