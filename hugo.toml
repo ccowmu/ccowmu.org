@@ -1,5 +1,6 @@
-baseURL = ""
-relativeURLs = true
+baseURL = "https://lochlanmcelroy.github.io/ccowmu.org"
+publishDir = "minutes-site"
+relativeURLs = false
 canonifyURLs = false
 languageCode = "en-us"
 title = "Computer Club @ WMU Minutes"

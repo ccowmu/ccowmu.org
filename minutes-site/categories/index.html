@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories - Computer Club @ WMU Minutes</title>
+    <meta name="description" content="Meeting minutes for Western Michigan University&#39;s Computer Club">
+    
+    
+    <link rel="icon" href="/ccowmu.org/favicon.ico" sizes="16x16 32x32">
+    <link rel="icon" type="image/png" sizes="16x16" href="/ccowmu.org/images/icon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/ccowmu.org/images/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/ccowmu.org/images/icon-48x48.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="/ccowmu.org/images/icon-192x192.png">
+    
+    
+    <link rel="stylesheet" href="/ccowmu.org/css/style.css">
+    
+    
+    <style>
+         
+        .minutes-container {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .search-container {
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: border-color var(--transition-fast);
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+        
+        .search-stats {
+            margin-top: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .minutes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .minute-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all var(--transition-fast);
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .minute-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(74, 158, 255, 0.1);
+        }
+        
+        .minute-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .minute-date {
+            color: var(--accent-primary);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .minute-preview {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .year-filters {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .year-filter {
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all var(--transition-fast);
+        }
+        
+        .year-filter:hover,
+        .year-filter.active {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+        
+        .view-toggle {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .view-btn {
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .view-btn.active {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+        
+        .minutes-list {
+            display: none;
+        }
+        
+        .minutes-list.active {
+            display: block;
+        }
+        
+        .minutes-grid.active {
+            display: grid;
+        }
+        
+        .minute-list-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all var(--transition-fast);
+        }
+        
+        .minute-list-item:hover {
+            border-color: var(--accent-primary);
+        }
+        
+        .breadcrumb {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+        
+        .breadcrumb a {
+            color: var(--accent-primary);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+         
+        @media (max-width: 768px) {
+            .minutes-container {
+                padding: 1rem;
+            }
+            
+            .minutes-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .year-filters {
+                justify-content: center;
+            }
+        }
+        
+         
+        .highlight {
+            background: var(--accent-yellow);
+            color: #000;
+            padding: 0.1rem 0.2rem;
+            border-radius: 3px;
+        }
+    </style>
+    
+    
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <link rel="alternate" type="application/rss+xml" href="https://lochlanmcelroy.github.io/ccowmu.org/categories/index.xml" title="Computer Club @ WMU Minutes" />
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Computer Club @ WMU Minutes",
+        "url": "https:\/\/lochlanmcelroy.github.io\/ccowmu.org\/",
+        "description": "Meeting minutes for Western Michigan University\u0027s Computer Club"
+    }
+    </script>
+</head>
+<body>
+    
+    <div id="header-container">
+        <header class="site-header">
+            <nav class="navbar">
+                <div class="nav-container">
+                    <div class="nav-brand">
+                        <a href="/" class="brand-link">
+                            <span class="brand-text">CCaWMU</span>
+                        </a>
+                    </div>
+                    <div class="nav-links">
+                        <a href="/">Home</a>
+                        <a href="/minutes/" class="active">Minutes</a>
+                        <a href="/join.html">Join</a>
+                        <a href="/chat.html">Chat</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+    </div>
+    
+    <main class="main-content">
+        
+<div class="minutes-container">
+    
+    <nav class="breadcrumb">
+        <a href="https://ccowmu.org">CCaWMU</a> / Minutes
+    </nav>
+    
+    
+    <div class="page-header">
+        <h1 class="main-title">Meeting Minutes</h1>
+        <p class="hero-subtitle">Archive of Computer Club @ WMU meetings</p>
+    </div>
+    
+    
+    <div class="search-container">
+        <input 
+            type="text" 
+            id="search-input" 
+            class="search-input" 
+            placeholder="Search minutes by date, topic, or content..."
+            autocomplete="off"
+        >
+        <div class="search-stats" id="search-stats">
+            Showing 0 of 0 minutes
+        </div>
+    </div>
+    
+    
+    <div class="controls-container">
+        
+        <div class="year-filters">
+            <a href="#" class="year-filter active" data-year="all">All Years</a>
+            
+            <a href="#" class="year-filter" data-year="1996">1996</a>
+            
+            <a href="#" class="year-filter" data-year="1997">1997</a>
+            
+            <a href="#" class="year-filter" data-year="1998">1998</a>
+            
+            <a href="#" class="year-filter" data-year="1999">1999</a>
+            
+            <a href="#" class="year-filter" data-year="2000">2000</a>
+            
+            <a href="#" class="year-filter" data-year="2001">2001</a>
+            
+            <a href="#" class="year-filter" data-year="2002">2002</a>
+            
+            <a href="#" class="year-filter" data-year="2003">2003</a>
+            
+            <a href="#" class="year-filter" data-year="2004">2004</a>
+            
+            <a href="#" class="year-filter" data-year="2005">2005</a>
+            
+            <a href="#" class="year-filter" data-year="2006">2006</a>
+            
+            <a href="#" class="year-filter" data-year="2007">2007</a>
+            
+            <a href="#" class="year-filter" data-year="2008">2008</a>
+            
+            <a href="#" class="year-filter" data-year="2009">2009</a>
+            
+            <a href="#" class="year-filter" data-year="2010">2010</a>
+            
+            <a href="#" class="year-filter" data-year="2011">2011</a>
+            
+            <a href="#" class="year-filter" data-year="2012">2012</a>
+            
+            <a href="#" class="year-filter" data-year="2013">2013</a>
+            
+            <a href="#" class="year-filter" data-year="2014">2014</a>
+            
+            <a href="#" class="year-filter" data-year="2015">2015</a>
+            
+            <a href="#" class="year-filter" data-year="2016">2016</a>
+            
+            <a href="#" class="year-filter" data-year="2017">2017</a>
+            
+            <a href="#" class="year-filter" data-year="2018">2018</a>
+            
+            <a href="#" class="year-filter" data-year="2019">2019</a>
+            
+            <a href="#" class="year-filter" data-year="2020">2020</a>
+            
+            <a href="#" class="year-filter" data-year="2021">2021</a>
+            
+            <a href="#" class="year-filter" data-year="2022">2022</a>
+            
+            <a href="#" class="year-filter" data-year="2023">2023</a>
+            
+            <a href="#" class="year-filter" data-year="2024">2024</a>
+            
+            <a href="#" class="year-filter" data-year="2025">2025</a>
+            
+            <a href="#" class="year-filter" data-year="date: 4/20/06, 6:11p&lt;br&gt;">date: 4/20/06, 6:11p&lt;br&gt;</a>
+            
+        </div>
+        
+        
+        <div class="view-toggle">
+            <button class="view-btn active" data-view="grid">Grid View</button>
+            <button class="view-btn" data-view="list">List View</button>
+        </div>
+    </div>
+    
+    
+    <div class="minutes-grid active" id="minutes-grid">
+        
+    </div>
+    
+    
+    <div class="minutes-list" id="minutes-list">
+        
+    </div>
+    
+    
+    <div class="no-results" id="no-results" style="display: none;">
+        <h3>No minutes found</h3>
+        <p>Try adjusting your search terms or year filter.</p>
+    </div>
+</div>
+
+    </main>
+    
+    
+    <div id="footer-container">
+        <footer class="site-footer">
+            <div class="container">
+                <div class="footer-content">
+                    <p>&copy; 2025 Computer Club @ WMU - Meeting Minutes Archive</p>
+                    <div class="footer-links">
+                        <a href="/">Home</a>
+                        <a href="/join.html">Join</a>
+                        <a href="/chat.html">Chat</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    
+    <script>
+        
+        fetch('\/ccowmu.org\/includes\/header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-container').innerHTML = html;
+                
+                if (typeof initializeHeader === 'function') {
+                    initializeHeader();
+                }
+            })
+            .catch(error => {
+                console.log('Header not found, using fallback');
+                document.getElementById('header-container').innerHTML = `
+                    <header class="site-header">
+                        <div class="container">
+                            <nav class="navbar">
+                                <a href="/" class="logo">CCaWMU</a>
+                                <div class="nav-links">
+                                    <a href="/">Home</a>
+                                    <a href="/minutes/" class="active">Minutes</a>
+                                    <a href="/join.html">Join</a>
+                                    <a href="/chat.html">Chat</a>
+                                </div>
+                            </nav>
+                        </div>
+                    </header>
+                `;
+            });
+        
+        
+        fetch('\/ccowmu.org\/includes\/footer.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('footer-container').innerHTML = html;
+            })
+            .catch(error => {
+                console.log('Footer not found, using fallback');
+                document.getElementById('footer-container').innerHTML = `
+                    <footer class="site-footer">
+                        <div class="container">
+                            <p>&copy; 2025 Computer Club @ WMU</p>
+                        </div>
+                    </footer>
+                `;
+            });
+    </script>
+    
+    
+    <script src="/ccowmu.org/js/main.js"></script>
+    
+    
+
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('search-input');
+    const searchStats = document.getElementById('search-stats');
+    const minutesGrid = document.getElementById('minutes-grid');
+    const minutesList = document.getElementById('minutes-list');
+    const noResults = document.getElementById('no-results');
+    const yearFilters = document.querySelectorAll('.year-filter');
+    const viewButtons = document.querySelectorAll('.view-btn');
+    
+    let allMinutes = [];
+    let filteredMinutes = [];
+    let currentView = 'grid';
+    let currentYear = 'all';
+    let fuse;
+    
+    
+    const minutes = document.querySelectorAll('.minute-card, .minute-list-item');
+    minutes.forEach(minute => {
+        allMinutes.push({
+            element: minute,
+            title: minute.querySelector('.minute-title').textContent,
+            content: minute.dataset.searchContent,
+            year: minute.dataset.year
+        });
+    });
+    
+    filteredMinutes = [...allMinutes];
+    
+    
+    fuse = new Fuse(allMinutes, {
+        keys: ['title', 'content'],
+        threshold: 0.3,
+        includeScore: true,
+        includeMatches: true
+    });
+    
+    
+    searchInput.addEventListener('input', function(e) {
+        const query = e.target.value.trim();
+        
+        if (query === '') {
+            filteredMinutes = allMinutes.filter(minute => 
+                currentYear === 'all' || minute.year === currentYear
+            );
+        } else {
+            const results = fuse.search(query);
+            filteredMinutes = results
+                .filter(result => currentYear === 'all' || result.item.year === currentYear)
+                .map(result => result.item);
+        }
+        
+        updateDisplay();
+        updateStats();
+    });
+    
+    
+    yearFilters.forEach(filter => {
+        filter.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            
+            yearFilters.forEach(f => f.classList.remove('active'));
+            this.classList.add('active');
+            
+            currentYear = this.dataset.year;
+            
+            
+            const query = searchInput.value.trim();
+            if (query === '') {
+                filteredMinutes = allMinutes.filter(minute => 
+                    currentYear === 'all' || minute.year === currentYear
+                );
+            } else {
+                const results = fuse.search(query);
+                filteredMinutes = results
+                    .filter(result => currentYear === 'all' || result.item.year === currentYear)
+                    .map(result => result.item);
+            }
+            
+            updateDisplay();
+            updateStats();
+        });
+    });
+    
+    
+    viewButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            
+            viewButtons.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            currentView = this.dataset.view;
+            
+            if (currentView === 'grid') {
+                minutesGrid.classList.add('active');
+                minutesList.classList.remove('active');
+            } else {
+                minutesGrid.classList.remove('active');
+                minutesList.classList.add('active');
+            }
+        });
+    });
+    
+    function updateDisplay() {
+        
+        allMinutes.forEach(minute => {
+            minute.element.style.display = 'none';
+        });
+        
+        
+        if (filteredMinutes.length === 0) {
+            noResults.style.display = 'block';
+            minutesGrid.style.display = 'none';
+            minutesList.style.display = 'none';
+        } else {
+            noResults.style.display = 'none';
+            if (currentView === 'grid') {
+                minutesGrid.style.display = 'grid';
+                minutesList.style.display = 'none';
+            } else {
+                minutesGrid.style.display = 'none';
+                minutesList.style.display = 'block';
+            }
+            
+            filteredMinutes.forEach(minute => {
+                minute.element.style.display = currentView === 'grid' ? 'block' : 'flex';
+            });
+        }
+    }
+    
+    function updateStats() {
+        const total = allMinutes.filter(minute => 
+            currentYear === 'all' || minute.year === currentYear
+        ).length;
+        
+        searchStats.textContent = `Showing ${filteredMinutes.length} of ${total} minutes`;
+    }
+    
+    
+    document.addEventListener('keydown', function(e) {
+        
+        if (e.key === '/' && !e.ctrlKey && !e.metaKey) {
+            e.preventDefault();
+            searchInput.focus();
+        }
+        
+        
+        if (e.key === 'Escape') {
+            searchInput.value = '';
+            searchInput.dispatchEvent(new Event('input'));
+        }
+    });
+    
+    
+    updateDisplay();
+    updateStats();
+});
+</script>
+
+</body>
+</html>

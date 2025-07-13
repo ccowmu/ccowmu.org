@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting Minutes - October 16, 1997 - Computer Club @ WMU Minutes</title>
+    <meta name="description" content="Meeting minutes for Western Michigan University&#39;s Computer Club">
+    
+    
+    <link rel="icon" href="/ccowmu.org/favicon.ico" sizes="16x16 32x32">
+    <link rel="icon" type="image/png" sizes="16x16" href="/ccowmu.org/images/icon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/ccowmu.org/images/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/ccowmu.org/images/icon-48x48.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="/ccowmu.org/images/icon-192x192.png">
+    
+    
+    <link rel="stylesheet" href="/ccowmu.org/css/style.css">
+    
+    
+    <style>
+         
+        .minutes-container {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .search-container {
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: border-color var(--transition-fast);
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+        
+        .search-stats {
+            margin-top: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .minutes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .minute-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all var(--transition-fast);
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .minute-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(74, 158, 255, 0.1);
+        }
+        
+        .minute-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .minute-date {
+            color: var(--accent-primary);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .minute-preview {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .year-filters {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .year-filter {
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all var(--transition-fast);
+        }
+        
+        .year-filter:hover,
+        .year-filter.active {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+        
+        .view-toggle {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .view-btn {
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .view-btn.active {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+        
+        .minutes-list {
+            display: none;
+        }
+        
+        .minutes-list.active {
+            display: block;
+        }
+        
+        .minutes-grid.active {
+            display: grid;
+        }
+        
+        .minute-list-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all var(--transition-fast);
+        }
+        
+        .minute-list-item:hover {
+            border-color: var(--accent-primary);
+        }
+        
+        .breadcrumb {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+        
+        .breadcrumb a {
+            color: var(--accent-primary);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+         
+        @media (max-width: 768px) {
+            .minutes-container {
+                padding: 1rem;
+            }
+            
+            .minutes-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .year-filters {
+                justify-content: center;
+            }
+        }
+        
+         
+        .highlight {
+            background: var(--accent-yellow);
+            color: #000;
+            padding: 0.1rem 0.2rem;
+            border-radius: 3px;
+        }
+    </style>
+    
+    
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Computer Club @ WMU Minutes",
+        "url": "https:\/\/lochlanmcelroy.github.io\/ccowmu.org\/",
+        "description": "Meeting minutes for Western Michigan University\u0027s Computer Club"
+    }
+    </script>
+</head>
+<body>
+    
+    <div id="header-container">
+        <header class="site-header">
+            <nav class="navbar">
+                <div class="nav-container">
+                    <div class="nav-brand">
+                        <a href="/" class="brand-link">
+                            <span class="brand-text">CCaWMU</span>
+                        </a>
+                    </div>
+                    <div class="nav-links">
+                        <a href="/">Home</a>
+                        <a href="/minutes/" class="active">Minutes</a>
+                        <a href="/join.html">Join</a>
+                        <a href="/chat.html">Chat</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+    </div>
+    
+    <main class="main-content">
+        
+<div class="minutes-container">
+    
+    <nav class="breadcrumb">
+        <a href="https://ccowmu.org">CCaWMU</a> / 
+        <a href="https://lochlanmcelroy.github.io/ccowmu.org//minutes/">Minutes</a> / 
+        Meeting Minutes - October 16, 1997
+    </nav>
+    
+    
+    <article class="minute-content">
+        <header class="minute-header">
+            <h1 class="minute-title">Meeting Minutes - October 16, 1997</h1>
+            <div class="minute-meta">
+                <time class="minute-date" datetime="1997-10-16">
+                    October 16, 1997
+                </time>
+                
+            </div>
+        </header>
+        
+        
+        <div class="minute-body">
+            <p>October 16th, 1997 </p><p>
+Present: Steve, Darren, Darron, Tim, Dennis, Ian. We&rsquo;re here, why aren&rsquo;t you? (Two actual members showed up over the course of the meeting :) </p><p>
+Meeting declared 6:12. </p><p>
+What is Tim doing right now? Buggering the password file! Tim&rsquo;s trying his hand at a C program to make it easier to expire accounts that have to go bye bye. </p><p>
+Steve: Everyone who mailed or called me has paid. We still have some expired folks who haven&rsquo;t gotten in touch with us, so those folks will have accounts suspended until they contact us. So far, approximately half of those folks expired have renewed their membership. </p><p>
+Tim: I&rsquo;ll also write an unexpire. </p><p>
+Steve: We need another table to put in front of the other window to put VAXstations on and store pop under. The VAXes are up and running and are networked to each other! </p><p>
+Tim: We ought to talk to WMU&rsquo;s VAX people to make sure all the current hardware won&rsquo;t have a problem talking to these things. </p><p>
+Steve: As soon as we can get them in here, I&rsquo;d like to try hooking them up to Wiley, then for the future, possibly assigning IP addresses. Wayne has named them already, I told him to use Tiny Toons(tm) characters again. Each machine has an external port to add another SCSI hard drive, so even though each one only has the ~100Mb&hellip; </p><p>
+WEB PAGES AT NETLINK. </p><p>
+Steve: We&rsquo;ve finished the acceptable use policy people need to read and sign. The 5Mb quota holds, with a 7Mb limit. I&rsquo;ll make copies of the policy to keep here in the office. Folks come in who want webpages should fill out: </p><p>
+Name  Username  Signature and Date  Officer Signature  Optional Comments </p><p>
+They should pick a password at that time which is different from their Yakko account, and NOT write it on the sheet, but instead mail it to steve or frogfarm so we can establish their account. The signing officer should put the form in the drawer with membership forms for the database&hellip;Darren? </p><p>
+Darren: I got it running, now it&rsquo;s up to the implementors. </p><p>
+Steve: I wanted something that can be accessible via any terminal, no graphics required. </p><p>
+Back to the webpages&hellip; </p><p>
+Steve: We need a new &ldquo;members list&rdquo;. I&rsquo;d rather start over and dynamically add to it as people add webpages. </p><p>
+Darron: For those members with webpages, list them, for those that don&rsquo;t just have an email link. </p><p>
+Steve: Agreed. members.html should be redirected over to yakko.com and edited appropriately.  </p><p>
+Steve: I have flyers Tim made up, which are pretty slick. Need help on distributing them. I think between this, the Herald article yesterday, and the new banner over our door courtesy of Dennis (everyone cheers), we should start getting a bit more recognition. I&rsquo;ll leave flyers in the office, they&rsquo;re already approved, so we can use every hand in getting them at approved posting places, or even off-campus. </p><p>
+Steve: Last issue, the web development team. I met with Wycoff again, she is very interested still in the club designing the Computer Science dept website. I told her also we were interested, and if we can do this, it could become an ongoing annual project, which would be very appropriate for us as an organization. Right now they have a lot of information but it&rsquo;s very bland&hellip; </p><p>
+Darren: also they use .shtml&hellip;blecch! </p><p>
+Steve: So we can totally revamp it if we like. She gave me a list of things she would like to see. We&rsquo;ll need to have separate meetings for the web design. I got lots of responses from the mass email from people who can&rsquo;t make it to our regular meetings but could attend at other times. Perhaps this could turn into a way to get CS student pages up like there were before, I brought that possibility up and she had no problem with that. Once again, all interested parties should mail me to coordinate times for a meeting. I&rsquo;d like to have the first meeting sometime next week, so get the word out. </p><p>
+Steve: I still want to do the project with Wiley. I want to get the Pentium into Yakko! </p><p>
+(much discussion of swapping muds around, the issue of performance and the perceived need for better performance, etc) </p><p>
+Darren: This motherboard is better than the old one, so we hopefully won&rsquo;t face the same problems we did last time we tried to upgrade Yakko. </p><p>
+Steve: I vote strongly for swapping. </p><p>
+Tim: How about at the same time we upgrade Redhat? </p><p>
+Steve: How much parts do we have in here to make another system? Would it be in our best interest to try to piece together another? </p><p>
+Tim: We have a small hard drive, but it would basically have to leech off Yakko. I believe we have a 100Mb sitting around right now. </p><p>
+Steve: I&rsquo;d like all these motherboards in the file cabinet tested for starters, eventually going through all the other equipment. Any volunteers, anyone who has extra equipment they want to donate? </p><p>
+Tim: WSA report! They sucked, but their meeting was mercifully short. I spoke with a Chris Bakotic, who suggested we put the petitions in the labs and residence halls, try to get everyone into a meeting with Dr. Wright, get Norm Grant and Nancy Kroes, etc., involved. The assumption is that he wants to resolve the issue. I put our budget request in for the Internet 2001 lectures &ndash; I confirmed the Microsoft dweeb, probly from a local regional office; also Declan McCullagh (yeah!). </p><p>
+Darron: I know someone at a travel agency&hellip; </p><p>
+Tim: Also put in request for a video, 65 bucks for a Year 2000 video, use the video as an opener for a discussion point. If we pull this off it will make a difference in the future for getting more budget grants. I don&rsquo;t know how anal they&rsquo;ll be about documentation; statistically, we can&rsquo;t count on it, but we asked for very little, and this is the first year they have a $9,000 ceiling. I have an appointment next Saturday, October 25th, to go beg for money for Chicago field trip/lecture speakers/etc.  </p><p>
+<sundry discussion of Chicago> </p><p>
+Tim: Once again, if anyone wants to be on the student budget allocation committee&hellip;<sigh> </p><p>
+Treasurer&rsquo;s report! </p><p>
+Dennis: Made about 80 bucks this week. Diet pop is needed. </p><p>
+Steve: Meeting closed due to degradation into alcohol jokes. Thankfully no spam yet&hellip; </p><p>
+Tim: We need a computer named Spam! spam.cs.wmich.edu&hellip; </p><p>
+Steve: and if someone puts together another one we can name it treet! </p><p>
+Meeting adjourned more or less unanimously, 7:00pm. Oh, the pain of it all. </p><p></p>
+</p>
+
+        </div>
+        
+        
+        <nav class="minute-navigation">
+            
+            <a href="https://lochlanmcelroy.github.io/ccowmu.org/minutes/19971009/" class="nav-prev">
+                ← Meeting Minutes - October 9, 1997
+            </a>
+            
+            
+            <a href="https://lochlanmcelroy.github.io/ccowmu.org//minutes/" class="nav-back">
+                Back to All Minutes
+            </a>
+            
+            
+            <a href="https://lochlanmcelroy.github.io/ccowmu.org/minutes/19971023/" class="nav-next">
+                Meeting Minutes - October 23, 1997 →
+            </a>
+            
+        </nav>
+    </article>
+</div>
+
+<style>
+.minute-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.minute-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.minute-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.minute-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.minute-date {
+    font-size: 1.1rem;
+    color: var(--accent-primary);
+    font-weight: 500;
+}
+
+.attendees {
+    font-size: 0.9rem;
+}
+
+.minute-body {
+    line-height: 1.8;
+    margin-bottom: 3rem;
+}
+
+.minute-body h1,
+.minute-body h2,
+.minute-body h3,
+.minute-body h4,
+.minute-body h5,
+.minute-body h6 {
+    color: var(--text-primary);
+    margin: 2rem 0 1rem 0;
+    font-weight: 600;
+}
+
+.minute-body h1 { font-size: 2rem; }
+.minute-body h2 { font-size: 1.5rem; }
+.minute-body h3 { font-size: 1.3rem; }
+.minute-body h4 { font-size: 1.1rem; }
+
+.minute-body p {
+    margin-bottom: 1rem;
+}
+
+.minute-body ul,
+.minute-body ol {
+    margin: 1rem 0;
+    padding-left: 2rem;
+}
+
+.minute-body li {
+    margin-bottom: 0.5rem;
+}
+
+.minute-body blockquote {
+    margin: 1.5rem 0;
+    padding: 1rem 1.5rem;
+    border-left: 4px solid var(--accent-primary);
+    background: var(--bg-secondary);
+    border-radius: 0 8px 8px 0;
+}
+
+.minute-body code {
+    background: var(--bg-tertiary);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+}
+
+.minute-body pre {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+.minute-body pre code {
+    background: none;
+    padding: 0;
+}
+
+.minute-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+}
+
+.minute-body th,
+.minute-body td {
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    text-align: left;
+}
+
+.minute-body th {
+    background: var(--bg-secondary);
+    font-weight: 600;
+}
+
+.minute-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 0;
+    border-top: 1px solid var(--border-color);
+    gap: 1rem;
+}
+
+.nav-prev,
+.nav-next,
+.nav-back {
+    padding: 0.75rem 1.5rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    font-weight: 500;
+}
+
+.nav-prev:hover,
+.nav-next:hover,
+.nav-back:hover {
+    border-color: var(--accent-primary);
+    background: var(--accent-primary);
+    color: white;
+}
+
+.nav-back {
+    background: var(--accent-primary);
+    color: white;
+    border-color: var(--accent-primary);
+}
+
+.nav-back:hover {
+    background: var(--accent-secondary);
+}
+
+ 
+@media (max-width: 768px) {
+    .minute-title {
+        font-size: 2rem;
+    }
+    
+    .minute-navigation {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .nav-prev,
+    .nav-next,
+    .nav-back {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .minute-body {
+        font-size: 1rem;
+    }
+    
+    .minute-body table {
+        font-size: 0.9rem;
+    }
+    
+    .minute-body pre {
+        font-size: 0.8rem;
+    }
+}
+
+ 
+@media print {
+    .breadcrumb,
+    .minute-navigation {
+        display: none;
+    }
+    
+    .minute-content {
+        max-width: none;
+    }
+    
+    .minute-body {
+        color: #000;
+    }
+}
+</style>
+
+    </main>
+    
+    
+    <div id="footer-container">
+        <footer class="site-footer">
+            <div class="container">
+                <div class="footer-content">
+                    <p>&copy; 2025 Computer Club @ WMU - Meeting Minutes Archive</p>
+                    <div class="footer-links">
+                        <a href="/">Home</a>
+                        <a href="/join.html">Join</a>
+                        <a href="/chat.html">Chat</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    
+    <script>
+        
+        fetch('\/ccowmu.org\/includes\/header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-container').innerHTML = html;
+                
+                if (typeof initializeHeader === 'function') {
+                    initializeHeader();
+                }
+            })
+            .catch(error => {
+                console.log('Header not found, using fallback');
+                document.getElementById('header-container').innerHTML = `
+                    <header class="site-header">
+                        <div class="container">
+                            <nav class="navbar">
+                                <a href="/" class="logo">CCaWMU</a>
+                                <div class="nav-links">
+                                    <a href="/">Home</a>
+                                    <a href="/minutes/" class="active">Minutes</a>
+                                    <a href="/join.html">Join</a>
+                                    <a href="/chat.html">Chat</a>
+                                </div>
+                            </nav>
+                        </div>
+                    </header>
+                `;
+            });
+        
+        
+        fetch('\/ccowmu.org\/includes\/footer.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('footer-container').innerHTML = html;
+            })
+            .catch(error => {
+                console.log('Footer not found, using fallback');
+                document.getElementById('footer-container').innerHTML = `
+                    <footer class="site-footer">
+                        <div class="container">
+                            <p>&copy; 2025 Computer Club @ WMU</p>
+                        </div>
+                    </footer>
+                `;
+            });
+    </script>
+    
+    
+    <script src="/ccowmu.org/js/main.js"></script>
+    
+    
+</body>
+</html>

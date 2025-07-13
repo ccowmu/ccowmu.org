@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting Minutes - February 26, 2015 - Computer Club @ WMU Minutes</title>
+    <meta name="description" content="Meeting minutes for Western Michigan University&#39;s Computer Club">
+    
+    
+    <link rel="icon" href="/ccowmu.org/favicon.ico" sizes="16x16 32x32">
+    <link rel="icon" type="image/png" sizes="16x16" href="/ccowmu.org/images/icon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/ccowmu.org/images/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/ccowmu.org/images/icon-48x48.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="/ccowmu.org/images/icon-192x192.png">
+    
+    
+    <link rel="stylesheet" href="/ccowmu.org/css/style.css">
+    
+    
+    <style>
+         
+        .minutes-container {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .search-container {
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: border-color var(--transition-fast);
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+        
+        .search-stats {
+            margin-top: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .minutes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .minute-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all var(--transition-fast);
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .minute-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(74, 158, 255, 0.1);
+        }
+        
+        .minute-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .minute-date {
+            color: var(--accent-primary);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .minute-preview {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .year-filters {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .year-filter {
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all var(--transition-fast);
+        }
+        
+        .year-filter:hover,
+        .year-filter.active {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+        
+        .view-toggle {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .view-btn {
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .view-btn.active {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+        
+        .minutes-list {
+            display: none;
+        }
+        
+        .minutes-list.active {
+            display: block;
+        }
+        
+        .minutes-grid.active {
+            display: grid;
+        }
+        
+        .minute-list-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all var(--transition-fast);
+        }
+        
+        .minute-list-item:hover {
+            border-color: var(--accent-primary);
+        }
+        
+        .breadcrumb {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+        
+        .breadcrumb a {
+            color: var(--accent-primary);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+         
+        @media (max-width: 768px) {
+            .minutes-container {
+                padding: 1rem;
+            }
+            
+            .minutes-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .year-filters {
+                justify-content: center;
+            }
+        }
+        
+         
+        .highlight {
+            background: var(--accent-yellow);
+            color: #000;
+            padding: 0.1rem 0.2rem;
+            border-radius: 3px;
+        }
+    </style>
+    
+    
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Computer Club @ WMU Minutes",
+        "url": "https:\/\/lochlanmcelroy.github.io\/ccowmu.org\/",
+        "description": "Meeting minutes for Western Michigan University\u0027s Computer Club"
+    }
+    </script>
+</head>
+<body>
+    
+    <div id="header-container">
+        <header class="site-header">
+            <nav class="navbar">
+                <div class="nav-container">
+                    <div class="nav-brand">
+                        <a href="/" class="brand-link">
+                            <span class="brand-text">CCaWMU</span>
+                        </a>
+                    </div>
+                    <div class="nav-links">
+                        <a href="/">Home</a>
+                        <a href="/minutes/" class="active">Minutes</a>
+                        <a href="/join.html">Join</a>
+                        <a href="/chat.html">Chat</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+    </div>
+    
+    <main class="main-content">
+        
+<div class="minutes-container">
+    
+    <nav class="breadcrumb">
+        <a href="https://ccowmu.org">CCaWMU</a> / 
+        <a href="https://lochlanmcelroy.github.io/ccowmu.org//minutes/">Minutes</a> / 
+        Meeting Minutes - February 26, 2015
+    </nav>
+    
+    
+    <article class="minute-content">
+        <header class="minute-header">
+            <h1 class="minute-title">Meeting Minutes - February 26, 2015</h1>
+            <div class="minute-meta">
+                <time class="minute-date" datetime="2015-02-26">
+                    February 26, 2015
+                </time>
+                
+            </div>
+        </header>
+        
+        
+        <div class="minute-body">
+            <p>##February 26th, 2015 Minutes</p>
+<ul>
+<li>By Renix!</li>
+</ul>
+<h2 id="meeting-begin-600pm">Meeting begin 6:00pm</h2>
+<hr>
+<p>###Head Count:</p>
+<ul>
+<li>38</li>
+<li>Special guest: Scaster</li>
+</ul>
+<p>###Jobs:
+*Mailchimp (zachzor)
+*Apple SRE (hush)
+*Get your resumes in!</p>
+<p>###Cclub Sign Coming:</p>
+<ul>
+<li>Voted on this a couple weeks ago</li>
+<li>Sign reads: &ldquo;line1: Computer Club line2: Hackerspace and RSO office&rdquo;</li>
+<li>between 80 and 150 dollars</li>
+<li>This will hang outside the room from the ceiling</li>
+</ul>
+<p>###Elections for a new president/cabinet:</p>
+<ul>
+<li>Need to think who will be president once flay is gone</li>
+<li>We will decide on an election date at next weeks meeting</li>
+<li>We will be voting for all positions!</li>
+<li>Executive board can create new positions as needed for the club</li>
+<li>You may be able to earn credits in the future for being an officer.</li>
+<li>1 Credit per semester, w/ 2-3 positions recieving reward for service.</li>
+<li>We&rsquo;re working on a voting functions for IRC to ease and anonymize voting process.</li>
+</ul>
+<p>###Constitution is now on wiki!:</p>
+<ul>
+<li>This will be up for everyone to see.</li>
+<li>Its also on GO-RSO</li>
+</ul>
+<p>###CTF:</p>
+<ul>
+<li>Boston Key Party</li>
+<li>Starts tomorrow at 5pm and goes until 12pm on sunday</li>
+<li>Rating weight of 60; Hard ctf with unique problems, even by ctf standards.</li>
+<li>2014 archives posted in #ctf</li>
+<li>We will probably get pizza!</li>
+<li>We will be doing this as a team, anyone is welcome with any level of experience</li>
+<li>8 or 9 people raised there hand and said they would be there on friday</li>
+</ul>
+<p>###Purchases:</p>
+<ul>
+<li>Last summer we voted on allocating 250 dollars towards a laser color printer. Still shopping around</li>
+<li>Radio Shack is going out of business so flay is trying to get their business printer sometime right as they liquidate. Its an OKI-C7111. Its a laser-color and we plan on using it for both PCB etching and prints.</li>
+<li>Radio shack is also selling &ldquo;Little Bits&rdquo;. These are modular electronic sets. These kits are normally 200 dollars, but they are 40 percent off right now.</li>
+<li>Flay argued that purchase would give us something to entice new members interested in electronics, demos for schools (such as the #msr program we&rsquo;re currently working on) and demos for adults at events such as the TEDx booth we&rsquo;re going to be operating.</li>
+<li>We voted tonight that we will allocate 300 dollars to buying things at radio shack, though we&rsquo;re going to wait until they get closer to liquidation to take advantage of sales</li>
+<li>Flay has a lock Impressioning Kit. Talk to follow</li>
+</ul>
+<p>###PLAN Updates:</p>
+<ul>
+<li>If you are looking to help come to the PLAN meetings sunday at 1pm</li>
+<li>If you cant attend meetings but still want to help out, pm hardison or join #plan</li>
+</ul>
+<p>###Next Week&rsquo;s Talk:</p>
+<ul>
+<li>Working in agile / scrum environment</li>
+<li>Flay is going to try and find someone to give this talk either in person or remotely, if you are interested let him know!</li>
+<li>One of the things that comes up a lot when you are looking at CS job applications are questions related to agile programming environments</li>
+<li>Knowing a little about workflow methodologies; a great thing to add to your resume</li>
+</ul>
+<p>###3dPrinter:</p>
+<ul>
+<li>Monofuel made a page on the wiki on basics of how to use this!</li>
+</ul>
+<p>###Hackathon:</p>
+<ul>
+<li>Postponed until next friday because of the CTF occuring tomorrow</li>
+<li>Botler basic functions are finished! Awesome!</li>
+<li>New hackathon project branch revealed next week: concurrent with botler</li>
+<li>Adding even more new functions to botler</li>
+</ul>
+<p>###Flickr Account:</p>
+<ul>
+<li><a href="mailto:him15farm@photos.flickr.com">him15farm@photos.flickr.com</a></li>
+<li>Email any pictures you would like added to the cclub flickr account to this email address</li>
+<li>Send all your old PLAN pictures here, or anything you&rsquo;ve got!</li>
+</ul>
+<p>###Middle School Robotic Event:</p>
+<ul>
+<li>If you are intereted you need to fill out some paperwork before hand to be involved</li>
+<li><a href="mailto:emilydemorest@gmail.com">emilydemorest@gmail.com</a> if you are interested. She will send you everything you need!</li>
+<li>This event involves the club getting a small group of middleschoolers involved in lego robotics</li>
+<li>This will get the club and you individually a lot of press!</li>
+<li>We are looking at starting this in mid March or early April</li>
+</ul>
+<p>###Functions to be added to botler:</p>
+<ul>
+<li>Probable usage !job add title url expiration</li>
+<li>This is added so when you hear about jobs you can add them so everyone in the club can check it out and apply. Hopefully an easier way for members to share job info</li>
+<li>!skills function, to help newbies connect with knowledgeable users</li>
+<li>Probable usage !skills add python, regex, courage, hadoop</li>
+<li>!skills butters (lists skills)</li>
+<li>!skills search python (yields all users w/ skill)</li>
+</ul>
+<p>###Bounty Bucks(repeated):</p>
+<ul>
+<li>Can earn this currency based on what you work on in cclub, for example items of the bounty board</li>
+<li>You can use these funds to go towards things you would like to see the club buying, to lower the cost or by them outright</li>
+<li>This currency will not be used on any concessions</li>
+<li>These can only be used on things that are for the club (such as equipment</li>
+<li>Everyone has a wallet who wants to participate. Club will be the only person who mines the coins. All are di</li>
+<li>No one will mine their own currency, it will be distributed be cclub officers after bounties are agreed on.</li>
+<li>Generate 1000 coins every second, we might run it for an hour or so, and be set.</li>
+<li>Whoever finishes the task first gets the bounty reward.</li>
+<li>Call them &ldquo;Rancor Peso&rsquo;s?&rdquo;</li>
+</ul>
+<p>###DRC donated
+USB Oscilloscope</p>
+<p>###Meeting ends at 6:43pm</p>
+<p>###Stringy begins talk on botler</p>
+<ul>
+<li>Botler is modular</li>
+<li>Core program requires no modification to create new functions (!command)</li>
+<li>If commands fail, botler will except them without crashing the program</li>
+<li>Written in python3 and connected to a postgresql database.</li>
+<li>Everyone is encouraged to show up to a hackathon and contribute</li>
+</ul>
+<hr>
+
+        </div>
+        
+        
+        <nav class="minute-navigation">
+            
+            <a href="https://lochlanmcelroy.github.io/ccowmu.org/minutes/20150222/" class="nav-prev">
+                ← Meeting Minutes - February 22, 2015
+            </a>
+            
+            
+            <a href="https://lochlanmcelroy.github.io/ccowmu.org//minutes/" class="nav-back">
+                Back to All Minutes
+            </a>
+            
+            
+            <a href="https://lochlanmcelroy.github.io/ccowmu.org/minutes/20150301/" class="nav-next">
+                Meeting Minutes - March 1, 2015 →
+            </a>
+            
+        </nav>
+    </article>
+</div>
+
+<style>
+.minute-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.minute-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.minute-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.minute-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.minute-date {
+    font-size: 1.1rem;
+    color: var(--accent-primary);
+    font-weight: 500;
+}
+
+.attendees {
+    font-size: 0.9rem;
+}
+
+.minute-body {
+    line-height: 1.8;
+    margin-bottom: 3rem;
+}
+
+.minute-body h1,
+.minute-body h2,
+.minute-body h3,
+.minute-body h4,
+.minute-body h5,
+.minute-body h6 {
+    color: var(--text-primary);
+    margin: 2rem 0 1rem 0;
+    font-weight: 600;
+}
+
+.minute-body h1 { font-size: 2rem; }
+.minute-body h2 { font-size: 1.5rem; }
+.minute-body h3 { font-size: 1.3rem; }
+.minute-body h4 { font-size: 1.1rem; }
+
+.minute-body p {
+    margin-bottom: 1rem;
+}
+
+.minute-body ul,
+.minute-body ol {
+    margin: 1rem 0;
+    padding-left: 2rem;
+}
+
+.minute-body li {
+    margin-bottom: 0.5rem;
+}
+
+.minute-body blockquote {
+    margin: 1.5rem 0;
+    padding: 1rem 1.5rem;
+    border-left: 4px solid var(--accent-primary);
+    background: var(--bg-secondary);
+    border-radius: 0 8px 8px 0;
+}
+
+.minute-body code {
+    background: var(--bg-tertiary);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+}
+
+.minute-body pre {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+.minute-body pre code {
+    background: none;
+    padding: 0;
+}
+
+.minute-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+}
+
+.minute-body th,
+.minute-body td {
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    text-align: left;
+}
+
+.minute-body th {
+    background: var(--bg-secondary);
+    font-weight: 600;
+}
+
+.minute-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 0;
+    border-top: 1px solid var(--border-color);
+    gap: 1rem;
+}
+
+.nav-prev,
+.nav-next,
+.nav-back {
+    padding: 0.75rem 1.5rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    font-weight: 500;
+}
+
+.nav-prev:hover,
+.nav-next:hover,
+.nav-back:hover {
+    border-color: var(--accent-primary);
+    background: var(--accent-primary);
+    color: white;
+}
+
+.nav-back {
+    background: var(--accent-primary);
+    color: white;
+    border-color: var(--accent-primary);
+}
+
+.nav-back:hover {
+    background: var(--accent-secondary);
+}
+
+ 
+@media (max-width: 768px) {
+    .minute-title {
+        font-size: 2rem;
+    }
+    
+    .minute-navigation {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .nav-prev,
+    .nav-next,
+    .nav-back {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .minute-body {
+        font-size: 1rem;
+    }
+    
+    .minute-body table {
+        font-size: 0.9rem;
+    }
+    
+    .minute-body pre {
+        font-size: 0.8rem;
+    }
+}
+
+ 
+@media print {
+    .breadcrumb,
+    .minute-navigation {
+        display: none;
+    }
+    
+    .minute-content {
+        max-width: none;
+    }
+    
+    .minute-body {
+        color: #000;
+    }
+}
+</style>
+
+    </main>
+    
+    
+    <div id="footer-container">
+        <footer class="site-footer">
+            <div class="container">
+                <div class="footer-content">
+                    <p>&copy; 2025 Computer Club @ WMU - Meeting Minutes Archive</p>
+                    <div class="footer-links">
+                        <a href="/">Home</a>
+                        <a href="/join.html">Join</a>
+                        <a href="/chat.html">Chat</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    
+    <script>
+        
+        fetch('\/ccowmu.org\/includes\/header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-container').innerHTML = html;
+                
+                if (typeof initializeHeader === 'function') {
+                    initializeHeader();
+                }
+            })
+            .catch(error => {
+                console.log('Header not found, using fallback');
+                document.getElementById('header-container').innerHTML = `
+                    <header class="site-header">
+                        <div class="container">
+                            <nav class="navbar">
+                                <a href="/" class="logo">CCaWMU</a>
+                                <div class="nav-links">
+                                    <a href="/">Home</a>
+                                    <a href="/minutes/" class="active">Minutes</a>
+                                    <a href="/join.html">Join</a>
+                                    <a href="/chat.html">Chat</a>
+                                </div>
+                            </nav>
+                        </div>
+                    </header>
+                `;
+            });
+        
+        
+        fetch('\/ccowmu.org\/includes\/footer.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('footer-container').innerHTML = html;
+            })
+            .catch(error => {
+                console.log('Footer not found, using fallback');
+                document.getElementById('footer-container').innerHTML = `
+                    <footer class="site-footer">
+                        <div class="container">
+                            <p>&copy; 2025 Computer Club @ WMU</p>
+                        </div>
+                    </footer>
+                `;
+            });
+    </script>
+    
+    
+    <script src="/ccowmu.org/js/main.js"></script>
+    
+    
+</body>
+</html>
