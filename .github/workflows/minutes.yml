@@ -2,8 +2,8 @@ name: Build Minutes Site
 
 on:
   schedule:
-    # Run daily at 2 AM UTC to check for new minutes
-    - cron: '0 2 * * *'
+    # Run daily at 6 AM UTC to check for new minutes
+    - cron: '0 6 * * *'
   workflow_dispatch:
     # Allow manual trigger
 
@@ -13,63 +13,64 @@ jobs:
     
     steps:
     - name: Checkout main repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         
     - name: Checkout minutes repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: ccowmu/minutes
         path: minutes-repo
         
     - name: Setup Hugo
-      uses: peaceiris/actions-hugo@v2
+      uses: peaceiris/actions-hugo@v3
       with:
         hugo-version: 'latest'
         extended: true
         
     - name: Setup Hugo site structure
       run: |
-        # Create Hugo site if it doesn't exist
-        if [ ! -f "hugo-minutes/config.yaml" ]; then
-          hugo new site hugo-minutes
-          cd hugo-minutes
-          
-          # Create basic config
-          cat > config.yaml << 'EOF'
-        baseURL: '/minutes'
-        languageCode: 'en-us'
-        title: 'CCaWMU Meeting Minutes'
-        theme: 'minutes-theme'
+        # Hugo site already exists, just ensure config is updated
+        cd hugo-minutes
         
-        paginate: 20
-        paginatePath: 'page'
-        
-        params:
-          clubName: 'Computer Club at WMU'
-          description: 'Meeting minutes archive for CCaWMU'
-        
-        markup:
-          goldmark:
-            renderer:
-              unsafe: true
+        # Only create hugo.toml if it doesn't exist or needs updating
+        if [ ! -f "hugo.toml" ]; then
+          cat > hugo.toml << 'EOF'
+        baseURL = '/minutes'
+        languageCode = 'en-us'
+        title = 'CCaWMU Meeting Minutes'
+        theme = 'minutes-theme'
+
+        [pagination]
+        pagerSize = 20
+
+        [markup]
+        [markup.goldmark]
+        [markup.goldmark.renderer]
+        unsafe = true
+
+        [params]
+        clubName = 'Computer Club at WMU'
+        description = 'Meeting minutes archive for CCaWMU'
         EOF
-          
-          # Create theme directory structure
+        fi
+        
+        # Ensure theme directory exists
+        if [ ! -d "themes/minutes-theme" ]; then
           mkdir -p themes/minutes-theme/layouts/_default
           mkdir -p themes/minutes-theme/layouts/partials
           mkdir -p themes/minutes-theme/static/css
-          
-          cd ..
         fi
         
     - name: Create Hugo templates
       run: |
         cd hugo-minutes
         
-        # Create base template
-        cat > themes/minutes-theme/layouts/_default/baseof.html << 'EOF'
+        # Only create templates if they don't exist to avoid overwriting customizations
+        if [ ! -f "themes/minutes-theme/layouts/_default/baseof.html" ]; then
+          # Create base template
+          cat > themes/minutes-theme/layouts/_default/baseof.html << 'EOF'
         <!DOCTYPE html>
         <html lang="{{ .Site.LanguageCode }}">
         <head>
@@ -99,9 +100,11 @@ jobs:
         </body>
         </html>
         EOF
+        fi
         
-        # Create list template (for minutes index)
-        cat > themes/minutes-theme/layouts/_default/list.html << 'EOF'
+        # Create list template (for minutes index) if it doesn't exist
+        if [ ! -f "themes/minutes-theme/layouts/_default/list.html" ]; then
+          cat > themes/minutes-theme/layouts/_default/list.html << 'EOF'
         {{ define "title" }}Meeting Minutes - {{ .Site.Title }}{{ end }}
         
         {{ define "main" }}
@@ -231,9 +234,11 @@ jobs:
         </script>
         {{ end }}
         EOF
+        fi
         
-        # Create single template (for individual minutes)
-        cat > themes/minutes-theme/layouts/_default/single.html << 'EOF'
+        # Create single template (for individual minutes) if it doesn't exist
+        if [ ! -f "themes/minutes-theme/layouts/_default/single.html" ]; then
+          cat > themes/minutes-theme/layouts/_default/single.html << 'EOF'
         {{ define "title" }}{{ .Title }} - {{ .Site.Title }}{{ end }}
         
         {{ define "main" }}
@@ -254,9 +259,11 @@ jobs:
         </div>
         {{ end }}
         EOF
+        fi
         
-        # Create CSS
-        cat > themes/minutes-theme/static/css/style.css << 'EOF'
+        # Create CSS if it doesn't exist
+        if [ ! -f "themes/minutes-theme/static/css/style.css" ]; then
+          cat > themes/minutes-theme/static/css/style.css << 'EOF'
         * {
             margin: 0;
             padding: 0;
@@ -546,6 +553,7 @@ jobs:
             }
         }
         EOF
+        fi
         
     - name: Convert and copy minutes
       run: |
@@ -553,8 +561,27 @@ jobs:
         
         # Clear existing content
         rm -rf content/*
+        mkdir -p content
+        
+        # Check if minutes repo was successfully checked out
+        if [ ! -d "../minutes-repo/minutes" ]; then
+          echo "Minutes repository not found, creating placeholder content"
+          cat > "content/placeholder.md" << EOF
+        ---
+        title: "No Minutes Available"
+        date: $(date -I)T18:00:00-05:00
+        draft: false
+        ---
+        
+        # No meeting minutes available
+        
+        Minutes will be available when the minutes repository is accessible.
+        EOF
+          exit 0
+        fi
         
         # Process each markdown file from the minutes repo
+        processed_count=0
         for file in ../minutes-repo/minutes/*.md; do
           if [ -f "$file" ]; then
             filename=$(basename "$file" .md)
@@ -565,8 +592,10 @@ jobs:
               month=${BASH_REMATCH[2]}
               day=${BASH_REMATCH[3]}
               
-              # Create content file with frontmatter
-              cat > "content/${filename}.md" << EOF
+              # Validate date components
+              if [ "$year" -ge 1996 ] && [ "$year" -le 2030 ] && [ "$month" -ge 1 ] && [ "$month" -le 12 ] && [ "$day" -ge 1 ] && [ "$day" -le 31 ]; then
+                # Create content file with frontmatter
+                cat > "content/${filename}.md" << EOF
         ---
         title: "Meeting Minutes - ${month}/${day}/${year}"
         date: ${year}-${month}-${day}T18:00:00-05:00
@@ -574,59 +603,82 @@ jobs:
         ---
         
         EOF
-              # Append the original content
-              cat "$file" >> "content/${filename}.md"
+                # Append the original content
+                cat "$file" >> "content/${filename}.md"
+                processed_count=$((processed_count + 1))
+              else
+                echo "Warning: Invalid date in filename $filename, skipping"
+              fi
+            else
+              echo "Warning: Filename $filename doesn't match expected YYYYMMDD format, skipping"
             fi
           fi
         done
         
+        echo "Processed $processed_count minute files"
+        
     - name: Build Hugo site
       run: |
         cd hugo-minutes
-        hugo --minify
+        
+        # Clean any previous build artifacts
+        rm -rf public/*
+        
+        echo "Building Hugo site..."
+        hugo --minify --verbose
+        
+        # Check if build was successful
+        if [ ! -d "public" ] || [ ! -f "public/index.html" ]; then
+          echo "Hugo build failed - public directory or index.html not found"
+          exit 1
+        fi
+        
+        echo "Hugo build completed successfully"
         
     - name: Deploy to minutes folder
       run: |
-        # Remove existing minutes folder and replace with new build
-        rm -rf minutes
+        # Backup existing minutes folder if it exists
+        if [ -d "minutes" ]; then
+          echo "Backing up existing minutes folder"
+          mv minutes minutes-backup-$(date +%s)
+        fi
+        
+        # Deploy new build
+        echo "Deploying new minutes site"
         mv hugo-minutes/public minutes
         
-        # Create a simple redirect index file for the minutes folder
-        cat > minutes/index.html << 'EOF'
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <meta charset="UTF-8">
-            <title>CCaWMU Meeting Minutes</title>
-            <style>
-                body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; text-align: center; padding: 2rem; }
-                .container { max-width: 600px; margin: 0 auto; }
-                h1 { color: #2c3e50; }
-                .button { display: inline-block; padding: 1rem 2rem; background: #3498db; color: white; text-decoration: none; border-radius: 8px; margin: 1rem; }
-                .button:hover { background: #2980b9; }
-            </style>
-        </head>
-        <body>
-            <div class="container">
-                <h1>CCaWMU Meeting Minutes</h1>
-                <p>Access our meeting minutes archive</p>
-                <a href="index.html" class="button">View All Minutes</a>
-                <a href="../index.html" class="button">Back to Main Site</a>
-            </div>
-        </body>
-        </html>
-        EOF
+        # Verify deployment
+        if [ ! -f "minutes/index.html" ]; then
+          echo "Deployment failed - index.html not found in minutes folder"
+          if [ -d "minutes-backup-"* ]; then
+            echo "Restoring backup"
+            mv minutes-backup-* minutes
+          fi
+          exit 1
+        fi
+        
+        echo "Minutes site deployed successfully"
         
     - name: Commit changes
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add minutes/
-        git add hugo-minutes/
         
+        # Add the minutes folder and hugo-minutes source (but not public/)
+        git add minutes/
+        git add hugo-minutes/hugo.toml
+        git add hugo-minutes/content/
+        git add .gitignore
+        
+        # Check if there are any changes to commit
         if git diff --staged --quiet; then
-          echo "No changes to commit"
+          echo "No changes detected in minutes site"
         else
-          git commit -m "Update minutes site [skip ci]"
+          echo "Changes detected, committing updates"
+          # Get count of minutes for commit message
+          minute_count=$(find minutes -name "*.html" -path "*/20*" | wc -l || echo "unknown")
+          
+          git commit -m "Update minutes site - $minute_count meeting records [skip ci]"
           git push
+          echo "Changes committed and pushed successfully"
         fi
