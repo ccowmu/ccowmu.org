@@ -37,7 +37,7 @@ jobs:
         # Only create hugo.toml if it doesn't exist or needs updating
         if [ ! -f "hugo.toml" ]; then
           cat > hugo.toml << 'EOF'
-        baseURL = '/minutes'
+        baseURL = '/'
         relativeURLs = true
         canonifyURLs = false
         languageCode = 'en-us'
@@ -147,18 +147,52 @@ jobs:
                 </div>
             </header>
             
-            <div class="search-controls" style="max-width: 800px; margin: 0 auto 3rem; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
-                <div class="search-box" style="flex: 1; min-width: 300px;">
-                    <input type="text" id="search" placeholder="Search minutes by date or content..." 
-                           style="width: 100%; padding: 1rem; border: 1px solid var(--border-color); border-radius: 8px; 
-                                  background: var(--bg-secondary); color: var(--text-primary); font-size: 1rem;" />
+            <div class="search-controls" style="max-width: 900px; margin: 0 auto 3rem;">
+                <div class="search-container" style="position: relative; margin-bottom: 1.5rem;">
+                    <div class="search-input-wrapper" style="position: relative; display: flex; align-items: center;">
+                        <div class="search-icon" style="position: absolute; left: 1rem; z-index: 1; color: var(--text-muted);">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                            </svg>
+                        </div>
+                        <input type="text" id="search" placeholder="Search all meeting minutes..." 
+                               style="width: 100%; padding: 1rem 3rem 1rem 3rem; border: 2px solid var(--border-color); border-radius: 12px; 
+                                      background: var(--bg-secondary); color: var(--text-primary); font-size: 1.1rem; 
+                                      transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"
+                               onfocus="this.style.borderColor='var(--accent-primary)'; this.style.boxShadow='0 4px 16px rgba(74, 158, 255, 0.2)'"
+                               onblur="this.style.borderColor='var(--border-color)'; this.style.boxShadow='0 2px 8px rgba(0,0,0,0.1)'" />
+                        <div class="search-loader" id="search-loader" style="position: absolute; right: 1rem; display: none;">
+                            <div style="width: 20px; height: 20px; border: 2px solid var(--border-color); border-top: 2px solid var(--accent-primary); border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Search Results Dropdown -->
+                    <div id="search-results" class="search-results" style="position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-secondary); 
+                         border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); 
+                         max-height: 400px; overflow-y: auto; z-index: 1000; display: none; margin-top: 0.5rem;">
+                    </div>
                 </div>
-                <div class="year-filter" style="min-width: 200px;">
-                    <select id="year-filter" 
-                            style="width: 100%; padding: 1rem; border: 1px solid var(--border-color); border-radius: 8px; 
-                                   background: var(--bg-secondary); color: var(--text-primary); font-size: 1rem;">
-                        <option value="">All years</option>
-                    </select>
+                
+                <div class="filter-controls" style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; align-items: center;">
+                    <div class="year-filter-wrapper" style="position: relative;">
+                        <select id="year-filter" 
+                                style="padding: 0.75rem 1rem; border: 1px solid var(--border-color); border-radius: 8px; 
+                                       background: var(--bg-secondary); color: var(--text-primary); font-size: 1rem; 
+                                       cursor: pointer; transition: all 0.3s ease;"
+                                onfocus="this.style.borderColor='var(--accent-primary)'"
+                                onblur="this.style.borderColor='var(--border-color)'">
+                            <option value="">All years</option>
+                        </select>
+                    </div>
+                    
+                    <div class="view-toggle" style="display: flex; background: var(--bg-primary); border-radius: 8px; padding: 0.25rem; border: 1px solid var(--border-color);">
+                        <button id="grid-view" class="view-btn active" style="padding: 0.5rem 1rem; border: none; background: var(--accent-primary); color: white; border-radius: 6px; cursor: pointer; transition: all 0.3s ease;">Grid</button>
+                        <button id="list-view" class="view-btn" style="padding: 0.5rem 1rem; border: none; background: transparent; color: var(--text-secondary); border-radius: 6px; cursor: pointer; transition: all 0.3s ease;">List</button>
+                    </div>
+                    
+                    <div class="search-stats" id="search-stats" style="color: var(--text-muted); font-size: 0.9rem; padding: 0.5rem;">
+                        <!-- Stats will be populated by JavaScript -->
+                    </div>
                 </div>
             </div>
             
@@ -236,61 +270,365 @@ jobs:
             {{ end }}
         </div>
         
-        <!-- JavaScript for search and filtering -->
+        <!-- JavaScript for enhanced search and filtering -->
         <script>
-        // Build search index from all pages
+        // Global search index for all minutes
+        let searchIndex = [];
         let allYears = new Set();
+        let currentView = 'grid';
+        let searchTimeout;
         
-        // Initialize year filter
+        // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.minute-card');
-            cards.forEach(card => {
-                allYears.add(card.dataset.year);
-            });
+            buildSearchIndex();
+            initializeFilters();
+            initializeViewToggle();
+            updateSearchStats();
             
+            // Add CSS animations
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+                
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(-10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+                
+                .search-result-item {
+                    animation: fadeIn 0.3s ease;
+                }
+                
+                .minute-card {
+                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                }
+                
+                .minute-card.hidden {
+                    display: none !important;
+                }
+                
+                .minute-card.list-view {
+                    grid-column: 1 / -1;
+                    display: flex;
+                    align-items: center;
+                    padding: 1.5rem 2rem;
+                    margin-bottom: 1rem;
+                }
+                
+                .minute-card.list-view .minute-header {
+                    flex: 1;
+                    margin-bottom: 0;
+                }
+                
+                .minute-card.list-view .minute-summary {
+                    display: none;
+                }
+                
+                .highlight {
+                    background: var(--accent-primary);
+                    color: white;
+                    padding: 0.1rem 0.3rem;
+                    border-radius: 3px;
+                    font-weight: bold;
+                }
+            `;
+            document.head.appendChild(style);
+        });
+        
+        // Build comprehensive search index from all minutes
+        async function buildSearchIndex() {
+            const cards = document.querySelectorAll('.minute-card');
+            searchIndex = [];
+            
+            for (const card of cards) {
+                const title = card.dataset.title;
+                const date = card.dataset.date;
+                const year = card.dataset.year;
+                const url = card.querySelector('a').href;
+                const summary = card.querySelector('.minute-summary')?.textContent || '';
+                
+                allYears.add(year);
+                
+                // Try to fetch full content for better search
+                let fullContent = summary;
+                try {
+                    // This would require CORS support, so we'll stick with summary for now
+                    // In a real implementation, we'd build this index during site generation
+                    fullContent = card.textContent.toLowerCase();
+                } catch (e) {
+                    // Use summary as fallback
+                }
+                
+                searchIndex.push({
+                    title,
+                    date,
+                    year,
+                    url,
+                    summary,
+                    content: fullContent,
+                    element: card,
+                    searchText: (title + ' ' + summary + ' ' + date).toLowerCase()
+                });
+            }
+        }
+        
+        // Initialize year filter and other controls
+        function initializeFilters() {
             const yearFilter = document.getElementById('year-filter');
+            
+            // Populate year filter
             Array.from(allYears).sort((a, b) => b - a).forEach(year => {
                 const option = document.createElement('option');
                 option.value = year;
                 option.textContent = year;
                 yearFilter.appendChild(option);
             });
-        });
-        
-        // Year filter functionality
-        document.getElementById('year-filter').addEventListener('change', function(e) {
-            const selectedYear = e.target.value;
-            const cards = document.querySelectorAll('.minute-card');
             
-            cards.forEach(card => {
-                if (!selectedYear || card.dataset.year === selectedYear) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
+            // Year filter event listener
+            yearFilter.addEventListener('change', function(e) {
+                filterByYear(e.target.value);
+                updateSearchStats();
             });
-        });
+        }
         
-        // Search functionality
-        document.getElementById('search').addEventListener('input', function(e) {
-            const searchTerm = e.target.value.toLowerCase();
-            const cards = document.querySelectorAll('.minute-card');
+        // Initialize view toggle functionality
+        function initializeViewToggle() {
+            const gridBtn = document.getElementById('grid-view');
+            const listBtn = document.getElementById('list-view');
+            const minutesGrid = document.getElementById('minutes-list');
             
-            if (searchTerm.length < 2) {
-                cards.forEach(card => card.style.display = 'block');
+            gridBtn.addEventListener('click', () => switchView('grid'));
+            listBtn.addEventListener('click', () => switchView('list'));
+            
+            function switchView(view) {
+                currentView = view;
+                
+                // Update button states
+                [gridBtn, listBtn].forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.style.background = 'transparent';
+                    btn.style.color = 'var(--text-secondary)';
+                });
+                
+                const activeBtn = view === 'grid' ? gridBtn : listBtn;
+                activeBtn.classList.add('active');
+                activeBtn.style.background = 'var(--accent-primary)';
+                activeBtn.style.color = 'white';
+                
+                // Update grid layout
+                if (view === 'list') {
+                    minutesGrid.style.gridTemplateColumns = '1fr';
+                    minutesGrid.style.gap = '1rem';
+                    document.querySelectorAll('.minute-card').forEach(card => {
+                        card.classList.add('list-view');
+                    });
+                } else {
+                    minutesGrid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(400px, 1fr))';
+                    minutesGrid.style.gap = '2rem';
+                    document.querySelectorAll('.minute-card').forEach(card => {
+                        card.classList.remove('list-view');
+                    });
+                }
+            }
+        }
+        
+        // Enhanced search functionality
+        const searchInput = document.getElementById('search');
+        const searchResults = document.getElementById('search-results');
+        const searchLoader = document.getElementById('search-loader');
+        
+        searchInput.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.trim();
+            
+            // Clear previous timeout
+            clearTimeout(searchTimeout);
+            
+            if (searchTerm.length === 0) {
+                hideSearchResults();
+                showAllCards();
+                updateSearchStats();
                 return;
             }
             
-            cards.forEach(card => {
-                const title = card.dataset.title.toLowerCase();
-                const content = card.textContent.toLowerCase();
+            if (searchTerm.length < 2) {
+                return;
+            }
+            
+            // Show loader
+            searchLoader.style.display = 'block';
+            
+            // Debounce search
+            searchTimeout = setTimeout(() => {
+                performSearch(searchTerm);
+                searchLoader.style.display = 'none';
+            }, 300);
+        });
+        
+        // Perform the actual search
+        function performSearch(searchTerm) {
+            const results = searchIndex.filter(item => {
+                return item.searchText.includes(searchTerm.toLowerCase());
+            });
+            
+            // Sort results by relevance (title matches first, then date)
+            results.sort((a, b) => {
+                const aTitle = a.title.toLowerCase().includes(searchTerm.toLowerCase());
+                const bTitle = b.title.toLowerCase().includes(searchTerm.toLowerCase());
                 
-                if (title.includes(searchTerm) || content.includes(searchTerm)) {
+                if (aTitle && !bTitle) return -1;
+                if (!aTitle && bTitle) return 1;
+                
+                // Secondary sort by date (newest first)
+                return new Date(b.date) - new Date(a.date);
+            });
+            
+            // Show search results dropdown
+            displaySearchResults(results.slice(0, 8), searchTerm); // Limit to 8 results
+            
+            // Filter main grid
+            filterMainGrid(results);
+            updateSearchStats(results.length, searchTerm);
+        }
+        
+        // Display search results in dropdown
+        function displaySearchResults(results, searchTerm) {
+            if (results.length === 0) {
+                searchResults.innerHTML = `
+                    <div style="padding: 2rem; text-align: center; color: var(--text-muted);">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor" style="margin-bottom: 1rem; opacity: 0.5;">
+                            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                        </svg>
+                        <div>No minutes found for "${searchTerm}"</div>
+                        <div style="font-size: 0.9rem; margin-top: 0.5rem;">Try a different search term</div>
+                    </div>
+                `;
+            } else {
+                const resultsHTML = results.map(result => {
+                    const highlightedTitle = highlightSearchTerm(result.title, searchTerm);
+                    const highlightedSummary = highlightSearchTerm(result.summary, searchTerm);
+                    const truncatedSummary = highlightedSummary.length > 100 ? 
+                        highlightedSummary.substring(0, 100) + '...' : highlightedSummary;
+                    
+                    return `
+                        <div class="search-result-item" style="padding: 1rem; border-bottom: 1px solid var(--border-color); cursor: pointer; transition: background 0.2s ease;"
+                             onmouseover="this.style.background='var(--bg-primary)'"
+                             onmouseout="this.style.background='transparent'"
+                             onclick="window.location.href='${result.url}'">
+                            <div style="font-weight: 600; color: var(--accent-primary); margin-bottom: 0.5rem;">
+                                ${highlightedTitle}
+                            </div>
+                            <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+                                ${new Date(result.date).toLocaleDateString('en-US', { 
+                                    year: 'numeric', 
+                                    month: 'long', 
+                                    day: 'numeric' 
+                                })}
+                            </div>
+                            ${truncatedSummary ? `<div style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.4;">${truncatedSummary}</div>` : ''}
+                        </div>
+                    `;
+                }).join('');
+                
+                searchResults.innerHTML = resultsHTML + 
+                    (results.length < searchIndex.filter(item => item.searchText.includes(searchTerm.toLowerCase())).length ? 
+                        `<div style="padding: 1rem; text-align: center; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid var(--border-color);">
+                            Showing top ${results.length} results. Scroll down to see all matches.
+                         </div>` : '');
+            }
+            
+            searchResults.style.display = 'block';
+        }
+        
+        // Highlight search terms in text
+        function highlightSearchTerm(text, searchTerm) {
+            if (!text || !searchTerm) return text;
+            
+            const regex = new RegExp(`(${searchTerm})`, 'gi');
+            return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+        
+        // Filter main grid based on search results
+        function filterMainGrid(results) {
+            const resultUrls = new Set(results.map(r => r.url));
+            
+            document.querySelectorAll('.minute-card').forEach(card => {
+                const cardUrl = card.querySelector('a').href;
+                if (resultUrls.has(cardUrl)) {
                     card.style.display = 'block';
+                    card.classList.remove('hidden');
                 } else {
                     card.style.display = 'none';
+                    card.classList.add('hidden');
                 }
             });
+        }
+        
+        // Filter by year
+        function filterByYear(selectedYear) {
+            const searchTerm = searchInput.value.trim();
+            let cardsToShow = searchIndex;
+            
+            // Apply year filter
+            if (selectedYear) {
+                cardsToShow = cardsToShow.filter(item => item.year === selectedYear);
+            }
+            
+            // Apply search filter if exists
+            if (searchTerm.length >= 2) {
+                cardsToShow = cardsToShow.filter(item => 
+                    item.searchText.includes(searchTerm.toLowerCase())
+                );
+            }
+            
+            // Update display
+            filterMainGrid(cardsToShow);
+            
+            if (searchTerm.length >= 2) {
+                displaySearchResults(cardsToShow.slice(0, 8), searchTerm);
+            }
+        }
+        
+        // Show all cards
+        function showAllCards() {
+            document.querySelectorAll('.minute-card').forEach(card => {
+                card.style.display = 'block';
+                card.classList.remove('hidden');
+            });
+        }
+        
+        // Hide search results dropdown
+        function hideSearchResults() {
+            searchResults.style.display = 'none';
+        }
+        
+        // Update search statistics
+        function updateSearchStats(resultCount = null, searchTerm = '') {
+            const statsElement = document.getElementById('search-stats');
+            const visibleCards = document.querySelectorAll('.minute-card:not(.hidden)').length;
+            const totalCards = document.querySelectorAll('.minute-card').length;
+            
+            if (resultCount !== null && searchTerm) {
+                statsElement.textContent = `Found ${resultCount} result${resultCount !== 1 ? 's' : ''} for "${searchTerm}"`;
+            } else {
+                statsElement.textContent = `Showing ${visibleCards} of ${totalCards} meetings`;
+            }
+        }
+        
+        // Hide search results when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                hideSearchResults();
+            }
+        });
+        
+        // Keyboard navigation for search results
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                hideSearchResults();
+            }
         });
         </script>
         {{ end }}
@@ -311,7 +649,7 @@ jobs:
                         <time datetime="{{ .Date.Format "2006-01-02" }}" style="font-size: 1.1rem;">
                             {{ .Date.Format "January 2, 2006" }}
                         </time>
-                        <a href="{{ .Site.BaseURL }}" class="back-link" 
+                        <a href="{{ "/" | relURL }}" class="back-link" 
                            style="color: var(--accent-primary); text-decoration: none; font-weight: 600; 
                                   display: inline-flex; align-items: center; gap: 0.5rem;">
                             ← Back to All Minutes
