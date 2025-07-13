@@ -36,6 +36,8 @@ jobs:
           title = "CCaWMU Meeting Minutes"
           theme = "minutes-theme"
           paginate = 20
+          contentDir = "content"
+          publishDir = "../minutes"
           [markup]
             [markup.goldmark]
               [markup.goldmark.renderer]
@@ -88,7 +90,9 @@ jobs:
 
       - name: Build site
         run: |
-          hugo -s hugo-minutes -d ../minutes --minify
+          rm -rf minutes
+          cd hugo-minutes
+          hugo --minify
 
       - name: Commit minutes
         run: |
