@@ -14,3 +14,5 @@ markup:
   goldmark:
     renderer:
       unsafe: true
+
+ignoreLogs: ['warning-goldmark-raw-html']

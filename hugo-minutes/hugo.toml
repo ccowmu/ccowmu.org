@@ -1,3 +1,16 @@
-baseURL = 'https://example.org/'
+baseURL = '/minutes'
 languageCode = 'en-us'
-title = 'My New Hugo Site'
+title = 'CCaWMU Meeting Minutes'
+theme = 'minutes-theme'
+
+[pagination]
+  pagerSize = 20
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[params]
+  description = "Meeting minutes archive for the CCaWMU organization"
+  clubName = "CCaWMU"

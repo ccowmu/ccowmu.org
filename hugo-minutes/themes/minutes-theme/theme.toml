@@ -1,0 +1,12 @@
+name = "minutes-theme"
+license = "MIT"
+licenselink = "https://github.com/yourname/yourtheme/blob/master/LICENSE"
+description = "A simple theme for meeting minutes"
+homepage = "https://ccawmu.org"
+tags = ["minutes", "club", "meetings"]
+features = ["responsive", "search", "pagination"]
+min_version = "0.41.0"
+
+[author]
+  name = "CCaWMU"
+  homepage = "https://ccawmu.org"

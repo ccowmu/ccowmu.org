@@ -1,0 +1,131 @@
+{{ define "title" }}Meeting Minutes - {{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+<div class="container">
+    <header class="page-header">
+        <h1>Meeting Minutes</h1>
+        <p class="page-description">{{ .Site.Params.description }}</p>
+        <div class="stats">
+            <span class="total-count">{{ len .Site.RegularPages }} total meetings</span>
+            {{ if .Paginator }}
+            <span class="current-page">Page {{ .Paginator.PageNumber }} of {{ .Paginator.TotalPages }}</span>
+            {{ end }}
+        </div>
+    </header>
+    
+    <div class="search-box">
+        <input type="text" id="search" placeholder="Search minutes by date or content..." />
+        <div class="search-results" id="search-results" style="display: none;"></div>
+    </div>
+    
+    <div class="year-filter">
+        <label>Filter by year:</label>
+        <select id="year-filter">
+            <option value="">All years</option>
+            <!-- Years will be populated by JavaScript -->
+        </select>
+    </div>
+    
+    <div class="minutes-grid" id="minutes-list">
+        {{ $paginator := .Paginate .Site.RegularPages.ByDate.Reverse 20 }}
+        {{ range $paginator.Pages }}
+        <article class="minute-card" data-title="{{ .Title }}" data-date="{{ .Date.Format "2006-01-02" }}" data-year="{{ .Date.Year }}">
+            <header class="minute-header">
+                <h2><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
+                <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+            </header>
+            {{ if .Summary }}
+            <div class="minute-summary">
+                {{ .Summary | truncate 150 }}
+            </div>
+            {{ end }}
+            <footer class="minute-footer">
+                <a href="{{ .Permalink }}" class="read-more">Read Minutes →</a>
+            </footer>
+        </article>
+        {{ end }}
+    </div>
+    
+    <!-- Pagination -->
+    {{ if gt $paginator.TotalPages 1 }}
+    <nav class="pagination">
+        {{ if $paginator.HasPrev }}
+        <a href="{{ $paginator.Prev.URL }}" class="pagination-link prev">← Previous</a>
+        {{ end }}
+        
+        <div class="pagination-numbers">
+            {{ range $paginator.Pagers }}
+            {{ if eq . $paginator }}
+            <span class="pagination-current">{{ .PageNumber }}</span>
+            {{ else }}
+            <a href="{{ .URL }}" class="pagination-link">{{ .PageNumber }}</a>
+            {{ end }}
+            {{ end }}
+        </div>
+        
+        {{ if $paginator.HasNext }}
+        <a href="{{ $paginator.Next.URL }}" class="pagination-link next">Next →</a>
+        {{ end }}
+    </nav>
+    {{ end }}
+</div>
+
+<!-- JavaScript for search and filtering -->
+<script>
+// Build search index from all pages (lazy loaded)
+let searchIndex = [];
+let allYears = new Set();
+
+// Initialize year filter
+document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('.minute-card');
+    cards.forEach(card => {
+        allYears.add(card.dataset.year);
+    });
+    
+    const yearFilter = document.getElementById('year-filter');
+    Array.from(allYears).sort((a, b) => b - a).forEach(year => {
+        const option = document.createElement('option');
+        option.value = year;
+        option.textContent = year;
+        yearFilter.appendChild(option);
+    });
+});
+
+// Year filter functionality
+document.getElementById('year-filter').addEventListener('change', function(e) {
+    const selectedYear = e.target.value;
+    const cards = document.querySelectorAll('.minute-card');
+    
+    cards.forEach(card => {
+        if (!selectedYear || card.dataset.year === selectedYear) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+});
+
+// Search functionality (client-side for current page)
+document.getElementById('search').addEventListener('input', function(e) {
+    const searchTerm = e.target.value.toLowerCase();
+    const cards = document.querySelectorAll('.minute-card');
+    
+    if (searchTerm.length < 2) {
+        cards.forEach(card => card.style.display = 'block');
+        return;
+    }
+    
+    cards.forEach(card => {
+        const title = card.dataset.title.toLowerCase();
+        const content = card.textContent.toLowerCase();
+        
+        if (title.includes(searchTerm) || content.includes(searchTerm)) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+});
+</script>
+{{ end }}

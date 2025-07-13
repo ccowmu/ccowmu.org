@@ -9,7 +9,7 @@
 <body>
     <header class="site-header">
         <div class="container">
-            <h1><a href="{{ .Site.BaseURL }}">{{ .Site.Params.clubName }}</a></h1>
+            <h1><a href="{{ .Site.BaseURL }}">{{ .Site.Params.clubName | default .Site.Title }}</a></h1>
             <nav>
                 <a href="{{ .Site.BaseURL }}">All Minutes</a>
                 <a href="https://ccawmu.org">Main Site</a>
