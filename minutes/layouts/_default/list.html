@@ -1,0 +1,24 @@
+{{ partial "header.html" . }}
+<main class="container">
+    <h1>Meeting Minutes</h1>
+    <input id="search" type="text" placeholder="Search minutes">
+    <select id="year-filter">
+        <option value="all">All Years</option>
+        {{ $years := slice }}
+        {{ range .Pages }}
+            {{ $years = $years | append (.Date.Format "2006") }}
+        {{ end }}
+        {{ range $y := uniq (sort $years) }}
+            <option value="{{ $y }}">{{ $y }}</option>
+        {{ end }}
+    </select>
+    <p id="result-count"></p>
+    <ul id="minutes-list">
+        {{ range .Pages.ByDate.Reverse }}
+            <li data-year="{{ .Date.Format "2006" }}"><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+        {{ end }}
+    </ul>
+</main>
+<script src="/js/flexsearch.min.js"></script>
+<script src="/minutes/js/search.js"></script>
+{{ partial "footer.html" . }}

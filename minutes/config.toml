@@ -1,0 +1,10 @@
+baseURL = "/minutes/"
+disableKinds = ["taxonomy", "RSS", "sitemap"]
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+[permalinks]
+  minutes = "/:slug/"
+[outputs]
+home = ["HTML", "JSON"]

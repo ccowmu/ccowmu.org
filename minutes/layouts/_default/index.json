@@ -1,0 +1,12 @@
+[
+{{- $pages := where .Site.RegularPages "Section" "" -}}
+{{- range $index, $page := $pages -}}
+  {{- if $index }},{{ end }}
+  {
+    "title": {{ $page.Title | jsonify }},
+    "date": "{{ $page.Date.Format "2006-01-02" }}",
+    "slug": "{{ $page.File.ContentBaseName }}",
+    "content": {{ $page.Plain | jsonify }}
+  }
+{{- end -}}
+]
