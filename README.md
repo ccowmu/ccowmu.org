@@ -15,8 +15,8 @@
 The club maintains an extensive archive of meeting minutes dating back to 1996. This system has been migrated from Jekyll to Hugo for better performance and maintainability.
 
 ### Features
-- **791 Meeting Minutes**: Complete archive from 1996-2025
-- **Automated Pagination**: 20 minutes per page (40 total pages)
+- **Meeting Minutes**: Complete archive from 1996-Now
+- **Automated Pagination**: 20 minutes per pag
 - **Search Functionality**: Search by date, content, or keywords
 - **Year Filtering**: Filter minutes by specific years
 - **Responsive Design**: Mobile-friendly interface
@@ -124,15 +124,6 @@ To work on the Hugo minutes system:
 - HTML uses semantic structure and clear class names
 - All external links open in new tabs with `rel="noopener"`
 
-## 🎮 Easter Eggs & Fun Features
-
-- **Konami Code**: Arrow keys sequence triggers glitch effect
-- **Logo Clicking**: Click the logo 10 times for spin animation
-- **Matrix Mode**: Ctrl+Shift+M for terminal rain effect
-- **Clock Interactions**: Click clock for different time formats
-- **Animated Stats**: Real-time counters that occasionally get "bugs"
-- **Terminal Windows**: Fake command prompts throughout the site
-
 ## 📱 Responsive Design
 
 The site works on all device sizes:
@@ -180,13 +171,6 @@ All colors are defined as CSS custom properties in `:root` at the top of `style.
 
 ## 🎨 Customization Tips
 
-### Color Scheme
-```css
---accent-green: #00ff41;    /* Terminal green */
---accent-cyan: #00ffff;     /* Bright cyan */
---accent-pink: #ff1493;     /* Glitch pink */
---accent-yellow: #ffff00;   /* Warning yellow */
-```
 
 ### Typography
 - Headers: JetBrains Mono (monospaced, terminal feel)
@@ -198,15 +182,6 @@ All colors are defined as CSS custom properties in `:root` at the top of `style.
 - Durations defined in CSS variables for consistency
 - GPU-accelerated transforms for smooth performance
 
-## 🤝 Contributing
-
-This site is built by students, for students. When making changes:
-
-1. **Keep it simple** - No complex build tools or frameworks
-2. **Comment your code** - Help future maintainers understand
-3. **Test on mobile** - Ensure responsive design works
-4. **Maintain the vibe** - Retro geek aesthetic with personality
-5. **Accessibility first** - Ensure everyone can use the site
 
 ## 📚 Resources Used
 
@@ -216,17 +191,6 @@ This site is built by students, for students. When making changes:
 - [MDN Web Docs](https://developer.mozilla.org/)
 - [WCAG Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
 
-## 🎯 Future Enhancements
-
-- [ ] More interactive animations
-- [ ] Performance optimizations
-- [ ] Enhanced minutes search with full-text indexing
-- [ ] Minutes system mobile app
-- [ ] Integration with club Discord for meeting notifications
-- [ ] Automated meeting minute templates
-
 ---
 
 **Built with ❤️, caffeine, and way too many late nights by CCoWMU**
-
-*"Where nerds unite to code, hack, and build impossibly cool stuff"*
