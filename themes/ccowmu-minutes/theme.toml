@@ -1,0 +1,11 @@
+name = "CCaWMU Minutes Theme"
+license = "MIT"
+description = "Custom Hugo theme for CCaWMU meeting minutes"
+homepage = "https://ccowmu.org"
+tags = ["minutes", "meetings", "search", "responsive"]
+features = ["instant-search", "responsive", "fast-loading"]
+min_version = "0.120.0"
+
+[author]
+  name = "Computer Club @ WMU"
+  homepage = "https://ccowmu.org"
