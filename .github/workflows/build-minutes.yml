@@ -35,29 +35,6 @@ jobs:
           git add minutes/content/*.md
           git commit -m "Update minutes content from ccowmu/minutes" || echo "No changes to commit"
           git push
-      - name: Copy assets
-        run: |
-          # Remove any existing static directory and recreate it
-          rm -rf minutes/static
-          mkdir -p minutes/static
-          # Copy assets from repo root to minutes/static
-          cp -r css minutes/static/css
-          cp -r js minutes/static/js
-          cp -r images minutes/static/images
-          cp favicon.ico minutes/static/favicon.ico
-          cp manifest.json minutes/static/manifest.json
-          # Copy layout partials
-          cp includes/header.html minutes/layouts/partials/header.html
-          cp includes/footer.html minutes/layouts/partials/footer.html
-      - name: Fix paths
-        run: |
-          # Update header and footer to use correct paths for GitHub Pages deployment
-          sed -i 's#href="/#href="/ccowmu.org/minutes/public/#g' minutes/layouts/partials/header.html
-          sed -i 's#href="/#href="/ccowmu.org/minutes/public/#g' minutes/layouts/partials/footer.html
-          sed -i 's#src="/#src="/ccowmu.org/minutes/public/#g' minutes/layouts/partials/header.html
-          sed -i 's#src="/#src="/ccowmu.org/minutes/public/#g' minutes/layouts/partials/footer.html
-          # Fix any remaining relative paths
-          sed -i 's#\./images#/ccowmu.org/minutes/public/images#g' minutes/layouts/partials/footer.html
       - name: Build
         uses: peaceiris/actions-hugo@v3
         with:
