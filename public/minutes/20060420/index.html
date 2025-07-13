@@ -71,12 +71,20 @@
             cursor: pointer;
             text-decoration: none;
             color: inherit;
+            display: block;
+        }
+        
+        .minute-card .card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
         
         .minute-card:hover {
             border-color: var(--accent-primary);
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(74, 158, 255, 0.1);
+            text-decoration: none;
         }
         
         .minute-title {
@@ -84,6 +92,12 @@
             font-weight: 600;
             margin-bottom: 0.5rem;
             color: var(--text-primary);
+            text-decoration: none;
+        }
+        
+        .minute-card:hover .minute-title {
+            color: var(--accent-primary);
+            text-decoration: none;
         }
         
         .minute-date {
@@ -167,10 +181,23 @@
             justify-content: space-between;
             align-items: center;
             transition: all var(--transition-fast);
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .minute-list-item .minute-title {
+            text-decoration: none;
+            color: var(--text-primary);
         }
         
         .minute-list-item:hover {
             border-color: var(--accent-primary);
+            text-decoration: none;
+        }
+        
+        .minute-list-item:hover .minute-title {
+            color: var(--accent-primary);
+            text-decoration: none;
         }
         
         .breadcrumb {
@@ -276,7 +303,6 @@
         
         <div class="minute-body">
             <p>Minutes of the Computer Club of Western Michigan University.<br>
-date: 4/20/06, 6:11p<br>
 12 members attended Joe G., Tim, Mark, Joe W., Brian, Velex, Greg, Chad, Matt, Craig, Miles and Matt<br>
 <br>
 This may be Joe G.&rsquo;s last meeting.<br>
