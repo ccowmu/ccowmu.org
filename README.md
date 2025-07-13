@@ -37,4 +37,8 @@ To work on minutes locally:
 3. Test locally
 4. Submit a pull request
 
+## Troubleshooting
+
+If you see 404 errors for images when testing locally, make sure you're serving the site from a local server rather than opening the HTML file directly in your browser.
+
 Keep it simple!
