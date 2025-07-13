@@ -1,10 +1,9 @@
-baseURL = "https://ccowmu.org/"
+baseURL = "https://ccawmu.org/"
 languageCode = "en-us"
-title = "CCOWMU"
-theme = "ananke"
+title = "CCAWMU"
 
 [params]
-  description = "CMU's student government for the College of Engineering"
+  description = "CCAWMU MINUTES"
   
 [menu]
   [[menu.main]]
