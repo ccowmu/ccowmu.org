@@ -1,0 +1,255 @@
+name: Hugo Minutes Generator
+
+on:
+  # Daily at 6 AM UTC
+  schedule:
+    - cron: '0 6 * * *'
+  
+  # Manual trigger
+  workflow_dispatch:
+  
+  # On push to main branch (for testing)
+  push:
+    branches: [ main, master ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+      
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+          extended: true
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Checkout minutes repository
+        uses: actions/checkout@v4
+        with:
+          repository: ccowmu/minutes
+          path: minutes-repo
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Process minutes files
+        run: |
+          # Create content directory
+          mkdir -p content/minutes
+          
+          # Process each markdown file in the minutes repo
+          find minutes-repo -name "*.md" -type f | while read file; do
+            filename=$(basename "$file" .md)
+            
+            # Extract date from filename (YYYYMMDD format)
+            if [[ $filename =~ ^([0-9]{4})([0-9]{2})([0-9]{2})$ ]]; then
+              year=${BASH_REMATCH[1]}
+              month=${BASH_REMATCH[2]}
+              day=${BASH_REMATCH[3]}
+              
+              # Create ISO date
+              iso_date="${year}-${month}-${day}"
+              
+              # Create human-readable title
+              title="Meeting Minutes - $(date -d "$iso_date" '+%B %-d, %Y' 2>/dev/null || date -j -f '%Y-%m-%d' "$iso_date" '+%B %-d, %Y')"
+              
+              # Create output file
+              output_file="content/minutes/${filename}.md"
+              
+              # Create frontmatter and content
+              cat > "$output_file" << EOF
+          ---
+          title: "$title"
+          date: ${iso_date}T12:00:00-05:00
+          draft: false
+          type: "minutes"
+          ---
+          
+          EOF
+              
+              # Append the original content
+              cat "$file" >> "$output_file"
+              
+              echo "Processed: $filename -> $title"
+            else
+              echo "Skipping file with invalid date format: $filename"
+            fi
+          done
+          
+          # Generate years data for filtering
+          mkdir -p data
+          find content/minutes -name "*.md" -exec grep -l "^date:" {} \; | \
+            xargs grep "^date:" | \
+            sed 's/.*date: \([0-9]\{4\}\).*/\1/' | \
+            sort -u > data/years.json
+          
+          # Convert to proper JSON array
+          echo -n "[" > temp_years.json
+          first=true
+          while read year; do
+            if [ "$first" = true ]; then
+              echo -n "\"$year\"" >> temp_years.json
+              first=false
+            else
+              echo -n ", \"$year\"" >> temp_years.json
+            fi
+          done < data/years.json
+          echo "]" >> temp_years.json
+          mv temp_years.json data/years.json
+          
+          echo "Generated years data: $(cat data/years.json)"
+      
+      - name: Install dependencies
+        run: |
+          if [ -f package.json ]; then
+            npm ci
+          fi
+      
+      - name: Build Hugo site
+        env:
+          HUGO_ENVIRONMENT: production
+        run: |
+          hugo \
+            --gc \
+            --minify \
+            --baseURL "https://ccowmu.org"
+      
+      - name: Generate search index
+        run: |
+          # Create search index for fast client-side search
+          mkdir -p public/api
+          
+          # Generate JSON search index
+          cat > public/api/search.json << 'EOF'
+          {
+            "minutes": [
+          EOF
+          
+          first=true
+          find content/minutes -name "*.md" | while read file; do
+            # Extract frontmatter and content
+            title=$(grep "^title:" "$file" | sed 's/title: "\(.*\)"/\1/')
+            date=$(grep "^date:" "$file" | sed 's/date: //')
+            
+            # Get content without frontmatter
+            content=$(sed '1,/^---$/d; /^---$/,$d' "$file" | head -c 500)
+            
+            # Get relative URL
+            basename=$(basename "$file" .md)
+            url="/minutes/$basename/"
+            
+            if [ "$first" = false ]; then
+              echo "," >> public/api/search.json
+            fi
+            
+            # Add to JSON (escape quotes)
+            title_escaped=$(echo "$title" | sed 's/"/\\"/g')
+            content_escaped=$(echo "$content" | sed 's/"/\\"/g' | tr '\n' ' ')
+            
+            cat >> public/api/search.json << EOF
+              {
+                "title": "$title_escaped",
+                "date": "$date",
+                "url": "$url",
+                "content": "$content_escaped"
+              }
+          EOF
+            first=false
+          done
+          
+          echo "" >> public/api/search.json
+          echo "    ]" >> public/api/search.json
+          echo "}" >> public/api/search.json
+      
+      - name: Optimize images
+        run: |
+          # Optimize any images if they exist
+          if command -v optipng &> /dev/null; then
+            find public -name "*.png" -exec optipng -o2 {} \;
+          fi
+      
+      - name: Generate RSS feed
+        run: |
+          # Hugo automatically generates RSS, but let's ensure it's optimized
+          if [ -f public/minutes/index.xml ]; then
+            echo "RSS feed generated successfully"
+          fi
+      
+      - name: Create .nojekyll file
+        run: |
+          # Prevent GitHub Pages from using Jekyll
+          touch public/.nojekyll
+          echo "Created .nojekyll file to prevent Jekyll processing"
+      
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v4
+      
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: ./public
+      
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v3
+      
+      - name: Post-deployment verification
+        run: |
+          echo "Deployment completed successfully!"
+          echo "Minutes site available at: ${{ steps.deployment.outputs.page_url }}"
+          
+          # Log build statistics
+          echo "Build statistics:"
+          echo "- Total minutes processed: $(find content/minutes -name "*.md" | wc -l)"
+          echo "- Total pages generated: $(find public -name "*.html" | wc -l)"
+          echo "- Site size: $(du -sh public | cut -f1)"
+          
+          # Check critical files
+          if [ -f public/index.html ]; then
+            echo "✓ Main index page generated"
+          else
+            echo "✗ Main index page missing"
+          fi
+          
+          if [ -f public/minutes/index.html ]; then
+            echo "✓ Minutes index page generated"
+          else
+            echo "✗ Minutes index page missing"
+          fi
+          
+          if [ -f public/api/search.json ]; then
+            echo "✓ Search index generated"
+          else
+            echo "✗ Search index missing"
+          fi
+      
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "❌ Hugo Minutes Generator failed!"
+          echo "Check the logs above for details."
+          echo "Common issues:"
+          echo "- Invalid date format in minutes filenames"
+          echo "- Hugo build errors"
+          echo "- Missing dependencies"
+          echo "- Network issues accessing minutes repository"

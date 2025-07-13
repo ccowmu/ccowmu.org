@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting Minutes - December 3, 2020 - Computer Club @ WMU Minutes</title>
+    <meta name="description" content="Meeting minutes for Western Michigan University&#39;s Computer Club">
+    
+    
+    <link rel="icon" href="/ccowmu.org/favicon.ico" sizes="16x16 32x32">
+    <link rel="icon" type="image/png" sizes="16x16" href="/ccowmu.org/images/icon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/ccowmu.org/images/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/ccowmu.org/images/icon-48x48.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="/ccowmu.org/images/icon-192x192.png">
+    
+    
+    <link rel="stylesheet" href="/ccowmu.org/css/style.css">
+    
+    
+    <style>
+         
+        .minutes-container {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .search-container {
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: border-color var(--transition-fast);
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+        
+        .search-stats {
+            margin-top: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .minutes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .minute-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all var(--transition-fast);
+            cursor: pointer;
+        }
+        
+        .minute-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(74, 158, 255, 0.1);
+        }
+        
+        .minute-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .minute-date {
+            color: var(--accent-primary);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .minute-preview {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .year-filters {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .year-filter {
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all var(--transition-fast);
+        }
+        
+        .year-filter:hover,
+        .year-filter.active {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+        
+        .view-toggle {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .view-btn {
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .view-btn.active {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+        
+        .minutes-list {
+            display: none;
+        }
+        
+        .minutes-list.active {
+            display: block;
+        }
+        
+        .minutes-grid.active {
+            display: grid;
+        }
+        
+        .minute-list-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all var(--transition-fast);
+        }
+        
+        .minute-list-item:hover {
+            border-color: var(--accent-primary);
+        }
+        
+        .breadcrumb {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+        
+        .breadcrumb a {
+            color: var(--accent-primary);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+         
+        @media (max-width: 768px) {
+            .minutes-container {
+                padding: 1rem;
+            }
+            
+            .minutes-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .year-filters {
+                justify-content: center;
+            }
+        }
+        
+         
+        .highlight {
+            background: var(--accent-yellow);
+            color: #000;
+            padding: 0.1rem 0.2rem;
+            border-radius: 3px;
+        }
+    </style>
+    
+    
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Computer Club @ WMU Minutes",
+        "url": "https:\/\/ccowmu.org\/",
+        "description": "Meeting minutes for Western Michigan University\u0027s Computer Club"
+    }
+    </script>
+</head>
+<body>
+    
+    <div id="header-container"></div>
+    
+    <main class="main-content">
+        
+<div class="minutes-container">
+    
+    <nav class="breadcrumb">
+        <a href="https://ccowmu.org">CCaWMU</a> / 
+        <a href="https://ccowmu.org//minutes/">Minutes</a> / 
+        Meeting Minutes - December 3, 2020
+    </nav>
+    
+    
+    <article class="minute-content">
+        <header class="minute-header">
+            <h1 class="minute-title">Meeting Minutes - December 3, 2020</h1>
+            <div class="minute-meta">
+                <time class="minute-date" datetime="2020-12-03">
+                    December 3, 2020
+                </time>
+                
+            </div>
+        </header>
+        
+        
+        <div class="minute-body">
+            <h1 id="december-3rd-2020-meeting-minutes">December 3rd, 2020 Meeting Minutes</h1>
+<blockquote>
+<p>Notes taken by Taylor in vim</p></blockquote>
+<blockquote>
+<p>x people in attendance</p></blockquote>
+<blockquote>
+<p>6:00 PM, On a Thursday,   on google meet</p></blockquote>
+<h2 id="school-stuff">School stuff</h2>
+<h3 id="course-ratings">Course Ratings</h3>
+<ul>
+<li>Rate things</li>
+</ul>
+<h3 id="academic-integrity-committee-member-needed">Academic Integrity Committee Member Needed</h3>
+<ul>
+<li>The AIC basically make the final verdict on cheating/misconduct charges</li>
+<li>As a member you would:
+<ul>
+<li>Regularly serve on five-member Academic Integrity Hearing Panels (AHIPs), each composed of three faculty members and two students, to hear charges of academic dishonesty and determine whether the charges have merit.  (These hearings are currently taking place virtually until further notice.)</li>
+</ul>
+</li>
+<li>Provide a minimum of 6 business hours per week (8am-5pm, Monday-Friday) of general availability to serve on AIHPs in 2+ hour blocks of time.  Panelists are assigned to AIHPs based on their availability and are notified approximately one week in advance by email if they have been scheduled to serve.  They are sent hearing information to review before they arrive.</li>
+<li>Attend a virtual training session on Thursday, February 4 or Friday, February 5.</li>
+<li>Based on past statistics, each student would serve an average of 2-3 times per year</li>
+<li>Email Dr. Carr</li>
+<li>One undergraduate and one graduate needed to serve through spring 2022</li>
+</ul>
+<h3 id="extension-to-withdraw-from-courses">Extension to Withdraw from Courses</h3>
+<ul>
+<li>The withdraw deadline has been extended to December 11</li>
+<li>last friday before finals week</li>
+</ul>
+<h3 id="cs-5810--compiler-design-and-implementation">CS 5810 – Compiler Design and Implementation</h3>
+<ul>
+<li>Potentially offered</li>
+<li>Class size around 5</li>
+<li>Email Dr. Carr to show interest</li>
+</ul>
+<h2 id="club-stuff">Club stuff</h2>
+<h3 id="two-more-meetings-including-this-one-in-the-semester">Two more meetings (including this one) in the semester</h3>
+<ul>
+<li>One more next week</li>
+<li>None during finals week</li>
+</ul>
+<h3 id="computer-art">Computer Art</h3>
+<ul>
+<li>Still in the mail?</li>
+<li>he said that he sent on nov 23, so we will have to see.</li>
+</ul>
+<h3 id="pictures">Pictures</h3>
+<ul>
+<li>Move flickr pictures to self-hosted</li>
+<li>600 or so</li>
+<li>Anyone want to make a website section dedicated to pictures?</li>
+<li>also, we can&rsquo;t recover the flicker account so that is a problem</li>
+<li></li>
+</ul>
+<p>Ccow Mu
+Pin Ccow Mu to your main screen.
+You can&rsquo;t remotely mute Ccow Mu&rsquo;s microphone
+You can&rsquo;t remove this participant
+Rick Zurek
+Pin Rick Zurek to your main screen.
+You can&rsquo;t remotely mute Rick Zurek&rsquo;s microphone
+You can&rsquo;t remove this participant
+Allie Kalhorn
+Pin Allie Kalhorn to your main screen.
+You can&rsquo;t unmute someone else
+You can&rsquo;t remove this participant
+Allin Kahrl
+Pin Allin Kahrl to your main screen.
+You can&rsquo;t unmute someone else
+You can&rsquo;t remove this participant
+Pin Anubhav Rawal to your main screen.
+You can&rsquo;t unmute someone else
+You can&rsquo;t remove this participant
+Pin Andrew Hazlett to your main screen.
+You can&rsquo;t unmute someone else
+You can&rsquo;t remove this participant
+Ioannis Nearchou
+Pin Ccow Mu&rsquo;s presentation to your main screen.
+You can&rsquo;t unmute someone else&rsquo;s presentation
+You can&rsquo;t remove this participant
+Dragones Locos
+Meeting details
+Close
+13 participants.
+Unread messages
+IN CALL
+Taylor Arndt(You)
+Pin yourself to your main screen.
+Allie Kalhorn
+You can&rsquo;t unmute someone else
+More actions
+Allin Kahrl
+You can&rsquo;t unmute someone else
+More actions
+Andrew Hazlett
+You can&rsquo;t unmute someone else
+More actions
+Anubhav Rawal
+You can&rsquo;t unmute someone else
+More actions
+aron lawrence
+You can&rsquo;t unmute someone else
+More actions
+Cameron Johnson
+You can&rsquo;t unmute someone else
+More actions
+Ccow Mu
+You can&rsquo;t remotely mute Ccow Mu&rsquo;s microphone
+More actions
+Ccow Mu
+Presentation
+You can&rsquo;t unmute someone else&rsquo;s presentation
+More actions
+Dragones Locos
+You can&rsquo;t unmute someone else
+More actions
+Drew Rautenberg
+You can&rsquo;t unmute someone else
+More actions
+Girrockss
+You can&rsquo;t unmute someone else
+More actions
+Ioannis Nearchou
+You can&rsquo;t unmute someone else
+More actions
+Rick Zurek
+You can&rsquo;t remotely mute Rick Zurek&rsquo;s microphone
+More actions
+Show everyone
+Chat with everyone
+6:18PM
+You
+Pin yourself to your main screen.
+Show in a tile
+Meeting details
+Turn off microphone (ctrl + d)
+Leave call
+Turn off camera (ctrl + e)
+Turn on captions
+Ccow Mu is presenting
+More options
+Girrockss says in chat: Lol computer didn&rsquo;t like the meme</p>
+
+        </div>
+        
+        
+        <nav class="minute-navigation">
+            
+            <a href="https://ccowmu.org/minutes/20201119/" class="nav-prev">
+                ← Meeting Minutes - November 19, 2020
+            </a>
+            
+            
+            <a href="https://ccowmu.org//minutes/" class="nav-back">
+                Back to All Minutes
+            </a>
+            
+            
+            <a href="https://ccowmu.org/minutes/20210114/" class="nav-next">
+                Meeting Minutes - January 14, 2021 →
+            </a>
+            
+        </nav>
+    </article>
+</div>
+
+<style>
+.minute-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.minute-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.minute-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.minute-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.minute-date {
+    font-size: 1.1rem;
+    color: var(--accent-primary);
+    font-weight: 500;
+}
+
+.attendees {
+    font-size: 0.9rem;
+}
+
+.minute-body {
+    line-height: 1.8;
+    margin-bottom: 3rem;
+}
+
+.minute-body h1,
+.minute-body h2,
+.minute-body h3,
+.minute-body h4,
+.minute-body h5,
+.minute-body h6 {
+    color: var(--text-primary);
+    margin: 2rem 0 1rem 0;
+    font-weight: 600;
+}
+
+.minute-body h1 { font-size: 2rem; }
+.minute-body h2 { font-size: 1.5rem; }
+.minute-body h3 { font-size: 1.3rem; }
+.minute-body h4 { font-size: 1.1rem; }
+
+.minute-body p {
+    margin-bottom: 1rem;
+}
+
+.minute-body ul,
+.minute-body ol {
+    margin: 1rem 0;
+    padding-left: 2rem;
+}
+
+.minute-body li {
+    margin-bottom: 0.5rem;
+}
+
+.minute-body blockquote {
+    margin: 1.5rem 0;
+    padding: 1rem 1.5rem;
+    border-left: 4px solid var(--accent-primary);
+    background: var(--bg-secondary);
+    border-radius: 0 8px 8px 0;
+}
+
+.minute-body code {
+    background: var(--bg-tertiary);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+}
+
+.minute-body pre {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+.minute-body pre code {
+    background: none;
+    padding: 0;
+}
+
+.minute-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+}
+
+.minute-body th,
+.minute-body td {
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    text-align: left;
+}
+
+.minute-body th {
+    background: var(--bg-secondary);
+    font-weight: 600;
+}
+
+.minute-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 0;
+    border-top: 1px solid var(--border-color);
+    gap: 1rem;
+}
+
+.nav-prev,
+.nav-next,
+.nav-back {
+    padding: 0.75rem 1.5rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    font-weight: 500;
+}
+
+.nav-prev:hover,
+.nav-next:hover,
+.nav-back:hover {
+    border-color: var(--accent-primary);
+    background: var(--accent-primary);
+    color: white;
+}
+
+.nav-back {
+    background: var(--accent-primary);
+    color: white;
+    border-color: var(--accent-primary);
+}
+
+.nav-back:hover {
+    background: var(--accent-secondary);
+}
+
+ 
+@media (max-width: 768px) {
+    .minute-title {
+        font-size: 2rem;
+    }
+    
+    .minute-navigation {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .nav-prev,
+    .nav-next,
+    .nav-back {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .minute-body {
+        font-size: 1rem;
+    }
+    
+    .minute-body table {
+        font-size: 0.9rem;
+    }
+    
+    .minute-body pre {
+        font-size: 0.8rem;
+    }
+}
+
+ 
+@media print {
+    .breadcrumb,
+    .minute-navigation {
+        display: none;
+    }
+    
+    .minute-content {
+        max-width: none;
+    }
+    
+    .minute-body {
+        color: #000;
+    }
+}
+</style>
+
+    </main>
+    
+    
+    <div id="footer-container"></div>
+    
+    
+    <script>
+        
+        fetch('/ccowmu.org/includes/header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-container').innerHTML = html;
+                
+                if (typeof initializeHeader === 'function') {
+                    initializeHeader();
+                }
+            });
+        
+        
+        fetch('/ccowmu.org/includes/footer.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('footer-container').innerHTML = html;
+            });
+    </script>
+    
+    
+    <script src="/ccowmu.org/js/main.js"></script>
+    
+    
+</body>
+</html>

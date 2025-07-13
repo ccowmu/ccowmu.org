@@ -1,0 +1,13 @@
+{{- $minutes := slice -}}
+{{- range .Site.RegularPages -}}
+  {{- if eq .Type "minutes" -}}
+    {{- $minutes = $minutes | append (dict 
+      "title" .Title 
+      "date" (.Date.Format "2006-01-02")
+      "url" .Permalink
+      "content" (.Summary | plainify | truncate 200)
+      "year" (.Date.Format "2006")
+    ) -}}
+  {{- end -}}
+{{- end -}}
+{{- $minutes | jsonify -}}

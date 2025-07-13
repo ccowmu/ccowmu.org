@@ -16,7 +16,7 @@ theme = "ccowmu-minutes"
 # Output formats
 [outputs]
   home = ["HTML", "RSS", "JSON"]
-  section = ["HTML", "RSS"]
+  section = ["HTML", "RSS", "JSON"]
 
 # Custom output format for search index
 [outputFormats]

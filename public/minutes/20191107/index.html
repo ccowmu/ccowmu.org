@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting Minutes - November 7, 2019 - Computer Club @ WMU Minutes</title>
+    <meta name="description" content="Meeting minutes for Western Michigan University&#39;s Computer Club">
+    
+    
+    <link rel="icon" href="/ccowmu.org/favicon.ico" sizes="16x16 32x32">
+    <link rel="icon" type="image/png" sizes="16x16" href="/ccowmu.org/images/icon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/ccowmu.org/images/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/ccowmu.org/images/icon-48x48.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="/ccowmu.org/images/icon-192x192.png">
+    
+    
+    <link rel="stylesheet" href="/ccowmu.org/css/style.css">
+    
+    
+    <style>
+         
+        .minutes-container {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .search-container {
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: border-color var(--transition-fast);
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+        
+        .search-stats {
+            margin-top: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .minutes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .minute-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all var(--transition-fast);
+            cursor: pointer;
+        }
+        
+        .minute-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(74, 158, 255, 0.1);
+        }
+        
+        .minute-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .minute-date {
+            color: var(--accent-primary);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .minute-preview {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .year-filters {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .year-filter {
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all var(--transition-fast);
+        }
+        
+        .year-filter:hover,
+        .year-filter.active {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+        
+        .view-toggle {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .view-btn {
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .view-btn.active {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+        
+        .minutes-list {
+            display: none;
+        }
+        
+        .minutes-list.active {
+            display: block;
+        }
+        
+        .minutes-grid.active {
+            display: grid;
+        }
+        
+        .minute-list-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all var(--transition-fast);
+        }
+        
+        .minute-list-item:hover {
+            border-color: var(--accent-primary);
+        }
+        
+        .breadcrumb {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+        
+        .breadcrumb a {
+            color: var(--accent-primary);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+         
+        @media (max-width: 768px) {
+            .minutes-container {
+                padding: 1rem;
+            }
+            
+            .minutes-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .year-filters {
+                justify-content: center;
+            }
+        }
+        
+         
+        .highlight {
+            background: var(--accent-yellow);
+            color: #000;
+            padding: 0.1rem 0.2rem;
+            border-radius: 3px;
+        }
+    </style>
+    
+    
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Computer Club @ WMU Minutes",
+        "url": "https:\/\/ccowmu.org\/",
+        "description": "Meeting minutes for Western Michigan University\u0027s Computer Club"
+    }
+    </script>
+</head>
+<body>
+    
+    <div id="header-container"></div>
+    
+    <main class="main-content">
+        
+<div class="minutes-container">
+    
+    <nav class="breadcrumb">
+        <a href="https://ccowmu.org">CCaWMU</a> / 
+        <a href="https://ccowmu.org//minutes/">Minutes</a> / 
+        Meeting Minutes - November 7, 2019
+    </nav>
+    
+    
+    <article class="minute-content">
+        <header class="minute-header">
+            <h1 class="minute-title">Meeting Minutes - November 7, 2019</h1>
+            <div class="minute-meta">
+                <time class="minute-date" datetime="2019-11-07">
+                    November 7, 2019
+                </time>
+                
+            </div>
+        </header>
+        
+        
+        <div class="minute-body">
+            <h1 id="november-7th-2019-meeting-minutes">November 7th, 2019 Meeting Minutes</h1>
+<blockquote>
+<p>Notes taken by Taylor in vim</p></blockquote>
+<blockquote>
+<p>12 people in attendance dolphin, spacedog, presto, sweeney, sphinx, aerospice, alu, taylor, backbutton, synthabit, kahrl</p></blockquote>
+<blockquote>
+<p>6:00 PM, On a Thursday, 2225 Kohrman Hall</p></blockquote>
+<h2 id="special-guest">special guest?</h2>
+<ul>
+<li>nishant gupta</li>
+<li>from quicken loans</li>
+<li>my team leader</li>
+<li>need some people</li>
+<li>if you are interested, they have both full time and internship positions</li>
+<li>see the jobs room if you are interested</li>
+<li>based in downtown Detroit</li>
+<li>also have system administrator positions</li>
+</ul>
+<h2 id="current-events">current events</h2>
+<h3 id="spring-registration">spring registration</h3>
+<ul>
+<li>open</li>
+<li>walk in advising tomorrow morning</li>
+</ul>
+<h3 id="robotics-club">robotics club</h3>
+<ul>
+<li>Fridays 2PM</li>
+<li>F208</li>
+<li>this club exists</li>
+<li>weekly meetings</li>
+<li>compete in contests</li>
+<li>talk to spacedog</li>
+</ul>
+<h3 id="dean-search-update">dean search update</h3>
+<ul>
+<li>new committee has been formed</li>
+<li>sphinx is on it</li>
+<li>at least one student is on it</li>
+</ul>
+<h3 id="possible-engineering-student-government">possible engineering student government</h3>
+<ul>
+<li>would be in charge of funding allocation</li>
+<li>current method is dean</li>
+<li>dean was allocated 35k and gave 55k</li>
+<li>not lots of details</li>
+<li>seeking feedback</li>
+<li>this isn&rsquo;t WSA</li>
+<li>could be possible down side</li>
+<li>as plans evolve you can talk to them as needed</li>
+<li>may hold by weekly or weekly meetings</li>
+</ul>
+<h3 id="kzoo-software-developers-meetup">kzoo software developers meetup</h3>
+<ul>
+<li>tue, November 19</li>
+<li>&ldquo;how do I UX?&rdquo; talk</li>
+<li>a few hours, pizza, networking</li>
+</ul>
+<h2 id="club-events">club events</h2>
+<h3 id="club-deep-cleaning">club deep cleaning</h3>
+<ul>
+<li>Saturday and Sunday</li>
+<li>will take inventory and only throw away actual garbage</li>
+<li>will give people the chance to claim what&rsquo;s rightfully theirs</li>
+<li>auction off the rest with the intention of throwing it away after that</li>
+<li>the time is fuzzy but see chat if you are interested</li>
+</ul>
+<h2 id="club-business">club business</h2>
+<h3 id="new-router">new router</h3>
+<ul>
+<li>it&rsquo;s set up, test it out</li>
+<li>the WIFI is Avalon</li>
+<li>login and use it</li>
+<li>the voting will be a good test
+<ul>
+<li>need to integrate with office bot</li>
+</ul>
+</li>
+</ul>
+<h3 id="new-chairsheadphones">new chairs/headphones</h3>
+<ul>
+<li>have been ordered, should arrive early next week</li>
+</ul>
+<h3 id="bernhard-center-display-cases">bernhard center display cases</h3>
+<ul>
+<li>December, march, April</li>
+<li>old computers and a poster?</li>
+<li>thinking about march</li>
+</ul>
+<h3 id="update-on-mwc3">update on MWC3</h3>
+<ul>
+<li>dawn has replied</li>
+<li>would like to work with us</li>
+<li>the theme is syber security
+*usually the 3rd Friday of each month</li>
+</ul>
+<h3 id="update-on-parkview-demo-station">update on Parkview demo station</h3>
+<ul>
+<li>money basically guaranteed now</li>
+<li>about 5kish</li>
+<li>move our current equipment to pview and replace it with money</li>
+<li>buy something to show on a table</li>
+<li>condition: has to be something that would be a good demo for the school&rsquo;s CS department
+<ul>
+<li>vr system</li>
+<li>syber security attach defense system</li>
+<li>we need something that can go on a table for bronco bash</li>
+<li>use led strips like sorting algorithm with sound</li>
+</ul>
+</li>
+</ul>
+<h3 id="5950">5950</h3>
+<ul>
+<li>sphinx</li>
+<li>don&rsquo;t think it will survive any longer</li>
+<li>at some point josh  will not be around any longer</li>
+<li>doctor car is totally down for making a 3-credit class</li>
+</ul>
+<h3 id="tutorassistant-job-next-semester">tutor/assistant job next semester</h3>
+<ul>
+<li>help taylor handle the possibly inaccessible IDE files</li>
+<li>Anything else that I may need help with</li>
+<li>Doctor Hardin would be your boss</li>
+</ul>
+<h2 id="dinner">dinner</h2>
+<ul>
+<li>roadhouse</li>
+</ul>
+
+        </div>
+        
+        
+        <nav class="minute-navigation">
+            
+            <a href="https://ccowmu.org/minutes/20191031/" class="nav-prev">
+                ← Meeting Minutes - October 31, 2019
+            </a>
+            
+            
+            <a href="https://ccowmu.org//minutes/" class="nav-back">
+                Back to All Minutes
+            </a>
+            
+            
+            <a href="https://ccowmu.org/minutes/20191114/" class="nav-next">
+                Meeting Minutes - November 14, 2019 →
+            </a>
+            
+        </nav>
+    </article>
+</div>
+
+<style>
+.minute-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.minute-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.minute-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.minute-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.minute-date {
+    font-size: 1.1rem;
+    color: var(--accent-primary);
+    font-weight: 500;
+}
+
+.attendees {
+    font-size: 0.9rem;
+}
+
+.minute-body {
+    line-height: 1.8;
+    margin-bottom: 3rem;
+}
+
+.minute-body h1,
+.minute-body h2,
+.minute-body h3,
+.minute-body h4,
+.minute-body h5,
+.minute-body h6 {
+    color: var(--text-primary);
+    margin: 2rem 0 1rem 0;
+    font-weight: 600;
+}
+
+.minute-body h1 { font-size: 2rem; }
+.minute-body h2 { font-size: 1.5rem; }
+.minute-body h3 { font-size: 1.3rem; }
+.minute-body h4 { font-size: 1.1rem; }
+
+.minute-body p {
+    margin-bottom: 1rem;
+}
+
+.minute-body ul,
+.minute-body ol {
+    margin: 1rem 0;
+    padding-left: 2rem;
+}
+
+.minute-body li {
+    margin-bottom: 0.5rem;
+}
+
+.minute-body blockquote {
+    margin: 1.5rem 0;
+    padding: 1rem 1.5rem;
+    border-left: 4px solid var(--accent-primary);
+    background: var(--bg-secondary);
+    border-radius: 0 8px 8px 0;
+}
+
+.minute-body code {
+    background: var(--bg-tertiary);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+}
+
+.minute-body pre {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+.minute-body pre code {
+    background: none;
+    padding: 0;
+}
+
+.minute-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+}
+
+.minute-body th,
+.minute-body td {
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    text-align: left;
+}
+
+.minute-body th {
+    background: var(--bg-secondary);
+    font-weight: 600;
+}
+
+.minute-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 0;
+    border-top: 1px solid var(--border-color);
+    gap: 1rem;
+}
+
+.nav-prev,
+.nav-next,
+.nav-back {
+    padding: 0.75rem 1.5rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    font-weight: 500;
+}
+
+.nav-prev:hover,
+.nav-next:hover,
+.nav-back:hover {
+    border-color: var(--accent-primary);
+    background: var(--accent-primary);
+    color: white;
+}
+
+.nav-back {
+    background: var(--accent-primary);
+    color: white;
+    border-color: var(--accent-primary);
+}
+
+.nav-back:hover {
+    background: var(--accent-secondary);
+}
+
+ 
+@media (max-width: 768px) {
+    .minute-title {
+        font-size: 2rem;
+    }
+    
+    .minute-navigation {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .nav-prev,
+    .nav-next,
+    .nav-back {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .minute-body {
+        font-size: 1rem;
+    }
+    
+    .minute-body table {
+        font-size: 0.9rem;
+    }
+    
+    .minute-body pre {
+        font-size: 0.8rem;
+    }
+}
+
+ 
+@media print {
+    .breadcrumb,
+    .minute-navigation {
+        display: none;
+    }
+    
+    .minute-content {
+        max-width: none;
+    }
+    
+    .minute-body {
+        color: #000;
+    }
+}
+</style>
+
+    </main>
+    
+    
+    <div id="footer-container"></div>
+    
+    
+    <script>
+        
+        fetch('/ccowmu.org/includes/header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-container').innerHTML = html;
+                
+                if (typeof initializeHeader === 'function') {
+                    initializeHeader();
+                }
+            });
+        
+        
+        fetch('/ccowmu.org/includes/footer.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('footer-container').innerHTML = html;
+            });
+    </script>
+    
+    
+    <script src="/ccowmu.org/js/main.js"></script>
+    
+    
+</body>
+</html>

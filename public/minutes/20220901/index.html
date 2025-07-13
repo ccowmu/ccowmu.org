@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting Minutes - September 1, 2022 - Computer Club @ WMU Minutes</title>
+    <meta name="description" content="Meeting minutes for Western Michigan University&#39;s Computer Club">
+    
+    
+    <link rel="icon" href="/ccowmu.org/favicon.ico" sizes="16x16 32x32">
+    <link rel="icon" type="image/png" sizes="16x16" href="/ccowmu.org/images/icon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/ccowmu.org/images/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/ccowmu.org/images/icon-48x48.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="/ccowmu.org/images/icon-192x192.png">
+    
+    
+    <link rel="stylesheet" href="/ccowmu.org/css/style.css">
+    
+    
+    <style>
+         
+        .minutes-container {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .search-container {
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: border-color var(--transition-fast);
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+        
+        .search-stats {
+            margin-top: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .minutes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .minute-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all var(--transition-fast);
+            cursor: pointer;
+        }
+        
+        .minute-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(74, 158, 255, 0.1);
+        }
+        
+        .minute-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .minute-date {
+            color: var(--accent-primary);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .minute-preview {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .year-filters {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .year-filter {
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all var(--transition-fast);
+        }
+        
+        .year-filter:hover,
+        .year-filter.active {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+        
+        .view-toggle {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .view-btn {
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .view-btn.active {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+        
+        .minutes-list {
+            display: none;
+        }
+        
+        .minutes-list.active {
+            display: block;
+        }
+        
+        .minutes-grid.active {
+            display: grid;
+        }
+        
+        .minute-list-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all var(--transition-fast);
+        }
+        
+        .minute-list-item:hover {
+            border-color: var(--accent-primary);
+        }
+        
+        .breadcrumb {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+        
+        .breadcrumb a {
+            color: var(--accent-primary);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+         
+        @media (max-width: 768px) {
+            .minutes-container {
+                padding: 1rem;
+            }
+            
+            .minutes-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .year-filters {
+                justify-content: center;
+            }
+        }
+        
+         
+        .highlight {
+            background: var(--accent-yellow);
+            color: #000;
+            padding: 0.1rem 0.2rem;
+            border-radius: 3px;
+        }
+    </style>
+    
+    
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Computer Club @ WMU Minutes",
+        "url": "https:\/\/ccowmu.org\/",
+        "description": "Meeting minutes for Western Michigan University\u0027s Computer Club"
+    }
+    </script>
+</head>
+<body>
+    
+    <div id="header-container"></div>
+    
+    <main class="main-content">
+        
+<div class="minutes-container">
+    
+    <nav class="breadcrumb">
+        <a href="https://ccowmu.org">CCaWMU</a> / 
+        <a href="https://ccowmu.org//minutes/">Minutes</a> / 
+        Meeting Minutes - September 1, 2022
+    </nav>
+    
+    
+    <article class="minute-content">
+        <header class="minute-header">
+            <h1 class="minute-title">Meeting Minutes - September 1, 2022</h1>
+            <div class="minute-meta">
+                <time class="minute-date" datetime="2022-09-01">
+                    September 1, 2022
+                </time>
+                
+            </div>
+        </header>
+        
+        
+        <div class="minute-body">
+            <h1 id="september-1-2022">September 1, 2022</h1>
+<blockquote>
+<p>Minutes taken by Ming in VSCode
+alu, acp, chago, ming, g&rsquo;kar, sphinx, minitron, girrocks, soup, kahrl, kelly, 5 new people(?)</p></blockquote>
+<h2 id="welcome-back">Welcome Back!</h2>
+<pre><code>- alu is president, adam is vice,
+</code></pre>
+<h2 id="no-classes-monday">No Classes Monday</h2>
+<h2 id="fall-picnic">Fall Picnic</h2>
+<pre><code>- 11am-1pm 13th, outside of Parkview
+- Free food, see professors eat food in their natural habitat
+</code></pre>
+<h2 id="engineering-expo">Engineering Expo</h2>
+<pre><code>- 3 weeks from now, Sep 21st from 1-4pm at Parkview
+- Resume reviews can be done at the writing center but can be tailored specifically towards engineering during events hosted by DENSO
+</code></pre>
+<h2 id="drop-in-advising">Drop-in Advising</h2>
+<pre><code>- Mostly within this week, but still can attent at E102 on Monday 6th at the Advising Office
+</code></pre>
+<h2 id="google-student-development-club">Google Student Development Club</h2>
+<pre><code>- Talk to acp and alu if interested or Elaine Chan if you're like to participate in it
+</code></pre>
+<h2 id="cybersecurity-club">Cybersecurity Club</h2>
+<pre><code>- Say hello, be nice with them
+- No meeting time set yet, or a groupchat
+</code></pre>
+<h2 id="wali">WALI</h2>
+<pre><code>- Builds satellites, uses linux, embedded c and cool microcontrollers
+- Has a lot of teams, not just Computer Science
+- Can learn how to work with government applications as well
+- G'kar is coming back to WALI
+</code></pre>
+<h2 id="heading">$$$</h2>
+<pre><code>- Bank account &amp; Funds =&gt; 5.5K
+- Shirts made 306.01
+- Giving day made 661.20
+</code></pre>
+<h2 id="request-for-funding">Request for funding</h2>
+<pre><code>- Due in early Fall (beginning of October)
+- For projects that you wanna build with and is feasible
+</code></pre>
+<h2 id="stickers">Stickers</h2>
+<pre><code>- We still have stickers in the clubroom, come over to club to get them
+</code></pre>
+<h2 id="pizza-party">Pizza Party</h2>
+<pre><code>- September 15th, come hangout
+- Pizza and donuts
+</code></pre>
+<h2 id="class-visits">Class Visits</h2>
+<pre><code>- We will be doing class visits to go around, looking for volunteers to go around these classes
+- Talk to alu if interested so she can plan for it
+</code></pre>
+<h2 id="snack-requests">Snack Requests</h2>
+<pre><code>- Any requests can be made to Chago's dms
+- Will be getting snacks and drinks soon
+- There is a channel called snack-attack?
+</code></pre>
+<h2 id="msp430--blacktop">MSP430 + Blacktop</h2>
+<pre><code>- Sep 15, we are doing a buyback for the MSP430
+- We will give you money
+</code></pre>
+<h2 id="senior-design-project">Senior Design Project</h2>
+<pre><code>- Wants to change the curriculum?
+- Will be talking to Sphinx and Karhl for the plan of attack tonight
+- Needs those MSP430 with the micro-usb and the led?
+- We need around 35 more of these
+</code></pre>
+<h2 id="days-to-remember">Days to Remember</h2>
+<ul>
+<li>LOCATED ON THE BOARD</li>
+</ul>
+<h2 id="more-shirts">More Shirts</h2>
+<pre><code>- Planning to do another shirt run for the club by the end of the month when there are more members
+- Club gets money from these shirts, so it helps if you buy one
+- Shirts, hoodies, crop-tops and long-sleeves
+</code></pre>
+<h2 id="hackathongamejam">Hackathon/GameJam</h2>
+<pre><code>- GameJam will run this fall at the last week of September (weekend)
+- Spacedog will help run it
+
+- Ideally planning hold the hackathon a little bit earlier in April compared to last year
+- Not sure if Bernhard will still be open by then/if the new student center was going to open in Spring
+- Bigby is closed, Starbucks is going to open
+- Adam couldn't get his coffee
+
+- Bronco Bash and Passport day went well
+- Will be planning the hackathon much earlier
+- Join the #hackathon channel if you are interested in helping out
+</code></pre>
+<h2 id="new-lockbox---new-code">New Lockbox - New Code!</h2>
+<pre><code>- Lockbox is broken, cannot get in freely
+- Will be replacing it soon (next week)
+</code></pre>
+<h2 id="new-servers-ty-flay">New Servers (ty flay)</h2>
+<pre><code>- New servers are already set up at Parkview
+- Doesn't have anything at the moment
+- Trying to move the chat and the website into the server so we could restart the dot
+- Chat will be down for a day, but it would handle the memory leaks so we don't have to restart yakko
+- Will still keep the names
+- Give suggestions on what you wanna do with the server
+- no cryptomining
+- yakko is currently still not in danger
+- You need to use wmu vpn if you want to ssh into any device here
+</code></pre>
+<h2 id="dinner">Dinner</h2>
+<pre><code>- Dinner at Roadhouse at 7.30!!!
+</code></pre>
+
+        </div>
+        
+        
+        <nav class="minute-navigation">
+            
+            <a href="https://ccowmu.org/minutes/20220331/" class="nav-prev">
+                ← Meeting Minutes - March 31, 2022
+            </a>
+            
+            
+            <a href="https://ccowmu.org//minutes/" class="nav-back">
+                Back to All Minutes
+            </a>
+            
+            
+            <a href="https://ccowmu.org/minutes/20220908/" class="nav-next">
+                Meeting Minutes - September 8, 2022 →
+            </a>
+            
+        </nav>
+    </article>
+</div>
+
+<style>
+.minute-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.minute-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.minute-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.minute-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.minute-date {
+    font-size: 1.1rem;
+    color: var(--accent-primary);
+    font-weight: 500;
+}
+
+.attendees {
+    font-size: 0.9rem;
+}
+
+.minute-body {
+    line-height: 1.8;
+    margin-bottom: 3rem;
+}
+
+.minute-body h1,
+.minute-body h2,
+.minute-body h3,
+.minute-body h4,
+.minute-body h5,
+.minute-body h6 {
+    color: var(--text-primary);
+    margin: 2rem 0 1rem 0;
+    font-weight: 600;
+}
+
+.minute-body h1 { font-size: 2rem; }
+.minute-body h2 { font-size: 1.5rem; }
+.minute-body h3 { font-size: 1.3rem; }
+.minute-body h4 { font-size: 1.1rem; }
+
+.minute-body p {
+    margin-bottom: 1rem;
+}
+
+.minute-body ul,
+.minute-body ol {
+    margin: 1rem 0;
+    padding-left: 2rem;
+}
+
+.minute-body li {
+    margin-bottom: 0.5rem;
+}
+
+.minute-body blockquote {
+    margin: 1.5rem 0;
+    padding: 1rem 1.5rem;
+    border-left: 4px solid var(--accent-primary);
+    background: var(--bg-secondary);
+    border-radius: 0 8px 8px 0;
+}
+
+.minute-body code {
+    background: var(--bg-tertiary);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+}
+
+.minute-body pre {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+.minute-body pre code {
+    background: none;
+    padding: 0;
+}
+
+.minute-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+}
+
+.minute-body th,
+.minute-body td {
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    text-align: left;
+}
+
+.minute-body th {
+    background: var(--bg-secondary);
+    font-weight: 600;
+}
+
+.minute-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 0;
+    border-top: 1px solid var(--border-color);
+    gap: 1rem;
+}
+
+.nav-prev,
+.nav-next,
+.nav-back {
+    padding: 0.75rem 1.5rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    font-weight: 500;
+}
+
+.nav-prev:hover,
+.nav-next:hover,
+.nav-back:hover {
+    border-color: var(--accent-primary);
+    background: var(--accent-primary);
+    color: white;
+}
+
+.nav-back {
+    background: var(--accent-primary);
+    color: white;
+    border-color: var(--accent-primary);
+}
+
+.nav-back:hover {
+    background: var(--accent-secondary);
+}
+
+ 
+@media (max-width: 768px) {
+    .minute-title {
+        font-size: 2rem;
+    }
+    
+    .minute-navigation {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .nav-prev,
+    .nav-next,
+    .nav-back {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .minute-body {
+        font-size: 1rem;
+    }
+    
+    .minute-body table {
+        font-size: 0.9rem;
+    }
+    
+    .minute-body pre {
+        font-size: 0.8rem;
+    }
+}
+
+ 
+@media print {
+    .breadcrumb,
+    .minute-navigation {
+        display: none;
+    }
+    
+    .minute-content {
+        max-width: none;
+    }
+    
+    .minute-body {
+        color: #000;
+    }
+}
+</style>
+
+    </main>
+    
+    
+    <div id="footer-container"></div>
+    
+    
+    <script>
+        
+        fetch('/ccowmu.org/includes/header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-container').innerHTML = html;
+                
+                if (typeof initializeHeader === 'function') {
+                    initializeHeader();
+                }
+            });
+        
+        
+        fetch('/ccowmu.org/includes/footer.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('footer-container').innerHTML = html;
+            });
+    </script>
+    
+    
+    <script src="/ccowmu.org/js/main.js"></script>
+    
+    
+</body>
+</html>
