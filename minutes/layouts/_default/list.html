@@ -1,33 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meeting Minutes | CCaWMU</title>
-    <meta name="description" content="Browse all Computer Club at WMU meeting minutes. Search by date, topic, or content.">
-    
-    <!-- Favicon and Icons -->
-    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32">
-    <link rel="icon" type="image/png" sizes="16x16" href="/images/icon-16x16.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/images/icon-32x32.png">
-    <link rel="icon" type="image/png" sizes="48x48" href="/images/icon-48x48.png">
-    
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#4a9eff">
-    
-    <!-- Styles -->
-    <link rel="stylesheet" href="/css/style.css">
-    
-    <!-- Theme support -->
-    <script>
-        if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: light)').matches)) {
-            document.documentElement.setAttribute('data-theme', 'light');
-        }
-    </script>
-</head>
-<body>
-    {{ partial "header.html" . }}
+{{ partial "header.html" . }}
     
     <main class="main-content">
         <div class="container">
@@ -166,6 +137,8 @@
 
     {{ partial "footer.html" . }}
     
+{{ partial "footer.html" . }}
+
     <!-- Search functionality -->
     <script src="{{ "js/flexsearch.min.js" | absURL }}"></script>
     <script src="{{ "js/search.js" | absURL }}"></script>
