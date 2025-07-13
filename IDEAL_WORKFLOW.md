@@ -72,6 +72,7 @@ Main Site → Minutes Section → Search/Browse → Individual Meeting → Back
 - **View Modes**: Switch between card grid and simple list
 - **Result Counts**: "Showing 45 of 234 meetings"
 - **Deep Linking**: Share direct links to search results
+- **RSS Feed**: Auto-generated RSS feed for new minutes
 
 ## The Ideal Workflow
 
