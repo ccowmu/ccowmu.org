@@ -1,4 +1,4 @@
-baseURL = '/minutes'
+baseURL = '/'
 relativeURLs = true
 canonifyURLs = false
 languageCode = 'en-us'
