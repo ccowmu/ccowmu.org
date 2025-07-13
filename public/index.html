@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-	<meta name="generator" content="Hugo 0.148.1">
+	<meta name="generator" content="Hugo 0.148.1"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Computer Club @ WMU Minutes</title>
     <meta name="description" content="Meeting minutes for Western Michigan University&#39;s Computer Club">
     
     
-    <link rel="icon" href="/ccowmu.org/favicon.ico" sizes="16x16 32x32">
-    <link rel="icon" type="image/png" sizes="16x16" href="/ccowmu.org/images/icon-16x16.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/ccowmu.org/images/icon-32x32.png">
-    <link rel="icon" type="image/png" sizes="48x48" href="/ccowmu.org/images/icon-48x48.png">
-    <link rel="apple-touch-icon" sizes="192x192" href="/ccowmu.org/images/icon-192x192.png">
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/icon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/images/icon-48x48.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="/images/icon-192x192.png">
     
     
-    <link rel="stylesheet" href="/ccowmu.org/css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
     
     
     <style>
@@ -70,6 +70,8 @@
             padding: 1.5rem;
             transition: all var(--transition-fast);
             cursor: pointer;
+            text-decoration: none;
+            color: inherit;
         }
         
         .minute-card:hover {
@@ -217,21 +219,39 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
     
-    <link rel="alternate" type="application/rss+xml" href="https://ccowmu.org/index.xml" title="Computer Club @ WMU Minutes" />
+    <link rel="alternate" type="application/rss+xml" href="http://localhost:1313/index.xml" title="Computer Club @ WMU Minutes" />
     
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "Organization",
         "name": "Computer Club @ WMU Minutes",
-        "url": "https:\/\/ccowmu.org\/",
+        "url": "http:\/\/localhost:1313\/",
         "description": "Meeting minutes for Western Michigan University\u0027s Computer Club"
     }
     </script>
 </head>
 <body>
     
-    <div id="header-container"></div>
+    <div id="header-container">
+        <header class="site-header">
+            <nav class="navbar">
+                <div class="nav-container">
+                    <div class="nav-brand">
+                        <a href="/" class="brand-link">
+                            <span class="brand-text">CCaWMU</span>
+                        </a>
+                    </div>
+                    <div class="nav-links">
+                        <a href="/">Home</a>
+                        <a href="/minutes/" class="active">Minutes</a>
+                        <a href="/join.html">Join</a>
+                        <a href="/chat.html">Chat</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+    </div>
     
     <main class="main-content">
         
@@ -342,7 +362,7 @@
     <div class="minutes-grid active" id="minutes-grid">
         
         <article class="minute-card" data-year="2025" data-search-content="Minutes  2025-04-17">
-            <a href="https://ccowmu.org/minutes/" class="card-link">
+            <a href="http://localhost:1313/minutes/" class="card-link">
                 <h2 class="minute-title">Minutes</h2>
                 <div class="minute-date">April 17, 2025</div>
                 <div class="minute-preview"></div>
@@ -356,7 +376,7 @@
         
         <article class="minute-list-item" data-year="2025" data-search-content="Minutes  2025-04-17">
             <div>
-                <a href="https://ccowmu.org/minutes/" class="minute-title">Minutes</a>
+                <a href="http://localhost:1313/minutes/" class="minute-title">Minutes</a>
                 <div class="minute-preview"></div>
             </div>
             <div class="minute-date">Apr 17, 2025</div>
@@ -374,12 +394,25 @@
     </main>
     
     
-    <div id="footer-container"></div>
+    <div id="footer-container">
+        <footer class="site-footer">
+            <div class="container">
+                <div class="footer-content">
+                    <p>&copy; 2025 Computer Club @ WMU - Meeting Minutes Archive</p>
+                    <div class="footer-links">
+                        <a href="/">Home</a>
+                        <a href="/join.html">Join</a>
+                        <a href="/chat.html">Chat</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
     
     
     <script>
         
-        fetch('/ccowmu.org/includes/header.html')
+        fetch('\/includes\/header.html')
             .then(response => response.text())
             .then(html => {
                 document.getElementById('header-container').innerHTML = html;
@@ -387,18 +420,46 @@
                 if (typeof initializeHeader === 'function') {
                     initializeHeader();
                 }
+            })
+            .catch(error => {
+                console.log('Header not found, using fallback');
+                document.getElementById('header-container').innerHTML = `
+                    <header class="site-header">
+                        <div class="container">
+                            <nav class="navbar">
+                                <a href="/" class="logo">CCaWMU</a>
+                                <div class="nav-links">
+                                    <a href="/">Home</a>
+                                    <a href="/minutes/" class="active">Minutes</a>
+                                    <a href="/join.html">Join</a>
+                                    <a href="/chat.html">Chat</a>
+                                </div>
+                            </nav>
+                        </div>
+                    </header>
+                `;
             });
         
         
-        fetch('/ccowmu.org/includes/footer.html')
+        fetch('\/includes\/footer.html')
             .then(response => response.text())
             .then(html => {
                 document.getElementById('footer-container').innerHTML = html;
+            })
+            .catch(error => {
+                console.log('Footer not found, using fallback');
+                document.getElementById('footer-container').innerHTML = `
+                    <footer class="site-footer">
+                        <div class="container">
+                            <p>&copy; 2025 Computer Club @ WMU</p>
+                        </div>
+                    </footer>
+                `;
             });
     </script>
     
     
-    <script src="/ccowmu.org/js/main.js"></script>
+    <script src="/js/main.js"></script>
     
     
 

@@ -7,14 +7,14 @@
     <meta name="description" content="{{ if .Description }}{{ .Description }}{{ else }}{{ .Site.Params.description }}{{ end }}">
     
     <!-- Favicon and Icons -->
-    <link rel="icon" href="/ccowmu.org/favicon.ico" sizes="16x16 32x32">
-    <link rel="icon" type="image/png" sizes="16x16" href="/ccowmu.org/images/icon-16x16.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/ccowmu.org/images/icon-32x32.png">
-    <link rel="icon" type="image/png" sizes="48x48" href="/ccowmu.org/images/icon-48x48.png">
-    <link rel="apple-touch-icon" sizes="192x192" href="/ccowmu.org/images/icon-192x192.png">
+    <link rel="icon" href="{{ "favicon.ico" | relURL }}" sizes="16x16 32x32">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ "images/icon-16x16.png" | relURL }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ "images/icon-32x32.png" | relURL }}">
+    <link rel="icon" type="image/png" sizes="48x48" href="{{ "images/icon-48x48.png" | relURL }}">
+    <link rel="apple-touch-icon" sizes="192x192" href="{{ "images/icon-192x192.png" | relURL }}">
     
     <!-- Use the same CSS as main site for perfect integration -->
-    <link rel="stylesheet" href="/ccowmu.org/css/style.css">
+    <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
     
     <!-- Minutes-specific CSS -->
     <style>
@@ -69,6 +69,8 @@
             padding: 1.5rem;
             transition: all var(--transition-fast);
             cursor: pointer;
+            text-decoration: none;
+            color: inherit;
         }
         
         .minute-card:hover {
@@ -233,19 +235,50 @@
 </head>
 <body>
     <!-- Load the same header as main site -->
-    <div id="header-container"></div>
+    <div id="header-container">
+        <header class="site-header">
+            <nav class="navbar">
+                <div class="nav-container">
+                    <div class="nav-brand">
+                        <a href="/" class="brand-link">
+                            <span class="brand-text">CCaWMU</span>
+                        </a>
+                    </div>
+                    <div class="nav-links">
+                        <a href="/">Home</a>
+                        <a href="/minutes/" class="active">Minutes</a>
+                        <a href="/join.html">Join</a>
+                        <a href="/chat.html">Chat</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+    </div>
     
     <main class="main-content">
         {{ block "main" . }}{{ end }}
     </main>
     
     <!-- Load the same footer as main site -->
-    <div id="footer-container"></div>
+    <div id="footer-container">
+        <footer class="site-footer">
+            <div class="container">
+                <div class="footer-content">
+                    <p>&copy; 2025 Computer Club @ WMU - Meeting Minutes Archive</p>
+                    <div class="footer-links">
+                        <a href="/">Home</a>
+                        <a href="/join.html">Join</a>
+                        <a href="/chat.html">Chat</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
     
     <!-- Load header and footer from main site -->
     <script>
         // Load header
-        fetch('/ccowmu.org/includes/header.html')
+        fetch('{{ "includes/header.html" | relURL }}')
             .then(response => response.text())
             .then(html => {
                 document.getElementById('header-container').innerHTML = html;
@@ -253,18 +286,46 @@
                 if (typeof initializeHeader === 'function') {
                     initializeHeader();
                 }
+            })
+            .catch(error => {
+                console.log('Header not found, using fallback');
+                document.getElementById('header-container').innerHTML = `
+                    <header class="site-header">
+                        <div class="container">
+                            <nav class="navbar">
+                                <a href="/" class="logo">CCaWMU</a>
+                                <div class="nav-links">
+                                    <a href="/">Home</a>
+                                    <a href="/minutes/" class="active">Minutes</a>
+                                    <a href="/join.html">Join</a>
+                                    <a href="/chat.html">Chat</a>
+                                </div>
+                            </nav>
+                        </div>
+                    </header>
+                `;
             });
         
         // Load footer
-        fetch('/ccowmu.org/includes/footer.html')
+        fetch('{{ "includes/footer.html" | relURL }}')
             .then(response => response.text())
             .then(html => {
                 document.getElementById('footer-container').innerHTML = html;
+            })
+            .catch(error => {
+                console.log('Footer not found, using fallback');
+                document.getElementById('footer-container').innerHTML = `
+                    <footer class="site-footer">
+                        <div class="container">
+                            <p>&copy; 2025 Computer Club @ WMU</p>
+                        </div>
+                    </footer>
+                `;
             });
     </script>
     
     <!-- Load main site JavaScript for theme toggle, etc. -->
-    <script src="/ccowmu.org/js/main.js"></script>
+    <script src="{{ "js/main.js" | relURL }}"></script>
     
     {{ block "scripts" . }}{{ end }}
 </body>

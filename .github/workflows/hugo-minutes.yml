@@ -84,24 +84,10 @@ jobs:
           
           # Generate years data for filtering
           mkdir -p data
-          find content/minutes -name "*.md" -exec grep -l "^date:" {} \; | \
-            xargs grep "^date:" | \
-            sed 's/.*date: \([0-9]\{4\}\).*/\1/' | \
-            sort -u > data/years.json
-          
-          # Convert to proper JSON array
-          echo -n "[" > temp_years.json
-          first=true
-          while read year; do
-            if [ "$first" = true ]; then
-              echo -n "\"$year\"" >> temp_years.json
-              first=false
-            else
-              echo -n ", \"$year\"" >> temp_years.json
-            fi
-          done < data/years.json
-          echo "]" >> temp_years.json
-          mv temp_years.json data/years.json
+          find content/minutes -name "*.md" -exec grep "^date:" {} \; | \
+            sed 's/date: \([0-9]\{4\}\).*/\1/' | \
+            sort -u | \
+            jq -R . | jq -s . > data/years.json
           
           echo "Generated years data: $(cat data/years.json)"
       
