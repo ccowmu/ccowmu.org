@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "en" }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    {{- with .Title }}
+    <title>{{ . }} | {{ $.Site.Title }}</title>
+    {{- else }}
+    <title>{{ .Site.Title }}</title>
+    {{- end }}
+    
+    {{- with .Description }}
+    <meta name="description" content="{{ . }}">
+    {{- else }}
+    <meta name="description" content="{{ .Site.Params.description }}">
+    {{- end }}
+    
+    <!-- Favicon and Icons -->
+    <link rel="icon" href="{{ "favicon.ico" | relURL }}" sizes="16x16 32x32">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ "images/icon-16x16.png" | relURL }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ "images/icon-32x32.png" | relURL }}">
+    <link rel="icon" type="image/png" sizes="48x48" href="{{ "images/icon-48x48.png" | relURL }}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{{ "images/icon.png" | relURL }}">
+    <link rel="apple-touch-icon" sizes="192x192" href="{{ "images/icon-192x192.png" | relURL }}">
+    <link rel="apple-touch-icon" sizes="512x512" href="{{ "images/icon-512x512.png" | relURL }}">
+    
+    <!-- RSS Feed -->
+    {{- with .OutputFormats.Get "rss" }}
+    <link rel="alternate" type="application/rss+xml" title="{{ $.Site.Title }} RSS Feed" href="{{ .Permalink }}">
+    {{- end }}
+    
+    <!-- Critical CSS inline for above-the-fold content -->
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}:root{--bg-primary:#0a0a0a;--bg-secondary:#1a1a1a;--bg-tertiary:#2a2a2a;--bg-window:#1e1e1e;--text-primary:#e0e0e0;--text-secondary:#b0b0b0;--text-muted:#808080;--accent-primary:#4a9eff;--border-color:#404040;--font-mono:'JetBrains Mono','Consolas','Monaco',monospace;--font-body:'Inter','Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;--container-max:1400px;--header-height:70px;--transition-medium:0.3s ease}[data-theme="light"]{--bg-primary:#f5f7fa;--bg-secondary:#ffffff;--text-primary:#212529;--text-secondary:#495057;--border-color:#dee2e6}body{font-family:var(--font-body);background:var(--bg-primary);color:var(--text-primary);line-height:1.6;overflow-x:hidden;transition:background-color var(--transition-medium)}.container{max-width:var(--container-max);margin:0 auto;padding:0 2rem}.main-content{margin-top:var(--header-height)}.site-header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,10,10,0.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border-color)}[data-theme="light"] .site-header{background:rgba(255,255,255,0.95)}.navbar{height:var(--header-height)}.hero{padding:4rem 0;text-align:center}.main-title{font-size:3rem;margin-bottom:1rem;font-weight:600}.hero-subtitle{font-size:1.2rem;color:var(--text-secondary);margin-bottom:2rem}
+    </style>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="{{ "manifest.json" | relURL }}">
+    <meta name="theme-color" content="#4a9eff">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="CCaWMU">
+    
+    <!-- DNS Prefetch for performance -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="dns-prefetch" href="//player.twitch.tv">
+    <link rel="dns-prefetch" href="//www.twitch.tv">
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://player.twitch.tv">
+    <link rel="preconnect" href="https://www.twitch.tv">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="{{ "js/main.js" | relURL }}" as="script">
+    <link rel="preload" href="{{ "css/style.css" | relURL }}" as="style">
+    
+    <!-- Load non-critical CSS asynchronously -->
+    <link rel="preload" href="{{ "css/style.css" | relURL }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ "css/style.css" | relURL }}"></noscript>
+    
+    <!-- Load fonts with display=swap for better performance -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
+    
+    {{- block "head" . }}{{- end }}
+</head>
+<body>
+    {{- partial "header.html" . }}
+
+    <main class="main-content">
+        {{- block "main" . }}{{- end }}
+    </main>
+
+    {{- partial "footer.html" . }}
+
+    <!-- Load JavaScript -->
+    <script src="{{ "js/main.js" | relURL }}" defer></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('{{ "sw.js" | relURL }}')
+                    .then(registration => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(registrationError => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
+    
+    {{- block "scripts" . }}{{- end }}
+</body>
+</html>

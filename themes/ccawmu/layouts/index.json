@@ -1,0 +1,13 @@
+[
+  {{- range $i, $page := .Site.Pages }}
+  {{- if ne $page.Type "json" }}
+  {
+    "title": {{ $page.Title | jsonify }},
+    "url": {{ $page.RelPermalink | jsonify }},
+    "content": {{ $page.Plain | jsonify }},
+    "date": {{ $page.Date.Format "2006-01-02" | jsonify }},
+    "section": {{ $page.Section | jsonify }}
+  }{{ if ne $i (sub (len $.Site.Pages) 1) }},{{ end }}
+  {{- end }}
+  {{- end }}
+]

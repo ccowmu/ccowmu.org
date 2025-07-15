@@ -1,0 +1,40 @@
+{{- define "head" }}
+<link rel="stylesheet" href="{{ "css/minutes.css" | relURL }}">
+{{- end }}
+
+{{- define "main" }}
+<div class="container">
+    <article class="minutes-single">
+        <header class="minutes-header">
+            <nav class="minutes-nav">
+                <a href="{{ "minutes" | relURL }}" class="back-link">← Back to Minutes</a>
+            </nav>
+            
+            <div class="meeting-info">
+                <time class="meeting-date" datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+                    {{ .Date.Format "January 2, 2006" }}
+                </time>
+                <h1 class="meeting-title">{{ .Title }}</h1>
+            </div>
+        </header>
+        
+        <div class="minutes-content">
+            {{ .Content }}
+        </div>
+        
+        <footer class="minutes-footer">
+            {{- with .PrevInSection }}
+            <a href="{{ .RelPermalink }}" class="nav-link prev">
+                ← {{ .Title }}
+            </a>
+            {{- end }}
+            
+            {{- with .NextInSection }}
+            <a href="{{ .RelPermalink }}" class="nav-link next">
+                {{ .Title }} →
+            </a>
+            {{- end }}
+        </footer>
+    </article>
+</div>
+{{- end }}

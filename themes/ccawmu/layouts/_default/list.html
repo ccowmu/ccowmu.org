@@ -1,0 +1,32 @@
+{{- define "main" }}
+<div class="container">
+    <header class="section-header">
+        <h1 class="section-title">{{ .Title }}</h1>
+        {{- with .Description }}
+        <p class="section-description">{{ . }}</p>
+        {{- end }}
+    </header>
+    
+    <div class="content-grid">
+        {{- range .Pages }}
+        <article class="content-card">
+            <header class="card-header">
+                <h2 class="card-title">
+                    <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                </h2>
+                {{- if not .Date.IsZero }}
+                <time class="card-date" datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+                    {{ .Date.Format "January 2, 2006" }}
+                </time>
+                {{- end }}
+            </header>
+            {{- with .Summary }}
+            <div class="card-summary">
+                {{ . }}
+            </div>
+            {{- end }}
+        </article>
+        {{- end }}
+    </div>
+</div>
+{{- end }}

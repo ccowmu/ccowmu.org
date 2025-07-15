@@ -1,0 +1,40 @@
+<header class="site-header">
+    <nav class="navbar">
+        <div class="nav-container">
+            <!-- Logo/Brand -->
+            <div class="nav-brand">
+                <a href="{{ .Site.BaseURL }}" class="brand-link">
+                    <span class="brand-text">CCaWMU</span>
+                </a>
+            </div>
+
+            <!-- Navigation Links -->
+            <ul class="nav-menu" id="nav-menu">
+                {{- range .Site.Menus.main }}
+                <li class="nav-item">
+                    <a href="{{ .URL }}" class="nav-link"{{ if hasPrefix .URL "http" }} target="_blank" rel="noopener"{{ end }}>{{ .Name }}</a>
+                </li>
+                {{- end }}
+            </ul>
+
+            <!-- Controls -->
+            <div class="nav-controls">
+                <!-- Theme Toggle -->
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                    <span class="theme-icon light">☀</span>
+                    <span class="theme-icon dark">☾</span>
+                </button>
+
+                <!-- Join Button -->
+                <a href="{{ "join" | relURL }}" class="nav-join-btn">Join</a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+</header>

@@ -1,0 +1,130 @@
+{{- define "head" }}
+<link rel="preload" href="{{ "js/flexsearch.min.js" | relURL }}" as="script">
+<link rel="preload" href="{{ "js/search.js" | relURL }}" as="script">
+<link rel="preload" href="{{ "css/minutes.css" | relURL }}" as="style">
+<link rel="stylesheet" href="{{ "css/minutes.css" | relURL }}">
+{{- end }}
+
+{{- define "main" }}
+<div class="container">
+    <!-- Hero Section -->
+    <section class="minutes-hero">
+        <div class="hero-content">
+            <h1 class="hero-title">{{ .Title }}</h1>
+            <p class="hero-subtitle">{{ .Description }}</p>
+        </div>
+    </section>
+
+    <!-- Search & Filter Section -->
+    <section class="minutes-controls">
+        <div class="search-container">
+            <div class="search-input-wrapper">
+                <input 
+                    id="search" 
+                    type="text" 
+                    placeholder="Search minutes by topic, content, or keywords..." 
+                    class="search-input"
+                    autocomplete="off"
+                >
+                <button class="search-clear" id="search-clear" aria-label="Clear search">×</button>
+            </div>
+        </div>
+        
+        <div class="filters-container">
+            <div class="filter-group">
+                <label for="year-filter" class="filter-label">Year</label>
+                <select id="year-filter" class="filter-select">
+                    <option value="all">All Years</option>
+                    {{- $years := slice }}
+                    {{- range .Pages }}
+                        {{- $years = $years | append (.Date.Format "2006") }}
+                    {{- end }}
+                    {{- range $y := sort (uniq $years) "value" "desc" }}
+                        <option value="{{ $y }}">{{ $y }}</option>
+                    {{- end }}
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="view-toggle" class="filter-label">View</label>
+                <div class="view-toggle" id="view-toggle">
+                    <button class="view-button active" data-view="card" aria-label="Card view">
+                        <span class="view-icon">⊞</span>
+                    </button>
+                    <button class="view-button" data-view="list" aria-label="List view">
+                        <span class="view-icon">☰</span>
+                    </button>
+                    <button class="view-button" data-view="timeline" aria-label="Timeline view">
+                        <span class="view-icon">⧖</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Minutes Content -->
+    <section class="minutes-content">
+        <div class="minutes-grid" id="minutes-container">
+            {{- range .Pages.ByDate.Reverse }}
+            <article class="minutes-card" data-year="{{ .Date.Format "2006" }}" data-date="{{ .Date.Format "2006-01-02" }}">
+                <div class="card-header">
+                    <time class="meeting-date" datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+                        <span class="date-day">{{ .Date.Format "02" }}</span>
+                        <span class="date-month">{{ .Date.Format "Jan" }}</span>
+                        <span class="date-year">{{ .Date.Format "2006" }}</span>
+                    </time>
+                    <h2 class="meeting-title">
+                        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                    </h2>
+                </div>
+                
+                {{- with .Summary }}
+                <div class="card-summary">
+                    {{ . | plainify | truncate 150 }}
+                </div>
+                {{- end }}
+                
+                <div class="card-footer">
+                    <a href="{{ .RelPermalink }}" class="read-more">Read Full Minutes →</a>
+                </div>
+            </article>
+            {{- end }}
+        </div>
+        
+        <div class="no-results" id="no-results" style="display: none;">
+            <div class="no-results-content">
+                <h3>No results found</h3>
+                <p>Try adjusting your search terms or filters.</p>
+            </div>
+        </div>
+    </section>
+</div>
+{{- end }}
+
+{{- define "scripts" }}
+<script src="{{ "js/flexsearch.min.js" | relURL }}"></script>
+<script src="{{ "js/search.js" | relURL }}"></script>
+<script>
+    // Initialize search with minutes data
+    document.addEventListener('DOMContentLoaded', function() {
+        // Search index data for FlexSearch
+        const searchData = [
+            {{- range .Pages }}
+            {
+                id: {{ .File.ContentBaseName | jsonify }},
+                title: {{ .Title | jsonify }},
+                content: {{ .Plain | jsonify }},
+                url: {{ .RelPermalink | jsonify }},
+                date: {{ .Date.Format "2006-01-02" | jsonify }},
+                year: {{ .Date.Format "2006" | jsonify }}
+            }{{ if not (eq . (index $.Pages (sub (len $.Pages) 1))) }},{{ end }}
+            {{- end }}
+        ];
+        
+        // Initialize search functionality
+        if (typeof initializeMinutesSearch === 'function') {
+            initializeMinutesSearch(searchData);
+        }
+    });
+</script>
+{{- end }}

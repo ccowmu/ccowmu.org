@@ -1,0 +1,73 @@
+baseURL = "https://ccawmu.org"
+languageCode = "en-us"
+title = "Computer Club @ WMU | CCaWMU"
+theme = "ccawmu"
+
+# Enable unsafe HTML for flexibility
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+# Site parameters
+[params]
+  description = "Western Michigan University's Computer Club - WMU's Resident Hackerspace Since 1976."
+  author = "Computer Club at WMU"
+  
+  # Club info
+  meetingTime = "Thursdays 6:00 PM"
+  meetingLocation = "2225 Kohrman Hall"
+  email = "rso_cclub@wmich.edu"
+  phone = "+16165041337"
+  
+  # Social links
+  github = "https://github.com/ccowmu"
+  flickr = "https://www.flickr.com/photos/ccawmu/"
+  linktree = "https://linktr.ee/ccawmu"
+  twitch = "ccawmu"
+
+# Navigation menu
+[menu]
+  [[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 10
+  
+  [[menu.main]]
+    name = "Minutes"
+    url = "/minutes/"
+    weight = 20
+  
+  [[menu.main]]
+    name = "Chat"
+    url = "/chat/"
+    weight = 30
+  
+  [[menu.main]]
+    name = "Events"
+    url = "https://experiencewmu.wmich.edu/organization/computer-club-at-wmu/events"
+    weight = 40
+  
+  [[menu.main]]
+    name = "Wiki"
+    url = "https://cclub.cs.wmich.edu/wiki/Main_Page"
+    weight = 50
+
+# Output formats
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+  page = ["HTML"]
+
+# Permalinks
+[permalinks]
+  posts = "/:year/:month/:day/:slug/"
+  minutes = "/minutes/:slug/"
+
+# Directory structure
+[directories]
+  archetypes = "archetypes"
+  content = "content"
+  data = "data"
+  layouts = "layouts"
+  static = "static"
+  themes = "themes"
