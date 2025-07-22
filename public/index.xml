@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>The Computer Club at Western Michigan University on CCAWMU</title><link>https://lochlanmcelroy.github.io/ccowmu.org/</link><description>Recent content in The Computer Club at Western Michigan University on CCAWMU</description><generator>Hugo</generator><language>en-us</language><atom:link href="https://lochlanmcelroy.github.io/ccowmu.org/index.xml" rel="self" type="application/rss+xml"/><item><title>Chat &amp; Community</title><link>https://lochlanmcelroy.github.io/ccowmu.org/chat/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lochlanmcelroy.github.io/ccowmu.org/chat/</guid><description>&lt;section class='page-header'>
+ &lt;div class='container'>
+ &lt;h1>Chat &amp;amp; Community&lt;/h1>
+ &lt;p class='page-description'>Connect with fellow members through our self-hosted Matrix chat server.&lt;/p>
+ &lt;/div>
+&lt;/section> 
+&lt;section class="chat-intro">
+ &lt;div class="container">
+ &lt;div class="intro-card">
+ &lt;div class="intro-header">
+ &lt;div class="matrix-logo">⚡&lt;/div>
+ &lt;div class="intro-info">
+ &lt;h2>Our Self-Hosted Matrix Server&lt;/h2>
+ &lt;p>Computer Club hosts our own Matrix chat server in Floyd Hall, WMU's engineering building. We use Element as our client for secure, decentralized communication.&lt;/p>
+ &lt;/div>
+ &lt;/div>
+ 
+ &lt;div class="intro-features">
+ &lt;div class="feature-grid">
+ &lt;div class="feature-item">
+ &lt;span class="feature-icon">🔒&lt;/span>
+ &lt;div class="feature-content">
+ &lt;h3>End-to-End Encryption&lt;/h3>
+ &lt;p>Your messages are secure and private by default&lt;/p>
+ &lt;/div>
+ &lt;/div>
+ 
+ &lt;div class="feature-item">
+ &lt;span class="feature-icon">🌐&lt;/span>
+ &lt;div class="feature-content">
+ &lt;h3>Decentralized&lt;/h3>
+ &lt;p>Not controlled by any single company or entity&lt;/p>
+ &lt;/div>
+ &lt;/div>
+ 
+ &lt;div class="feature-item">
+ &lt;span class="feature-icon">💻&lt;/span>
+ &lt;div class="feature-content">
+ &lt;h3>Cross-Platform&lt;/h3>
+ &lt;p>Available on desktop, mobile, and web&lt;/p>
+ &lt;/div>
+ &lt;/div>
+ 
+ &lt;div class="feature-item">
+ &lt;span class="feature-icon">⚡&lt;/span>
+ &lt;div class="feature-content">
+ &lt;h3>Free &amp; Open Source&lt;/h3>
+ &lt;p>No cost, no ads, just community&lt;/p></description></item><item><title>Join the Computer Club</title><link>https://lochlanmcelroy.github.io/ccowmu.org/join/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lochlanmcelroy.github.io/ccowmu.org/join/</guid><description>&lt;section class='page-header'>
+ &lt;div class='container'>
+ &lt;h1>Join the Computer Club&lt;/h1>
+ &lt;p class='page-description'>Become part of Western Michigan University&amp;#39;s premier technical organization.&lt;/p>
+ &lt;/div>
+&lt;/section> 
+&lt;section class="membership-info">
+ &lt;div class="container">
+ &lt;div class="info-card" style="max-width: 800px; margin: 0 auto; text-align: center;">
+ &lt;h2>Why Join the Computer Club?&lt;/h2>
+ &lt;div style="font-size: 1.1rem; line-height: 1.7; color: var(--text-secondary);">
+ &lt;p style="margin-bottom: 1.5rem;">With our own office and the resources in it, our greatest resource remains our people. After almost 40 years at WMU, we've gained hundreds of great members doing remarkable things at companies like Google, Apple, LinkedIn, IBM, and the DoD.&lt;/p>
+ 
+ &lt;p style="margin-bottom: 1.5rem;">If you're even a little interested in security, programming, hardware, electronics, or have an idea for your own project, then chances are you'll find a friend in us.&lt;/p></description></item></channel></rss>

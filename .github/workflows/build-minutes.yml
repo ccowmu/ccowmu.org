@@ -1,12 +1,22 @@
-name: Build Minutes
+name: Build and Deploy Site
 on:
   schedule:
     - cron: '0 6 * * *'
   workflow_dispatch:
   repository_dispatch:
+  push:
+    branches:
+      - master
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - name: Pull minutes markdown
@@ -28,22 +38,21 @@ jobs:
             } > minutes/content/$name
             cat "$f" >> minutes/content/$name
           done
-      - name: Commit minutes to content folder
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add minutes/content/*.md
-          git commit -m "Update minutes content from ccowmu/minutes" || echo "No changes to commit"
-          git push
-      - name: Build
+      - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: 'latest'
           extended: true
-      - name: Build site
+      - name: Build minutes site
         run: hugo --minify -s minutes
+      - name: Build main site
+        run: hugo --minify
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: minutes-site
-          path: minutes/public
+          path: ./public
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

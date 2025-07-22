@@ -1,34 +1,54 @@
 # Computer Club at Western Michigan University Website
 
-Static website built with HTML, CSS, and vanilla JavaScript. No build tools required.
+Static website built with Hugo. The site includes the main website and an integrated minutes archive.
 
 ## How to run locally
 
-1. Open `index.html` in your browser
-2. Or use a local server: `python -m http.server 8000`
+### Prerequisites
+- Install Hugo (extended version): https://gohugo.io/installation/
+
+### Development
+1. Clone the repository
+2. Run `hugo server` for the main site
+3. Or run `hugo server -s minutes` for the minutes only
+4. Visit `http://localhost:1313`
 
 ## File structure
 
-- `index.html` - Main page
-- `css/style.css` - All styles
-- `js/` - JavaScript files
-- `includes/` - Header and footer components
-- `hugo-minutes/` - Meeting minutes archive (Hugo-based)
+- `content/` - Main site content (Markdown)
+- `layouts/` - Hugo templates
+- `static/` - Static assets (CSS, JS, images)
+- `themes/ccawmu/` - Custom Hugo theme
+- `minutes/` - Separate Hugo site for meeting minutes
+- `public/` - Generated static files (created by Hugo build)
 
-## Minutes system IN DEVELOPMENT
+## Minutes system
 
-The minutes archive uses Hugo and updates automatically via GitHub Actions.
+The minutes archive automatically pulls from the [ccowmu/minutes](https://github.com/ccowmu/minutes) repository and builds them into the site. This happens automatically via GitHub Actions.
 
-To work on minutes locally:
-1. Install Hugo
-2. Run `hugo server` in the `hugo-minutes/` directory
+## Building for production
+
+The site is automatically built and deployed via GitHub Actions when changes are pushed to the master branch.
+
+To build manually:
+```bash
+# Build minutes first
+hugo --minify -s minutes
+
+# Build main site
+hugo --minify
+
+# Copy minutes to main site
+mkdir -p public/minutes
+cp -r minutes/public/* public/minutes/
+```
 
 ## Making changes
 
-- Edit HTML files directly
-- All CSS is in one file with clear sections
-- JavaScript is split into logical files
-- Shared header/footer in `includes/`
+- Edit Markdown files in `content/` for page content
+- Modify templates in `layouts/` for structure changes
+- Update styles in `themes/ccawmu/` or `static/css/`
+- Minutes are automatically synced from the separate minutes repository
 
 ## Contributing
 
