@@ -1,0 +1,6 @@
+<section class='page-header'>
+  <div class='container'>
+    <h1>{{ .Get "title" }}</h1>
+    {{ with .Get "subtitle" }}<p class='page-description'>{{ . }}</p>{{ end }}
+  </div>
+</section> 
