@@ -1,0 +1,28 @@
+{{ $isHome := .IsHome }}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<base href="{{ .Site.BaseURL }}">
+<title>{{ if $isHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+<meta name="description" content="{{ with .Params.description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+
+<!-- Icons & Manifest -->
+<link rel="icon" href="{{ "favicon.ico" | relURL }}" sizes="16x16 32x32">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ "images/icon-16x16.png" | relURL }}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ "images/icon-32x32.png" | relURL }}">
+<link rel="icon" type="image/png" sizes="48x48" href="{{ "images/icon-48x48.png" | relURL }}">
+<link rel="apple-touch-icon" sizes="144x144" href="{{ "images/icon.png" | relURL }}">
+<link rel="apple-touch-icon" sizes="192x192" href="{{ "images/icon-192x192.png" | relURL }}">
+<link rel="alternate" type="application/rss+xml" title="CCOWMU RSS Feed" href="{{ "rss.xml" | relURL }}">
+<link rel="manifest" href="{{ "manifest.json" | relURL }}">
+<meta name="theme-color" content="#4a9eff">
+
+<!-- Critical CSS inline -->
+<style>
+*{margin:0;padding:0;box-sizing:border-box}:root{--bg-primary:#0a0a0a;--bg-secondary:#1a1a1a;--text-primary:#e0e0e0;--text-secondary:#b0b0b0;--accent-primary:#4a9eff;--border-color:#404040;--font-body:'Inter','Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;--container-max:1400px;--header-height:70px;--transition-medium:0.3s ease}[data-theme="light"]{--bg-primary:#f5f7fa;--bg-secondary:#ffffff;--text-primary:#212529;--text-secondary:#495057;--border-color:#dee2e6}body{font-family:var(--font-body);background:var(--bg-primary);color:var(--text-primary);line-height:1.6;overflow-x:hidden}.container{max-width:var(--container-max);margin:0 auto;padding:0 2rem}.main-content{margin-top:var(--header-height)}.site-header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,10,10,0.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border-color)}
+</style>
+
+<!-- Load stylesheet & fonts -->
+<link rel="preload" href="{{ "css/style.css" | relURL }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="{{ "css/style.css" | relURL }}"></noscript>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"></noscript> 
