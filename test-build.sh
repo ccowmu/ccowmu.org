@@ -13,14 +13,15 @@ fi
 
 # Build minutes first
 echo "Building minutes..."
-hugo --minify -s minutes
+hugo --minify --cleanDestinationDir -s minutes
 
 # Build main site
 echo "Building main site..."
-hugo --minify
+hugo --minify --cleanDestinationDir
 
 # Copy minutes into main public
 echo "Copying minutes into public/minutes..."
+rm -rf public/minutes
 mkdir -p public/minutes
 cp -r minutes/public/* public/minutes/
 
