@@ -8,14 +8,14 @@
 <meta name="description" content="{{ with .Params.description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
 
 <!-- Icons & Manifest -->
-<link rel="icon" href="{{ "favicon.ico" | relURL }}" sizes="16x16 32x32">
-<link rel="icon" type="image/png" sizes="16x16" href="{{ "images/icon-16x16.png" | relURL }}">
-<link rel="icon" type="image/png" sizes="32x32" href="{{ "images/icon-32x32.png" | relURL }}">
-<link rel="icon" type="image/png" sizes="48x48" href="{{ "images/icon-48x48.png" | relURL }}">
-<link rel="apple-touch-icon" sizes="144x144" href="{{ "images/icon.png" | relURL }}">
-<link rel="apple-touch-icon" sizes="192x192" href="{{ "images/icon-192x192.png" | relURL }}">
-<link rel="alternate" type="application/rss+xml" title="CCOWMU RSS Feed" href="{{ "index.xml" | relURL }}">
-<link rel="manifest" href="{{ "manifest.json" | relURL }}">
+<link rel="icon" href="{{ "favicon.ico" | absURL }}" sizes="16x16 32x32">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ "images/icon-16x16.png" | absURL }}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ "images/icon-32x32.png" | absURL }}">
+<link rel="icon" type="image/png" sizes="48x48" href="{{ "images/icon-48x48.png" | absURL }}">
+<link rel="apple-touch-icon" sizes="144x144" href="{{ "images/icon.png" | absURL }}">
+<link rel="apple-touch-icon" sizes="192x192" href="{{ "images/icon-192x192.png" | absURL }}">
+<link rel="alternate" type="application/rss+xml" title="CCOWMU RSS Feed" href="{{ "index.xml" | absURL }}">
+<link rel="manifest" href="{{ "manifest.json" | absURL }}">
 <meta name="theme-color" content="#4a9eff">
 
 <!-- Critical CSS inline -->
@@ -24,7 +24,7 @@
 </style>
 
 <!-- Load stylesheet & fonts -->
-<link rel="preload" href="{{ "css/style.css" | relURL }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="{{ "css/style.css" | relURL }}"></noscript>
+<link rel="preload" href="{{ "css/style.css" | absURL }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="{{ "css/style.css" | absURL }}"></noscript>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"></noscript> 

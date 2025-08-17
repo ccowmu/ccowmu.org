@@ -15,8 +15,8 @@ description: 'WMU''s Resident Hackerspace Since 1976.'
   </div>
 </div>
 <div class='hero-actions'>
-  <a href='{{ "join" | relURL }}' class='join-button'>Join the Club</a>
-</div>
+  <a href='{{ "join" | absURL }}' class='join-button'>Join the Club</a>
+  </div>
 {{< /hero >}}
 
 {{< windows-grid >}} 

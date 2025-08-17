@@ -17,6 +17,9 @@ concurrency:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      # Project Pages URL: https://<owner>.github.io/<repo>/
+      BASEURL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
     permissions:
       contents: read
       pages: write
@@ -52,10 +55,11 @@ jobs:
           extended: true
       - name: Build minutes site
         run: |
-          hugo --minify -s minutes
+          echo "Using BASEURL=${BASEURL}"
+          hugo --minify -s minutes -b "${BASEURL%/}/minutes/"
       - name: Build main site
         run: |
-          hugo --minify
+          hugo --minify -b "${BASEURL%/}/"
       - name: Copy minutes to main site
         run: |
           mkdir -p public/minutes

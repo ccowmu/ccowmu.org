@@ -20,11 +20,11 @@
 
     {{ partial "footer.html" . }}
 
-    <script src="{{ "js/main.js" | relURL }}" async></script>
+    <script src="{{ "js/main.js" | absURL }}" async></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('{{ "sw.js" | relURL }}')
+                navigator.serviceWorker.register('{{ "sw.js" | absURL }}')
                     .then(registration => { console.log('SW registered:', registration); })
                     .catch(err => { console.log('SW registration failed:', err); });
             });

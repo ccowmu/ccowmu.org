@@ -17,7 +17,7 @@ hugo --minify --cleanDestinationDir -s minutes
 
 # Build main site
 echo "Building main site..."
-hugo --minify --cleanDestinationDir
+hugo --minify --cleanDestinationDir -b "http://localhost:1313/ccowmu.org/"
 
 # Copy minutes into main public
 echo "Copying minutes into public/minutes..."
