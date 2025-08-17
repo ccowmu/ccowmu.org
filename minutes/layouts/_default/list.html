@@ -67,6 +67,10 @@
             <section class="minutes-section">
                 <div id="minutes-container" class="minutes-grid">
                     {{ range .Pages.ByDate.Reverse }}
+                    {{/* Build a link relative to /minutes/ to avoid duplicating the segment (./YYYYMMDD/) */}}
+                    {{ $rel := .RelPermalink }}
+                    {{ $slug := replaceRE ".*/([^/]+)/$" "$1" $rel }}
+                    {{ $href := printf "./%s/" $slug }}
                     <article class="minutes-card" data-year="{{ .Date.Format "2006" }}" data-title="{{ .Title | lower }}" data-content="{{ .Plain | lower }}">
                         <div class="card-header">
                             <time datetime="{{ .Date.Format "2006-01-02" }}" class="card-date">
@@ -81,7 +85,7 @@
                         
                         <div class="card-content">
                             <h2 class="card-title">
-                                <a href="{{ .RelPermalink }}" class="card-link">{{ .Title }}</a>
+                                <a href="{{ $href }}" class="card-link">{{ .Title }}</a>
                             </h2>
                             
                             <div class="card-excerpt">
@@ -113,7 +117,7 @@
                         </div>
                         
                         <div class="card-footer">
-                            <a href="{{ .RelPermalink }}" class="read-more-btn">
+                            <a href="{{ $href }}" class="read-more-btn">
                                 <span>Read Minutes</span>
                                 <span class="btn-icon">→</span>
                             </a>

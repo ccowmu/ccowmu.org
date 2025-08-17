@@ -63,7 +63,10 @@
                     
                     <div class="nav-adjacent">
                         {{ if .PrevInSection }}
-                        <a href="{{ .PrevInSection.RelPermalink }}" class="nav-button nav-button-prev">
+                        {{ $prel := .PrevInSection.RelPermalink }}
+                        {{ $pslug := replaceRE ".*/([^/]+)/$" "$1" $prel }}
+                        {{ $phref := printf "../%s/" $pslug }}
+                        <a href="{{ $phref }}" class="nav-button nav-button-prev">
                             <span class="nav-icon">←</span>
                             <span class="nav-text">
                                 <small>Previous</small>
@@ -73,7 +76,10 @@
                         {{ end }}
                         
                         {{ if .NextInSection }}
-                        <a href="{{ .NextInSection.RelPermalink }}" class="nav-button nav-button-next">
+                        {{ $nrel := .NextInSection.RelPermalink }}
+                        {{ $nslug := replaceRE ".*/([^/]+)/$" "$1" $nrel }}
+                        {{ $nhref := printf "../%s/" $nslug }}
+                        <a href="{{ $nhref }}" class="nav-button nav-button-next">
                             <span class="nav-text">
                                 <small>Next</small>
                                 <span>{{ .NextInSection.Title }}</span>
