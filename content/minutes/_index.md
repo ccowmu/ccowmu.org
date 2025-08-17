@@ -1,10 +1,5 @@
----
 title: "Meeting Minutes"
 description: "Archive of club meeting minutes."
----
+draft: true
+<!-- Placeholder disabled: the minutes subsite renders /minutes/. -->
 
-> Under construction. For now, browse minutes here:
-
-- View minutes archive: [Minutes Archive]({{ "/minutes/" | relURL }})
-
-We'll finish integrating the archive into the new theme shortly.
