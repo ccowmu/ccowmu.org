@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>The Computer Club at Western Michigan University on</title><link>/</link><description>Recent content in The Computer Club at Western Michigan University on</description><generator>Hugo</generator><language>en</language><atom:link href="/index.xml" rel="self" type="application/rss+xml"/><item><title>Chat &amp; Community</title><link>/chat/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/chat/</guid><description>&lt;section class='page-header'>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>The Computer Club at Western Michigan University on</title><link>http://localhost:1313/ccowmu.org/</link><description>Recent content in The Computer Club at Western Michigan University on</description><generator>Hugo</generator><language>en</language><atom:link href="http://localhost:1313/ccowmu.org/index.xml" rel="self" type="application/rss+xml"/><item><title>Chat &amp; Community</title><link>http://localhost:1313/ccowmu.org/chat/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://localhost:1313/ccowmu.org/chat/</guid><description>&lt;section class='page-header'>
  &lt;div class='container'>
  &lt;h1>Chat &amp;amp; Community&lt;/h1>
  &lt;p class='page-description'>Connect with fellow members through our self-hosted Matrix chat server.&lt;/p>
@@ -45,7 +45,7 @@
  &lt;span class="feature-icon">⚡&lt;/span>
  &lt;div class="feature-content">
  &lt;h3>Free &amp; Open Source&lt;/h3>
- &lt;p>No cost, no ads, just community&lt;/p></description></item><item><title>Join the Computer Club</title><link>/join/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/join/</guid><description>&lt;section class='page-header'>
+ &lt;p>No cost, no ads, just community&lt;/p></description></item><item><title>Join the Computer Club</title><link>http://localhost:1313/ccowmu.org/join/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://localhost:1313/ccowmu.org/join/</guid><description>&lt;section class='page-header'>
  &lt;div class='container'>
  &lt;h1>Join the Computer Club&lt;/h1>
  &lt;p class='page-description'>Become part of Western Michigan University&amp;#39;s premier technical organization.&lt;/p>
