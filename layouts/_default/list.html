@@ -1,4 +1,11 @@
 {{ define "main" }}
+    {{ if .Site.Params.underConstruction }}
+    <div class="container" style="margin:1rem auto 2rem;">
+        <div style="background:#fff3cd;color:#664d03;border:1px solid #ffec99;padding:1rem 1.25rem;border-radius:8px;">
+            <strong>Under construction:</strong> Some listings may be incomplete while we rebuild the site.
+        </div>
+    </div>
+    {{ end }}
     {{ .Content }}
     {{ if .Pages }}
     <div class="container">

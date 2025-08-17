@@ -1,7 +1,9 @@
 {{ $isHome := .IsHome }}
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<base href="{{ .Site.BaseURL }}">
+{{ if .Site.Params.underConstruction }}
+<meta name="robots" content="noindex, nofollow">
+{{ end }}
 <title>{{ if $isHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
 <meta name="description" content="{{ with .Params.description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
 
@@ -12,7 +14,7 @@
 <link rel="icon" type="image/png" sizes="48x48" href="{{ "images/icon-48x48.png" | relURL }}">
 <link rel="apple-touch-icon" sizes="144x144" href="{{ "images/icon.png" | relURL }}">
 <link rel="apple-touch-icon" sizes="192x192" href="{{ "images/icon-192x192.png" | relURL }}">
-<link rel="alternate" type="application/rss+xml" title="CCOWMU RSS Feed" href="{{ "rss.xml" | relURL }}">
+<link rel="alternate" type="application/rss+xml" title="CCOWMU RSS Feed" href="{{ "index.xml" | relURL }}">
 <link rel="manifest" href="{{ "manifest.json" | relURL }}">
 <meta name="theme-color" content="#4a9eff">
 

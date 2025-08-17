@@ -3,21 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{ if .Site.Params.underConstruction }}
+    <meta name="robots" content="noindex, nofollow">
+    {{ end }}
     <title>{{ if .IsHome }}Meeting Minutes | CCaWMU{{ else if .Title }}{{ .Title }} | Meeting Minutes | CCaWMU{{ else }}Meeting Minutes | CCaWMU{{ end }}</title>
     <meta name="description" content="{{ if .Summary }}Meeting minutes from {{ .Date.Format "January 2, 2006" }} - {{ .Summary | truncate 150 }}{{ else if .Description }}{{ .Description }}{{ else }}Browse all Computer Club at WMU meeting minutes. Search by date, topic, or content.{{ end }}">
     
     <!-- Favicon and Icons -->
-    <link rel="icon" href="{{ "favicon.ico" | absURL }}" sizes="16x16 32x32">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ "images/icon-16x16.png" | absURL }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ "images/icon-32x32.png" | absURL }}">
-    <link rel="icon" type="image/png" sizes="48x48" href="{{ "images/icon-48x48.png" | absURL }}">
+    {{/* Determine relative prefixes for minutes assets and links */}}
+    {{ $assetPrefix := "" }}
+    {{ if not .IsHome }}{{ $assetPrefix = "../" }}{{ end }}
+    {{ $siteRootPrefix := "../" }}
+    {{ if not .IsHome }}{{ $siteRootPrefix = "../../" }}{{ end }}
+
+    <link rel="icon" href="{{ printf "%sfavicon.ico" $assetPrefix }}" sizes="16x16 32x32">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ printf "%simages/icon-16x16.png" $assetPrefix }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ printf "%simages/icon-32x32.png" $assetPrefix }}">
+    <link rel="icon" type="image/png" sizes="48x48" href="{{ printf "%simages/icon-48x48.png" $assetPrefix }}">
     
     <!-- PWA Manifest -->
-    <link rel="manifest" href="{{ "manifest.json" | absURL }}">
+    <link rel="manifest" href="{{ printf "%smanifest.json" $assetPrefix }}">
     <meta name="theme-color" content="#4a9eff">
     
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ "css/style.css" | absURL }}">
+    <link rel="stylesheet" href="{{ printf "%scss/style.css" $assetPrefix }}">
     
     <!-- Theme support -->
     <script>
@@ -32,7 +41,7 @@
             <div class="nav-container">
                 <!-- Logo/Brand -->
                 <div class="nav-brand">
-                    <a href="https://lochlanmcelroy.github.io/ccowmu.org/" class="brand-link">
+                    <a href='{{ $siteRootPrefix }}' class="brand-link">
                         <span class="brand-text">CCaWMU</span>
                     </a>
                 </div>
@@ -40,13 +49,13 @@
                 <!-- Navigation Links -->
                 <ul class="nav-menu" id="nav-menu">
                     <li class="nav-item">
-                        <a href="https://lochlanmcelroy.github.io/ccowmu.org/" class="nav-link">Home</a>
+                        <a href='{{ $siteRootPrefix }}' class="nav-link">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a href="https://lochlanmcelroy.github.io/ccowmu.org/minutes/public/" class="nav-link {{ if eq .Section "minutes" }}nav-link-active{{ end }}">Minutes</a>
+                        <a href='{{ if .IsHome }}./{{ else }}../{{ end }}' class="nav-link {{ if eq .Section "minutes" }}nav-link-active{{ end }}">Minutes</a>
                     </li>
                     <li class="nav-item">
-                        <a href="https://lochlanmcelroy.github.io/ccowmu.org/chat.html" class="nav-link">Chat</a>
+                        <a href='{{ printf "%schat" $siteRootPrefix }}' class="nav-link">Chat</a>
                     </li>
                     <li class="nav-item">
                         <a href="https://experiencewmu.wmich.edu/organization/computer-club-at-wmu/events" class="nav-link">Events</a>
@@ -65,7 +74,7 @@
                     </button>
 
                     <!-- Join Button -->
-                    <a href="{{ "join.html" | absURL }}" class="nav-join-btn">Join</a>
+                    <a href='{{ printf "%sjoin" $siteRootPrefix }}' class="nav-join-btn">Join</a>
                 </div>
 
                 <!-- Mobile Menu Toggle -->
@@ -77,3 +86,10 @@
             </div>
         </nav>
     </header>
+    {{ if .Site.Params.underConstruction }}
+    <div class="uc-banner" role="status" aria-live="polite" style="background:#ffbf69;color:#1a1a1a;border-bottom:1px solid rgba(0,0,0,.2);">
+        <div class="container" style="padding:.6rem 2rem;text-align:center;font-weight:600;">
+            🚧 Minutes section is under construction. Content and search may be incomplete. 🚧
+        </div>
+    </div>
+    {{ end }}

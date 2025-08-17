@@ -51,9 +51,11 @@ jobs:
           hugo-version: 'latest'
           extended: true
       - name: Build minutes site
-        run: hugo --minify -s minutes
+        run: |
+          hugo --minify -s minutes
       - name: Build main site
-        run: hugo --minify
+        run: |
+          hugo --minify
       - name: Copy minutes to main site
         run: |
           mkdir -p public/minutes

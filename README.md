@@ -62,3 +62,9 @@ cp -r minutes/public/* public/minutes/
 If you see 404 errors for images when testing locally, make sure you're serving the site from a local server rather than opening the HTML file directly in your browser.
 
 Keep it simple!
+
+## Deployment targets and links
+
+- GitHub Pages: built from `master` via `.github/workflows/deploy-site.yml` using Hugo. Minutes are built separately and copied into `public/minutes/`.
+- cclub.cs.wmich.edu: static export in `public/` can be rsynced to the server root. Because `relativeURLs=true` and all templates use `relURL`, links and assets resolve correctly whether hosted at a subpath or root.
+- Under construction mode: controlled by `params.underConstruction` in `hugo.yml`. While true, a banner appears site-wide and list/single pages show a notice.

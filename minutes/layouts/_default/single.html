@@ -6,10 +6,10 @@
             <nav class="breadcrumb" aria-label="Breadcrumb">
                 <ol class="breadcrumb-list">
                     <li class="breadcrumb-item">
-                        <a href="{{ .Site.BaseURL }}" class="breadcrumb-link">Home</a>
+                        <a href="../../" class="breadcrumb-link">Home</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ .Site.BaseURL }}" class="breadcrumb-link">Minutes</a>
+                        <a href="../" class="breadcrumb-link">Minutes</a>
                     </li>
                     <li class="breadcrumb-item breadcrumb-current" aria-current="page">
                         {{ .Title }}
@@ -56,7 +56,7 @@
             <!-- Navigation -->
             <nav class="minutes-navigation">
                 <div class="nav-buttons">
-                    <a href="{{ .Site.BaseURL }}" class="nav-button nav-button-back">
+                    <a href="../" class="nav-button nav-button-back">
                         <span class="nav-icon">←</span>
                         <span>Back to Minutes</span>
                     </a>
@@ -89,6 +89,6 @@
 
     {{ partial "footer.html" . }}
     
-    <script src="{{ "js/main.js" | absURL }}"></script>
+    <script src="../js/main.js"></script>
 </body>
 </html>

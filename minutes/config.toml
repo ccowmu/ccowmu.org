@@ -1,4 +1,6 @@
-baseURL = "/ccowmu.org/minutes/public/"
+baseURL = "/minutes/"
+relativeURLs = true
+canonifyURLs = false
 disableKinds = ["taxonomy", "RSS", "sitemap"]
 [markup]
   [markup.goldmark]
@@ -8,3 +10,6 @@ disableKinds = ["taxonomy", "RSS", "sitemap"]
   minutes = "/:contentbasename/"
 [outputs]
 home = ["HTML", "JSON"]
+
+[params]
+  underConstruction = true
