@@ -155,6 +155,13 @@ function initPageFeatures() {
     if (document.querySelector('.windows-grid')) {
         initWindowAnimations();
         initGroupPhotoClick();
+    // Keep the live stream window the same height as the about.sh window
+    syncStreamHeightToAbout();
+    // Recalculate on resize (debounced)
+    const resizeHandler = debounce(syncStreamHeightToAbout, 150);
+    window.addEventListener('resize', resizeHandler);
+    // Re-run after fonts/layout settle
+    setTimeout(syncStreamHeightToAbout, 250);
     }
     
     // Initialize meeting date calculations
@@ -518,3 +525,33 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// ===== STREAM HEIGHT SYNC =====
+function syncStreamHeightToAbout() {
+    // Only apply on wider viewports where windows are side-by-side
+    const isWide = window.matchMedia('(min-width: 769px)').matches;
+    const aboutContent = document.querySelector('.window-frame[data-window="about"] .window-content');
+    const streamContent = document.querySelector('.window-frame[data-window="stream"] .window-content');
+    if (!streamContent) return;
+
+    if (!isWide || !aboutContent) {
+        // On small screens or if about is missing, let stream auto-size
+        streamContent.style.height = '';
+        return;
+    }
+
+    // Measure about window content height and apply to stream content
+    const aboutHeight = aboutContent.getBoundingClientRect().height;
+    if (aboutHeight > 0) {
+        streamContent.style.height = `${aboutHeight}px`;
+    }
+}
+
+// Simple debounce utility
+function debounce(fn, wait = 100) {
+    let t;
+    return function(...args) {
+        clearTimeout(t);
+        t = setTimeout(() => fn.apply(this, args), wait);
+    };
+}

@@ -1,6 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Guard: ensure root site does not have its own /minutes/ content
+if [ -d content/minutes ]; then
+	if find content/minutes -type f \( ! -name '.gitkeep' \) | grep -q .; then
+		echo "Error: root content/minutes/ contains files. Remove them so the minutes subsite owns /minutes/." >&2
+		echo "Offending files:" >&2
+		find content/minutes -type f \( ! -name '.gitkeep' \) >&2
+		exit 1
+	fi
+fi
+
 # Build minutes first
 echo "Building minutes..."
 hugo --minify -s minutes
