@@ -1,8 +1,8 @@
-baseURL = "/"
+baseURL = "https://cclub.cs.wmich.edu/"
 languageCode = "en-us"
 title = "CCAWMU"
-relativeURLs = true
-canonifyURLs = false
+relativeURLs = false
+canonifyURLs = true
 enableRobotsTXT = true
 
 [params]
