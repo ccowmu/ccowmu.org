@@ -336,7 +336,7 @@ function showFallbackNavigation() {
                         <ul class="nav-menu" id="nav-menu">
                             <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
                             <li class="nav-item"><a href="https://github.com/ccowmu/minutes/tree/master/minutes" class="nav-link" target="_blank">Minutes</a></li>
-                            <li class="nav-item"><a href="chat.html" class="nav-link">Chat</a></li>
+                            <li class="nav-item"><a href="connect.html" class="nav-link">Connect</a></li>
                             <li class="nav-item"><a href="https://experiencewmu.wmich.edu/organization/computer-club-at-wmu/events" class="nav-link" target="_blank">Events</a></li>
                             <li class="nav-item"><a href="https://cclub.cs.wmich.edu/wiki/Main_Page" class="nav-link" target="_blank">Wiki</a></li>
                         </ul>
@@ -388,7 +388,7 @@ function showFallbackFooter() {
                                     <span class="contact-icon">🐙</span>
                                     <span>GitHub</span>
                                 </a>
-                                <a href="chat.html" class="contact-link">
+                                <a href="connect.html" class="contact-link">
                                     <span class="contact-icon">💬</span>
                                     <span>Element/Matrix Chat</span>
                                 </a>
@@ -456,7 +456,7 @@ document.addEventListener('keydown', function(e) {
     // Alt + C = Chat
     if (e.altKey && e.code === 'KeyC') {
         e.preventDefault();
-        window.location.href = 'chat.html';
+        window.location.href = 'connect.html';
     }
     
     // Alt + J = Join

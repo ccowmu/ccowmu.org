@@ -150,7 +150,7 @@ class RSSGenerator {
             {
                 title: "Join Our Matrix Chat Server",
                 description: "Connect with fellow club members on our Matrix chat server for real-time discussions.",
-                link: `${window.location.origin}/chat.html`,
+                link: `${window.location.origin}/connect.html`,
                 category: "Announcements",
                 pubDate: new Date('2025-07-08T12:00:00Z').toUTCString()
             }

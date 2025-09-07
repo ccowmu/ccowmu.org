@@ -1,8 +1,8 @@
 # Computer Club at Western Michigan University Website
 
 Static website built with Hugo. This repo contains two Hugo sites:
-- Main site (root)
-- Minutes subsite in `minutes/` (published at `/minutes/`)
+- Main site (root) - uses `config.toml`
+- Minutes subsite in `minutes/` (published at `/minutes/`) - uses `minutes/config.toml`
 
 The build stitches them together into a single static export in `public/`.
 
@@ -33,6 +33,21 @@ Notes
 - Built separately with its own theme/templates and then published under `/minutes/` in the main export.
 - Breadcrumbs and assets use relative paths, so pages work both at root and subpath hosting.
 - RSS is at `index.xml` (not `rss.xml`).
+
+## Adding new meeting minutes
+
+To add new meeting minutes:
+
+1. Create a new file in `minutes/content/` with the naming format `YYYYMMDD.md` (e.g., `20250116.md`)
+2. Use this front matter template:
+   ```yaml
+   ---
+   title: "Meeting Minutes – MM/DD/YYYY"
+   date: YYYY-MM-DD
+   ---
+   ```
+3. Add your meeting content in Markdown format
+4. Rebuild using `./test-build.sh`
 
 ## Build and deploy
 

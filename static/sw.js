@@ -10,7 +10,7 @@ const STATIC_ASSETS = [
     './',
     './index.html',
     './join.html',
-    './chat.html',
+    './connect.html',
     './css/style.css',
     './js/main.js',
     './js/clock.js',
