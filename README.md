@@ -55,7 +55,7 @@ To add new meeting minutes:
 Manual build
 ```bash
 # From repo root
-./test-build.sh
+./build.sh
 ```
 The script:
 - Pulls latest minutes from https://github.com/ccowmu/minutes
@@ -67,11 +67,23 @@ The script:
 Deploy
 - Publish `public/` to your web root: `rsync -av public/ /var/www/ccowmu/_site/`
 
-## Under construction mode
+## Server Deployment
 
-- Controlled via `params.underConstruction` in `config.toml` (main) and `minutes/config.toml`.
-- While enabled, pages include a site-wide banner and `<meta name="robots" content="noindex, nofollow">`.
-- Toggle off by removing or setting `underConstruction = false` in both configs when ready to launch.
+To deploy the site on the server:
+
+1. Run the pull script to update the repository:
+   ```bash
+   ~/server-rebuild/containers$ ./pull-website.sh
+   ```
+
+2. Navigate to the site directory and build:
+   ```bash
+   cd ~/server-rebuild/containers/ccowmu.org
+   ./build.sh
+   ```
+
+That's it! The site will be built and deployed automatically.
+
 
 ## Making changes
 
@@ -88,8 +100,4 @@ Deploy
 	- Ensure you haven’t hard-coded absolute paths in templates; we use relative links in the minutes templates.
 - RSS feed location:
 	- Use `index.xml` for feeds (root: `/index.xml`, minutes: `/minutes/index.xml`).
-
-## Deployment
-
-Deploy to cclub.cs.wmich.edu: rsync or copy the `public/` folder to the web root.
 
