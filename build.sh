@@ -50,32 +50,52 @@ for f in minutes_src/minutes/*.md; do
             continue
         fi
         
-        # Create proper front matter for Hugo
-        echo "---" > "minutes/content/$name"
-        
-        # Cross-platform date parsing (macOS vs Linux)
-        # Detect OS type more reliably
-        if [[ "$OSTYPE" == "darwin"* ]]; then
-            # macOS (BSD date)
-            formatted_date=$(date -j -f '%Y%m%d' "$date" '+%m/%d/%Y' 2>/dev/null || echo "Invalid Date ($date)")
-            iso_date=$(date -j -f '%Y%m%d' "$date" '+%Y-%m-%d' 2>/dev/null || echo "$year-$month-$day")
+        # Check if file already has front matter with additional fields
+        if grep -q "^---$" "$f" && grep -q -E "(meeting_type|attendees):" "$f"; then
+            # File has enhanced front matter, preserve it but update title/date
+            awk -v title="Meeting Minutes – $formatted_date" -v date="$iso_date" '
+            BEGIN { in_fm = 0; fm_end = 0 }
+            /^---$/ { 
+                if (!in_fm) { 
+                    in_fm = 1; print; next 
+                } else { 
+                    fm_end = 1; print; next 
+                }
+            }
+            in_fm && !fm_end {
+                if (/^title:/) { print "title: \"" title "\""; next }
+                if (/^date:/) { print "date: " date; next }
+                print
+            }
+            fm_end { print }
+            ' "$f" > "minutes/content/$name"
         else
-            # Linux and other systems (GNU date)
-            formatted_date=$(date -d "$year-$month-$day" '+%m/%d/%Y' 2>/dev/null || echo "Invalid Date ($date)")
-            iso_date=$(date -d "$year-$month-$day" '+%Y-%m-%d' 2>/dev/null || echo "$year-$month-$day")
-        fi
-        
-        echo "title: \"Meeting Minutes – $formatted_date\"" >> "minutes/content/$name"
-        echo "date: $iso_date" >> "minutes/content/$name"
-        echo "---" >> "minutes/content/$name"
-        
-        # Add the content - handle files with or without existing front matter
-        if grep -q "^---$" "$f"; then
-            # File has front matter, skip it
-            awk '/^---$/{if(++c==2) f=1; next} f' "$f" >> "minutes/content/$name"
-        else
-            # File has no front matter, copy entire content
-            cat "$f" >> "minutes/content/$name"
+            # Create basic front matter for files without enhanced fields
+            # Cross-platform date parsing (macOS vs Linux)
+            # Detect OS type more reliably
+            if [[ "$OSTYPE" == "darwin"* ]]; then
+                # macOS (BSD date)
+                formatted_date=$(date -j -f '%Y%m%d' "$date" '+%m/%d/%Y' 2>/dev/null || echo "Invalid Date ($date)")
+                iso_date=$(date -j -f '%Y%m%d' "$date" '+%Y-%m-%d' 2>/dev/null || echo "$year-$month-$day")
+            else
+                # Linux and other systems (GNU date)
+                formatted_date=$(date -d "$year-$month-$day" '+%m/%d/%Y' 2>/dev/null || echo "Invalid Date ($date)")
+                iso_date=$(date -d "$year-$month-$day" '+%Y-%m-%d' 2>/dev/null || echo "$year-$month-$day")
+            fi
+            
+            echo "---" > "minutes/content/$name"
+            echo "title: \"Meeting Minutes – $formatted_date\"" >> "minutes/content/$name"
+            echo "date: $iso_date" >> "minutes/content/$name"
+            echo "---" >> "minutes/content/$name"
+            
+            # Add the content - handle files with or without existing front matter
+            if grep -q "^---$" "$f"; then
+                # File has front matter, skip it
+                awk '/^---$/{if(++c==2) f=1; next} f' "$f" >> "minutes/content/$name"
+            else
+                # File has no front matter, copy entire content
+                cat "$f" >> "minutes/content/$name"
+            fi
         fi
         
         echo "Processed: $name"
