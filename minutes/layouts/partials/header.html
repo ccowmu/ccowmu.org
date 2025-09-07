@@ -16,13 +16,15 @@
     {{ $siteRootPrefix := "../" }}
     {{ if not .IsHome }}{{ $siteRootPrefix = "../../" }}{{ end }}
 
-    <link rel="icon" href="{{ printf "%sfavicon.ico" $assetPrefix }}" sizes="16x16 32x32">
+    <!-- Use site-root favicon to avoid missing /minutes/favicon.ico -->
+    <link rel="icon" href="{{ printf "%sfavicon.ico" $siteRootPrefix }}" sizes="16x16 32x32">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ printf "%simages/icon-16x16.png" $assetPrefix }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ printf "%simages/icon-32x32.png" $assetPrefix }}">
     <link rel="icon" type="image/png" sizes="48x48" href="{{ printf "%simages/icon-48x48.png" $assetPrefix }}">
     
     <!-- PWA Manifest -->
-    <link rel="manifest" href="{{ printf "%smanifest.json" $assetPrefix }}">
+    <!-- Use site-root manifest to avoid missing /minutes/manifest.json -->
+    <link rel="manifest" href="{{ printf "%smanifest.json" $siteRootPrefix }}">
     <meta name="theme-color" content="#4a9eff">
     
     <!-- Styles -->

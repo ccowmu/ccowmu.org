@@ -30,7 +30,7 @@
                         <span class="button-icon"><img src="{{ printf "%simages/linktree.png" $assetPrefix }}" alt="Linktree" class="footer-icon"></span>
                         <span>Linktree</span>
                     </a>
-                    <a href='{{ printf "%schat" $siteRootPrefix }}' class="footer-button">
+                    <a href='{{ printf "%sconnect" $siteRootPrefix }}' class="footer-button">
                         <span class="button-icon"><img src='{{ printf "%simages/logo-mark-primary.svg" $assetPrefix }}' alt="Matrix Chat" class="footer-icon"></span>
                         <span>Matrix Chat</span>
                     </a>
@@ -53,7 +53,8 @@
                         <span class="button-icon">📚</span>
                         <span>Club Wiki</span>
                     </a>
-                    <a href='{{ if .IsHome }}./index.xml{{ else }}../index.xml{{ end }}' class="footer-button" target="_blank" rel="noopener">
+                    <!-- Always point RSS to site-root to avoid missing /minutes/index.xml -->
+                    <a href='{{ printf "%sindex.xml" $siteRootPrefix }}' class="footer-button" target="_blank" rel="noopener">
                         <span class="button-icon">📡</span>
                         <span>RSS Feed</span>
                     </a>
