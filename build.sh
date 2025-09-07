@@ -50,6 +50,17 @@ for f in minutes_src/minutes/*.md; do
             continue
         fi
         
+        # Cross-platform date parsing (macOS vs Linux) - do this first for all files
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+            # macOS (BSD date)
+            formatted_date=$(date -j -f '%Y%m%d' "$date" '+%m/%d/%Y' 2>/dev/null || echo "Invalid Date ($date)")
+            iso_date=$(date -j -f '%Y%m%d' "$date" '+%Y-%m-%d' 2>/dev/null || echo "$year-$month-$day")
+        else
+            # Linux and other systems (GNU date)
+            formatted_date=$(date -d "$year-$month-$day" '+%m/%d/%Y' 2>/dev/null || echo "Invalid Date ($date)")
+            iso_date=$(date -d "$year-$month-$day" '+%Y-%m-%d' 2>/dev/null || echo "$year-$month-$day")
+        fi
+        
         # Check if file already has front matter with additional fields
         if grep -q "^---$" "$f" && grep -q -E "(meeting_type|attendees):" "$f"; then
             # File has enhanced front matter, preserve it but update title/date
@@ -71,18 +82,6 @@ for f in minutes_src/minutes/*.md; do
             ' "$f" > "minutes/content/$name"
         else
             # Create basic front matter for files without enhanced fields
-            # Cross-platform date parsing (macOS vs Linux)
-            # Detect OS type more reliably
-            if [[ "$OSTYPE" == "darwin"* ]]; then
-                # macOS (BSD date)
-                formatted_date=$(date -j -f '%Y%m%d' "$date" '+%m/%d/%Y' 2>/dev/null || echo "Invalid Date ($date)")
-                iso_date=$(date -j -f '%Y%m%d' "$date" '+%Y-%m-%d' 2>/dev/null || echo "$year-$month-$day")
-            else
-                # Linux and other systems (GNU date)
-                formatted_date=$(date -d "$year-$month-$day" '+%m/%d/%Y' 2>/dev/null || echo "Invalid Date ($date)")
-                iso_date=$(date -d "$year-$month-$day" '+%Y-%m-%d' 2>/dev/null || echo "$year-$month-$day")
-            fi
-            
             echo "---" > "minutes/content/$name"
             echo "title: \"Meeting Minutes – $formatted_date\"" >> "minutes/content/$name"
             echo "date: $iso_date" >> "minutes/content/$name"
