@@ -4,6 +4,7 @@ title = "CCAWMU"
 relativeURLs = false
 canonifyURLs = true
 enableRobotsTXT = true
+ignoreErrors = ["error-disable-taxonomy"]
 
 [params]
 	description = "WMU's Resident Hackerspace Since 1976."

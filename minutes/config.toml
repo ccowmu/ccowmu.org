@@ -1,13 +1,13 @@
-baseURL = "/minutes/"
-relativeURLs = true
-canonifyURLs = false
-disableKinds = ["taxonomy", "RSS", "sitemap"]
+baseURL = "https://cclub.cs.wmich.edu/minutes/"
+relativeURLs = false
+canonifyURLs = true
+disableKinds = ["term", "RSS", "sitemap"]
 [markup]
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true
 [permalinks]
-  minutes = "/:contentbasename/"
+  minutes = "/:filename/"
 [outputs]
 home = ["HTML", "JSON"]
 
