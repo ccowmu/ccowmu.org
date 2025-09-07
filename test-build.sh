@@ -11,13 +11,47 @@ if [ -d content/minutes ]; then
 	fi
 fi
 
+# Pull latest minutes from ccowmu/minutes repository
+echo "Pulling latest minutes from ccowmu/minutes repository..."
+if [ -d "minutes_src" ]; then
+    rm -rf minutes_src
+fi
+git clone https://github.com/ccowmu/minutes.git minutes_src
+
+# Copy minutes content
+echo "Updating minutes content..."
+mkdir -p minutes/content
+rm -f minutes/content/*.md
+for f in minutes_src/minutes/*.md; do
+    if [ -f "$f" ]; then
+        name=$(basename "$f")
+        date=${name%.*}
+        year=${date:0:4}
+        
+        # Create proper front matter for Hugo
+        echo "---" > "minutes/content/$name"
+        echo "title: \"Meeting Minutes – $(date -j -f '%Y%m%d' "$date" '+%m/%d/%Y' 2>/dev/null || echo 'Unknown Date')\"" >> "minutes/content/$name"
+        echo "date: $(date -j -f '%Y%m%d' "$date" '+%Y-%m-%d' 2>/dev/null || echo '1970-01-01')" >> "minutes/content/$name"
+        echo "---" >> "minutes/content/$name"
+        
+        # Add the content (skip any existing front matter)
+        awk '/^---$/{if(++c==2) f=1; next} f' "$f" >> "minutes/content/$name"
+        
+        echo "Processed: $name"
+    fi
+done
+
+# Clean up temporary directory
+rm -rf minutes_src
+echo "Minutes update complete."
+
 # Build minutes first
 echo "Building minutes..."
 hugo --minify --cleanDestinationDir -s minutes
 
 # Build main site
 echo "Building main site..."
-hugo --minify --cleanDestinationDir -b "http://localhost:1313/ccowmu.org/"
+hugo --minify --cleanDestinationDir
 
 # Copy minutes into main public
 echo "Copying minutes into public/minutes..."
