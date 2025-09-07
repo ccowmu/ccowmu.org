@@ -3,7 +3,7 @@
 /resources/_gen/
 /hugo_stats.json
 /minutes/content/
-/minutes/public/
+/minutes/public/*
 
 # OS / editor junk
 .DS_Store
