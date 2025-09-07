@@ -38,21 +38,19 @@ Notes
 
 To add new meeting minutes:
 
-1. Create a new file in `minutes/content/` with the naming format `YYYYMMDD.md` (e.g., `20250116.md`)
-2. Use this front matter template:
-   ```yaml
-   ---
-   title: "Meeting Minutes – MM/DD/YYYY"
-   date: YYYY-MM-DD
-   ---
+1. **Add to the minutes repository**: https://github.com/ccowmu/minutes
+   - Create a new file in the `minutes/` directory with the naming format `YYYYMMDD.md` (e.g., `20250116.md`)
+   - Use standard Markdown format (front matter will be generated automatically)
+
+2. **Update this site**:
+   ```bash
+   # The test-build script automatically pulls latest minutes
+   ./test-build.sh
    ```
-3. Add your meeting content in Markdown format
-4. Rebuild using `./test-build.sh`
+
+**Note**: Minutes content is pulled from the separate [ccowmu/minutes](https://github.com/ccowmu/minutes) repository during build.
 
 ## Build and deploy
-
-CI
-- GitHub Actions builds minutes first, then main, then copies `minutes/public` to `public/minutes`.
 
 Manual build
 ```bash
@@ -60,12 +58,14 @@ Manual build
 ./test-build.sh
 ```
 The script:
-- Fails fast if the main site has any files under `content/minutes/` (the minutes subsite must own `/minutes/`).
-- Builds minutes and main with `--cleanDestinationDir` to avoid stale files.
-- Replaces `public/minutes` with the minutes build output.
+- Pulls latest minutes from https://github.com/ccowmu/minutes
+- Processes minutes content and generates Hugo front matter automatically
+- Fails fast if the main site has any files under `content/minutes/` (the minutes subsite must own `/minutes/`)
+- Builds minutes and main with `--cleanDestinationDir` to avoid stale files
+- Replaces `public/minutes` with the minutes build output
 
 Deploy
-- Publish `public/` to your web root (e.g., rsync to cclub.cs.wmich.edu or push via GitHub Pages).
+- Publish `public/` to your web root: `rsync -av public/ /var/www/ccowmu/_site/`
 
 ## Under construction mode
 
@@ -78,7 +78,7 @@ Deploy
 - Edit content: `content/`
 - Templating/partials: `layouts/`
 - Styles/JS: `static/` and `themes/ccawmu/`
-- Minutes content lives in the separate minutes repo; the minutes site here is the renderer/UI.
+- Minutes content is automatically pulled from the [ccowmu/minutes repository](https://github.com/ccowmu/minutes) during build
 
 ## Troubleshooting
 
@@ -89,8 +89,7 @@ Deploy
 - RSS feed location:
 	- Use `index.xml` for feeds (root: `/index.xml`, minutes: `/minutes/index.xml`).
 
-## Deployment targets
+## Deployment
 
-- GitHub Pages: built from `master` via `.github/workflows/deploy-site.yml`. Minutes are bundled under `public/minutes/`.
-- cclub.cs.wmich.edu: rsync or copy the `public/` folder to the web root.
+Deploy to cclub.cs.wmich.edu: rsync or copy the `public/` folder to the web root.
 
