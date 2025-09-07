@@ -1,0 +1,15 @@
+# Hugo build output
+/public/
+/resources/_gen/
+/hugo_stats.json
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE junk
+.vscode/
+.idea/
