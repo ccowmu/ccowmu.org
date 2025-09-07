@@ -1,0 +1,82 @@
+name: Build and Deploy Site
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+  repository_dispatch:
+  push:
+    branches:
+      - master
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    env:
+      # Project Pages URL: https://<owner>.github.io/<repo>/
+      BASEURL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Pull minutes markdown
+        run: |
+          git clone https://github.com/ccowmu/minutes.git minutes_src
+          mkdir -p minutes/content
+          rm -f minutes/content/*.md
+          for f in minutes_src/minutes/*.md; do
+            name=$(basename "$f")
+            date=${name%.*}
+            year=${date:0:4}
+            month=${date:4:2}
+            day=${date:6:2}
+            {
+              echo '---'
+              echo "title: \"Meeting Minutes – $month/$day/$year\""
+              echo "date: $year-$month-$day"
+              echo '---'
+            } > minutes/content/$name
+            cat "$f" >> minutes/content/$name
+          done
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: 'latest'
+          extended: true
+      - name: Build minutes site
+        run: |
+          echo "Using BASEURL=${BASEURL}"
+          hugo --minify -s minutes -b "${BASEURL%/}/minutes/"
+      - name: Build main site
+        run: |
+          hugo --minify -b "${BASEURL%/}/"
+      - name: Copy minutes to main site
+        run: |
+          mkdir -p public/minutes
+          cp -r minutes/public/* public/minutes/
+      - name: Verify build output
+        run: |
+          echo "Checking build artifacts..."
+          ls -la public/
+          test -f public/index.html || (echo "ERROR: public/index.html not found" && exit 1)
+          test -d public/minutes || (echo "ERROR: public/minutes directory not found" && exit 1)
+          echo "Build verification successful!"
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

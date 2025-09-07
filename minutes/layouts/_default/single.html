@@ -1,0 +1,100 @@
+{{ partial "header.html" . }}
+    
+    <main class="main-content">
+        <div class="container">
+            <!-- Breadcrumb Navigation -->
+            <nav class="breadcrumb" aria-label="Breadcrumb">
+                <ol class="breadcrumb-list">
+                    <li class="breadcrumb-item">
+                        <a href="../../" class="breadcrumb-link">Home</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="../" class="breadcrumb-link">Minutes</a>
+                    </li>
+                    <li class="breadcrumb-item breadcrumb-current" aria-current="page">
+                        {{ .Title }}
+                    </li>
+                </ol>
+            </nav>
+
+            <!-- Minutes Article -->
+            <article class="minutes-article">
+                <header class="minutes-header">
+                    <div class="minutes-meta">
+                        <time datetime="{{ .Date.Format "2006-01-02" }}" class="minutes-date">
+                            {{ .Date.Format "Monday, January 2, 2006" }}
+                        </time>
+                        {{ if .Params.meeting_type }}
+                        <span class="meeting-type">{{ .Params.meeting_type }}</span>
+                        {{ end }}
+                    </div>
+                    <h1 class="minutes-title">{{ .Title }}</h1>
+                    {{ if .Params.attendees }}
+                    <div class="attendees-count">
+                        <span class="attendees-icon">👥</span>
+                        <span>{{ len .Params.attendees }} attendees</span>
+                    </div>
+                    {{ end }}
+                </header>
+
+                <div class="minutes-content">
+                    {{ .Content }}
+                </div>
+
+                {{ if .Params.attendees }}
+                <section class="attendees-section">
+                    <h2>Attendees</h2>
+                    <ul class="attendees-list">
+                        {{ range .Params.attendees }}
+                        <li class="attendee">{{ . }}</li>
+                        {{ end }}
+                    </ul>
+                </section>
+                {{ end }}
+            </article>
+
+            <!-- Navigation -->
+            <nav class="minutes-navigation">
+                <div class="nav-buttons">
+                    <a href="../" class="nav-button nav-button-back">
+                        <span class="nav-icon">←</span>
+                        <span>Back to Minutes</span>
+                    </a>
+                    
+                    <div class="nav-adjacent">
+                        {{ if .PrevInSection }}
+                        {{ $prel := .PrevInSection.RelPermalink }}
+                        {{ $pslug := replaceRE ".*/([^/]+)/$" "$1" $prel }}
+                        {{ $phref := printf "../%s/" $pslug }}
+                        <a href="{{ $phref }}" class="nav-button nav-button-prev">
+                            <span class="nav-icon">←</span>
+                            <span class="nav-text">
+                                <small>Previous</small>
+                                <span>{{ .PrevInSection.Title }}</span>
+                            </span>
+                        </a>
+                        {{ end }}
+                        
+                        {{ if .NextInSection }}
+                        {{ $nrel := .NextInSection.RelPermalink }}
+                        {{ $nslug := replaceRE ".*/([^/]+)/$" "$1" $nrel }}
+                        {{ $nhref := printf "../%s/" $nslug }}
+                        <a href="{{ $nhref }}" class="nav-button nav-button-next">
+                            <span class="nav-text">
+                                <small>Next</small>
+                                <span>{{ .NextInSection.Title }}</span>
+                            </span>
+                            <span class="nav-icon">→</span>
+                        </a>
+                        {{ end }}
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </main>
+
+    {{ partial "footer.html" . }}
+    
+    <script src="../js/main.js"></script>
+</body>
+</html>

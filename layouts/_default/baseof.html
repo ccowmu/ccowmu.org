@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{ partial "head.html" . }}
+</head>
+<body>
+    {{ partial "header.html" . }}
+
+    {{ if .Site.Params.underConstruction }}
+    <div class="uc-banner" role="status" aria-live="polite" style="background:#ffbf69;color:#1a1a1a;border-bottom:1px solid rgba(0,0,0,.2);margin-top:var(--header-height);">
+        <div class="container" style="padding:.6rem 2rem;text-align:center;font-weight:600;">
+            🚧 This site is under construction. Some content is still being migrated. 🚧
+        </div>
+    </div>
+    {{ end }}
+
+    <main class="main-content">
+        {{ block "main" . }}{{ end }}
+    </main>
+
+    {{ partial "footer.html" . }}
+
+    <script src="{{ "js/main.js" | absURL }}" async></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('{{ "sw.js" | absURL }}')
+                    .then(registration => { console.log('SW registered:', registration); })
+                    .catch(err => { console.log('SW registration failed:', err); });
+            });
+        }
+    </script>
+</body>
+</html> 

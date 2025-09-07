@@ -1,0 +1,9 @@
+<section class='hero'>
+  <div class='container'>
+    <div class='hero-content'>
+      <h1 class='main-title'>{{ .Get "heading" }}</h1>
+      {{ with .Get "subtitle" }}<p class='hero-subtitle'>{{ . }}</p>{{ end }}
+      {{ .Inner }}
+    </div>
+  </div>
+</section> 

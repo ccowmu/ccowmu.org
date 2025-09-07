@@ -1,0 +1,15 @@
+baseURL = "/minutes/"
+relativeURLs = true
+canonifyURLs = false
+disableKinds = ["taxonomy", "RSS", "sitemap"]
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+[permalinks]
+  minutes = "/:contentbasename/"
+[outputs]
+home = ["HTML", "JSON"]
+
+[params]
+  underConstruction = true

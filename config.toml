@@ -1,0 +1,10 @@
+baseURL = "/"
+languageCode = "en-us"
+title = "CCAWMU"
+relativeURLs = true
+canonifyURLs = false
+enableRobotsTXT = true
+
+[params]
+	description = "WMU's Resident Hackerspace Since 1976."
+	underConstruction = true

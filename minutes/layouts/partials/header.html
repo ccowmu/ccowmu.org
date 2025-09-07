@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{ if .Site.Params.underConstruction }}
+    <meta name="robots" content="noindex, nofollow">
+    {{ end }}
+    <title>{{ if .IsHome }}Meeting Minutes | CCaWMU{{ else if .Title }}{{ .Title }} | Meeting Minutes | CCaWMU{{ else }}Meeting Minutes | CCaWMU{{ end }}</title>
+    <meta name="description" content="{{ if .Summary }}Meeting minutes from {{ .Date.Format "January 2, 2006" }} - {{ .Summary | truncate 150 }}{{ else if .Description }}{{ .Description }}{{ else }}Browse all Computer Club at WMU meeting minutes. Search by date, topic, or content.{{ end }}">
+    
+    <!-- Favicon and Icons -->
+    {{/* Determine relative prefixes for minutes assets and links */}}
+    {{ $assetPrefix := "" }}
+    {{ if not .IsHome }}{{ $assetPrefix = "../" }}{{ end }}
+    {{ $siteRootPrefix := "../" }}
+    {{ if not .IsHome }}{{ $siteRootPrefix = "../../" }}{{ end }}
+
+    <link rel="icon" href="{{ printf "%sfavicon.ico" $assetPrefix }}" sizes="16x16 32x32">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ printf "%simages/icon-16x16.png" $assetPrefix }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ printf "%simages/icon-32x32.png" $assetPrefix }}">
+    <link rel="icon" type="image/png" sizes="48x48" href="{{ printf "%simages/icon-48x48.png" $assetPrefix }}">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="{{ printf "%smanifest.json" $assetPrefix }}">
+    <meta name="theme-color" content="#4a9eff">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ printf "%scss/style.css" $assetPrefix }}">
+    
+    <!-- Theme support -->
+    <script>
+        if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <!-- Logo/Brand -->
+                <div class="nav-brand">
+                    <a href='{{ $siteRootPrefix }}' class="brand-link">
+                        <span class="brand-text">CCaWMU</span>
+                    </a>
+                </div>
+
+                <!-- Navigation Links -->
+                <ul class="nav-menu" id="nav-menu">
+                    <li class="nav-item">
+                        <a href='{{ $siteRootPrefix }}' class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href='{{ if .IsHome }}./{{ else }}../{{ end }}' class="nav-link {{ if eq .Section "minutes" }}nav-link-active{{ end }}">Minutes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href='{{ printf "%sconnect" $siteRootPrefix }}' class="nav-link">Connect</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://experiencewmu.wmich.edu/organization/computer-club-at-wmu/events" class="nav-link">Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://cclub.cs.wmich.edu/wiki/Main_Page" class="nav-link">Wiki</a>
+                    </li>
+                </ul>
+
+                <!-- Controls -->
+                <div class="nav-controls">
+                    <!-- Theme Toggle -->
+                    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                        <span class="theme-icon light">☀</span>
+                        <span class="theme-icon dark">☾</span>
+                    </button>
+
+                    <!-- Join Button -->
+                    <a href='{{ printf "%sjoin" $siteRootPrefix }}' class="nav-join-btn">Join</a>
+                </div>
+
+                <!-- Mobile Menu Toggle -->
+                <div class="nav-toggle" id="nav-toggle">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+    

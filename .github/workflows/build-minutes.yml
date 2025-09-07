@@ -1,0 +1,58 @@
+name: Build and Deploy Site
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+  repository_dispatch:
+  push:
+    branches:
+      - master
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Pull minutes markdown
+        run: |
+          git clone https://github.com/ccowmu/minutes.git minutes_src
+          mkdir -p minutes/content
+          rm -f minutes/content/*.md
+          for f in minutes_src/minutes/*.md; do
+            name=$(basename "$f")
+            date=${name%.*}
+            year=${date:0:4}
+            month=${date:4:2}
+            day=${date:6:2}
+            {
+              echo '---'
+              echo "title: \"Meeting Minutes – $month/$day/$year\""
+              echo "date: $year-$month-$day"
+              echo '---'
+            } > minutes/content/$name
+            cat "$f" >> minutes/content/$name
+          done
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: 'latest'
+          extended: true
+      - name: Build minutes site
+        run: hugo --minify -s minutes
+      - name: Build main site
+        run: hugo --minify
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
