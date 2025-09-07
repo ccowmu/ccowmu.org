@@ -30,8 +30,18 @@ for f in minutes_src/minutes/*.md; do
         
         # Create proper front matter for Hugo
         echo "---" > "minutes/content/$name"
-        echo "title: \"Meeting Minutes – $(date -j -f '%Y%m%d' "$date" '+%m/%d/%Y' 2>/dev/null || echo 'Unknown Date')\"" >> "minutes/content/$name"
-        echo "date: $(date -j -f '%Y%m%d' "$date" '+%Y-%m-%d' 2>/dev/null || echo '1970-01-01')" >> "minutes/content/$name"
+        # Cross-platform date parsing (macOS vs Linux)
+        if date --version >/dev/null 2>&1; then
+            # GNU date (Linux)
+            formatted_date=$(date -d "${date:0:4}-${date:4:2}-${date:6:2}" '+%m/%d/%Y' 2>/dev/null || echo 'Unknown Date')
+            iso_date=$(date -d "${date:0:4}-${date:4:2}-${date:6:2}" '+%Y-%m-%d' 2>/dev/null || echo '1970-01-01')
+        else
+            # BSD date (macOS)
+            formatted_date=$(date -j -f '%Y%m%d' "$date" '+%m/%d/%Y' 2>/dev/null || echo 'Unknown Date')
+            iso_date=$(date -j -f '%Y%m%d' "$date" '+%Y-%m-%d' 2>/dev/null || echo '1970-01-01')
+        fi
+        echo "title: \"Meeting Minutes – $formatted_date\"" >> "minutes/content/$name"
+        echo "date: $iso_date" >> "minutes/content/$name"
         echo "---" >> "minutes/content/$name"
         
         # Add the content (skip any existing front matter)
