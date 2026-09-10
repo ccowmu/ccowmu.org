@@ -1,0 +1,14 @@
+{{- $names := slice -}}
+{{- if fileExists "minutes/content" -}}
+	{{- range (os.ReadDir "minutes/content") -}}
+		{{- $stem := strings.TrimSuffix ".md" .Name -}}
+		{{- if and (not .IsDir) (ne $stem .Name) (eq 8 (len $stem)) -}}
+			{{- $names = $names | append $stem -}}
+		{{- end -}}
+	{{- end -}}
+{{- end -}}
+{{- $count := len $names -}}
+{{- if lt $count 1 -}}
+	{{- $count = site.Params.portalMinutesFallback | default 813 -}}
+{{- end -}}
+{{- return (dict "count" $count "latest" (first 5 (sort $names "value" "desc"))) -}}

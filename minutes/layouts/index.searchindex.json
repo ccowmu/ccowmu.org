@@ -1,0 +1,12 @@
+{{- $out := dict -}}
+{{- range site.RegularPages -}}
+	{{- $text := .Plain -}}
+	{{- if reflect.IsSlice .Params.attendees -}}
+		{{- $text = printf "%s %s" $text (delimit .Params.attendees " ") -}}
+	{{- end -}}
+	{{- with .Params.meeting_type -}}
+		{{- $text = printf "%s %s" $text . -}}
+	{{- end -}}
+	{{- $out = merge $out (dict (.Date.Format "20060102") (delimit (sort (uniq (findRE "[a-z0-9]{2,23}" (lower $text)))) " ")) -}}
+{{- end -}}
+{{- jsonify $out -}}

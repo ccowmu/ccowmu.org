@@ -1,0 +1,44 @@
+{{- $page := .page -}}
+{{- $title := cond $page.IsHome site.Title (printf "%s | %s" $page.Title site.Title) -}}
+{{- $desc := $page.Params.description | default site.Params.description -}}
+{{- $url := $page.Permalink -}}
+{{- $image := site.Params.ogImage | default "/images/group_photo_2025.webp" | absURL -}}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{{- if site.Params.underConstruction }}
+<meta name="robots" content="noindex, nofollow">
+{{- end }}
+<title>{{ $title }}</title>
+<meta name="description" content="{{ $desc }}">
+<link rel="canonical" href="{{ $url }}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $desc }}">
+<meta property="og:url" content="{{ $url }}">
+<meta property="og:image" content="{{ $image }}">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ $title }}">
+<meta name="twitter:description" content="{{ $desc }}">
+<meta name="twitter:image" content="{{ $image }}">
+<meta name="theme-color" content="#7a45e6">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/icon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/icon-32x32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="/images/icon-48x48.png">
+<link rel="apple-touch-icon" sizes="192x192" href="/images/icon-192x192.png">
+<link rel="alternate" type="application/rss+xml" title="Meeting Minutes" href="/minutes/index.xml">
+<link rel="manifest" href="/manifest.json">
+{{- if $page.IsHome }}
+<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@type" "Organization" "name" "Computer Club at Western Michigan University" "alternateName" (slice "CCAWMU" "cclub") "url" site.BaseURL "logo" ("/images/icon-512x512.png" | absURL) "email" "rso_cclub@wmich.edu" "foundingDate" "1976" "sameAs" (slice "https://github.com/ccowmu" "https://twitch.tv/ccawmu" "https://www.flickr.com/photos/ccawmu/" "https://linktr.ee/ccawmu") | jsonify | safeJS }}</script>
+{{- end }}
+<link rel="stylesheet" href="{{ partial "portal/asset.html" "css/portal.css" }}">
+<script src="{{ partial "portal/asset.html" "js/prefs.js" }}"></script>
+<script>
+(function () {
+	var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+	portalPrefs.apply(document.documentElement, portalPrefs.load(localStorage), reduce);
+})();
+</script>

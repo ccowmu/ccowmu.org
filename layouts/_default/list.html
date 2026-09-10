@@ -1,3 +1,15 @@
 {{ define "main" }}
-    {{ .Content }}
-{{ end }} 
+<div class="p-body p-body-2">
+	<aside class="p-col" aria-label="Site index">
+		{{ partial "portal/sections.html" (dict "minutesCount" .minutes.count) }}
+		{{ partial "portal/next-meeting.html" . }}
+		{{ partial "portal/stamps.html" . }}
+	</aside>
+	<div class="p-col p-col-center">
+		<section class="p-panel">
+			<h1 class="p-panel-title p-split"><span>{{ .page.Title }}</span>{{ with .page.Params.description }}<span class="p-aside">{{ . }}</span>{{ end }}</h1>
+		</section>
+		{{ .page.Content }}
+	</div>
+</div>
+{{ end }}

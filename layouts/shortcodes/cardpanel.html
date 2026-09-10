@@ -1,0 +1,4 @@
+<section class="p-panel">
+	<h2 class="p-panel-title p-split"><span>{{ .Get "title" }}</span>{{ with .Get "aside" }}<span class="p-aside">{{ . }}</span>{{ end }}</h2>
+	<div class="p-cards{{ if .Get "numbered" }} is-numbered{{ end }}">{{ .Inner }}</div>
+</section>

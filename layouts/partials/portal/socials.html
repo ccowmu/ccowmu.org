@@ -1,0 +1,8 @@
+<section class="p-panel s-socials">
+	<h2 class="p-panel-title">Socials</h2>
+	<ul class="p-socials">
+		{{- range site.Data.portal.socials }}
+		<li><a href="{{ .url }}"{{ if hasPrefix .url "http" }} rel="noopener"{{ end }}><img src="{{ .icon }}" alt="" width="16" height="16" loading="lazy"><span class="p-social-name">{{ .name }}</span><span class="p-social-meta">{{ .meta }}</span></a></li>
+		{{- end }}
+	</ul>
+</section>

@@ -1,0 +1,4 @@
+<div class="p-card">
+	<h3>{{ .Get "title" }}</h3>
+	<p>{{ .Inner | strings.TrimSpace | safeHTML }}</p>
+</div>

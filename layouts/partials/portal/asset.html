@@ -1,0 +1,4 @@
+{{- $r := resources.Get . -}}
+{{- if not $r -}}{{ errorf "asset not found: %s" . }}{{- end -}}
+{{- if hugo.IsProduction -}}{{ $r = $r | minify }}{{- end -}}
+{{- return ($r | fingerprint).RelPermalink -}}

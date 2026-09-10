@@ -1,0 +1,8 @@
+<section class="p-panel">
+	<h2 class="p-panel-title">Sections</h2>
+	<div class="p-sections">
+		{{- range site.Data.portal.sections }}
+		<a href="{{ .url }}">&raquo; {{ .name }}{{ if .count }} <span class="p-count">({{ $.minutesCount }})</span>{{ end }}</a>
+		{{- end }}
+	</div>
+</section>

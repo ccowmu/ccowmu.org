@@ -1,8 +1,7 @@
 User-agent: *
-
 Disallow: /harming/humans
 Disallow: /ignoring/human/orders
 Disallow: /harm/to/self
 
-# RSS Feed
-Sitemap: /rss.xml
+Sitemap: https://cclub.cs.wmich.edu/sitemap.xml
+Sitemap: https://cclub.cs.wmich.edu/minutes/sitemap.xml

@@ -1,0 +1,218 @@
+{{ define "main" }}
+{{- $P := site.Data.portal -}}
+{{- $count := .minutes.count -}}
+{{- $latest := .minutes.latest -}}
+{{- $embed := `<a href="https://cclub.cs.wmich.edu"><img src="https://cclub.cs.wmich.edu/cclub88x31.gif" width="88" height="31" alt="Computer Club @ WMU"></a>` -}}
+<div class="p-body">
+
+	<aside class="p-col" aria-label="Site index">
+
+		<section class="p-panel s-sections">
+			<h2 class="p-panel-title">Sections</h2>
+			<div class="p-sections">
+				{{- range $P.sections }}
+				<a href="{{ .url }}">&raquo; {{ .name }}{{ if .count }} <span class="p-count">({{ $count }})</span>{{ end }}</a>
+				{{- end }}
+			</div>
+		</section>
+
+		<section class="p-panel s-meeting">
+			<h2 class="p-panel-title">Next Meeting</h2>
+			<div class="p-meeting">
+				<div class="p-meeting-when">
+					<div class="p-meeting-day">THURSDAY</div>
+					<div class="p-meeting-time">6:00 PM</div>
+					<div class="p-meeting-room">2225 Kohrman Hall</div>
+				</div>
+				<div class="p-meeting-count">
+					<div class="p-countdown" id="portal-countdown">Thursday 6:00 PM</div>
+					<div class="p-meeting-note">Any major. No experience needed.</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="p-panel s-status">
+			<h2 class="p-panel-title p-split"><span>Server Status</span><span class="p-aside-green" id="portal-upcount">{{ add (len $P.servers) (len $P.workstations) }} up</span></h2>
+			<div class="p-status">
+				<div class="p-status-head">SERVERS</div>
+				{{- range $P.servers }}
+				<div class="p-status-row" data-host="{{ . }}"><span class="p-host">{{ . }}</span><span class="p-up">UP</span></div>
+				{{- end }}
+				<div class="p-status-head">WORKSTATIONS</div>
+				{{- range $P.workstations }}
+				<div class="p-status-row" data-host="{{ . }}"><span class="p-host">{{ . }}</span><span class="p-up">UP</span></div>
+				{{- end }}
+				<div class="p-status-head">GRAVEYARD</div>
+				{{- range $P.graveyard }}
+				<div class="p-status-row is-dead"><span class="p-host">{{ .name }}</span><span class="p-note">{{ .note }}</span></div>
+				{{- end }}
+			</div>
+		</section>
+
+		{{ partial "portal/socials.html" . }}
+
+	</aside>
+
+	<div class="p-col p-col-center">
+
+		<section class="p-panel s-term">
+			<h2 class="p-panel-title p-split"><span>{{ $P.terminalTitle | default "newyakko" }}</span><span class="p-aside-green">tty1</span></h2>
+			<div class="t-box" id="term">
+				<div class="t-out" role="log" aria-live="polite" aria-label="Terminal output"></div>
+				<label class="t-line"><span class="t-prompt"></span><input class="t-in" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Terminal command" placeholder="help"></label>
+				<noscript><p class="t-noscript">The terminal needs JavaScript. Type help once it loads.</p></noscript>
+			</div>
+		</section>
+
+		{{- with $P.featured }}
+		<section class="p-panel s-featured">
+			<h2 class="p-panel-title p-split"><span>Featured</span><span class="p-aside-gold">{{ .badge }}</span></h2>
+			<div class="p-featured">
+				<div class="p-featured-shot">
+					<img src="{{ .image }}" alt="{{ .imageAlt }}" width="300" height="190">
+					<div class="p-featured-cap">{{ .caption }}</div>
+					{{- with .ribbon }}<div class="p-badge-new">{{ . }}</div>{{ end }}
+				</div>
+				<div class="p-featured-text">
+					<h3 class="p-featured-title">{{ .title }}</h3>
+					<p class="p-featured-when">{{ .when }}</p>
+					<p class="p-featured-body">{{ .body }}</p>
+					<div class="p-featured-actions">
+						{{- range .actions }}
+						<a class="{{ if .primary }}p-btn-gold{{ else }}p-btn-purple{{ end }}" href="{{ .url }}"{{ if hasPrefix .url "http" }} rel="noopener"{{ end }}>{{ .label }}</a>
+						{{- end }}
+					</div>
+				</div>
+			</div>
+		</section>
+		{{- end }}
+
+		<section class="p-panel s-services">
+			<h2 class="p-panel-title p-split"><span>Services</span><span class="p-aside">click to play</span></h2>
+			<div class="p-tiles">
+				{{- range $P.tiles }}
+				<a class="p-tile" href="{{ .url }}"{{ if .external }} rel="noopener"{{ end }}>
+					<div class="p-tile-icon {{ .class }}">{{ partial "portal/icon.html" (dict "name" .icon) }}</div>
+					<div class="p-tile-text">
+						<div class="p-tile-head"><span class="p-tile-name">{{ .name }}</span>{{ if .hot }}<span class="p-badge-hot">HOT</span>{{ end }}</div>
+						<div class="p-tile-desc">{{ .desc }}</div>
+						<div class="p-tile-meta">{{ replace .meta "MINUTES_COUNT" (string $count) }}</div>
+					</div>
+				</a>
+				{{- end }}
+			</div>
+		</section>
+
+		<div class="p-twoup s-twoup">
+			<section class="p-panel">
+				<h2 class="p-panel-title">New here? Start here</h2>
+				<div class="p-steps">
+					<div class="p-step"><span class="p-step-n" aria-hidden="true">1</span><div class="p-step-text"><b>Show up.</b> Thursday, 6pm, 2225 Kohrman. Bring nothing.</div></div>
+					<div class="p-step"><span class="p-step-n" aria-hidden="true">2</span><div class="p-step-text"><b>Read the orientation.</b> <a href="/wiki/New_Member_Orientation">New_Member_Orientation</a> on the wiki covers the room, the rack, the rules.</div></div>
+					<div class="p-step"><span class="p-step-n" aria-hidden="true">3</span><div class="p-step-text"><b>Join #geeks.</b> Our Matrix homeserver. Ask anything.</div></div>
+					<div class="p-milestones">
+						<div>[ ] milestone 1: get linux running</div>
+						<div>[ ] milestone 2: write a bot for #geeks</div>
+					</div>
+					<a class="p-btn-pink" href="/join/">Join &mdash; $10/yr, any major &raquo;</a>
+				</div>
+			</section>
+			<section class="p-panel" id="stream">
+				<h2 class="p-panel-title p-split"><span>Live from 2225</span><span class="p-rec p-live" aria-live="polite"><i aria-hidden="true"></i>LIVE</span></h2>
+				<div class="p-stream">
+					{{- $src := printf "https://player.twitch.tv/?channel=%s&muted=true&autoplay=true" $P.stream.channel }}
+					{{- range site.Params.twitchParents }}{{ $src = printf "%s&parent=%s" $src . }}{{ end }}
+					<button type="button" class="p-stream-facade" id="stream-load" data-src="{{ $src }}" aria-label="Load the Twitch stream">
+						<div class="p-scanlines" aria-hidden="true"></div>
+						<div class="p-play" aria-hidden="true"></div>
+						<div class="p-stream-cap">twitch.tv/{{ $P.stream.channel }} &middot; click to load</div>
+					</button>
+					<p class="p-stream-body">{{ $P.stream.blurb }}</p>
+					<p class="p-nowplaying"><span class="p-next">Next stream: <b>Thursday 6:00 PM</b></span><span class="p-live-text">Meeting in progress <span class="p-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span></span></p>
+				</div>
+			</section>
+		</div>
+
+		<section class="p-panel s-history">
+			<h2 class="p-panel-title">Club History <span class="p-aside">&mdash; per the wiki</span></h2>
+			<div class="p-history">
+				<div class="p-era">
+					<h3 class="p-era-name">The Dark Ages</h3>
+					<p class="p-era-years">1976&ndash;1993</p>
+					<p class="p-era-body">Hand-wiring computers before PCs were commonplace. Most records lost to time.</p>
+				</div>
+				<div class="p-era">
+					<h3 class="p-era-name">The Yakko Era</h3>
+					<p class="p-era-years">1994&ndash;2015</p>
+					<p class="p-era-body">One server, twenty years, a nexus for every project. Survived the Webpage Controversy of 1997.</p>
+				</div>
+				<div class="p-era">
+					<h3 class="p-era-name">Post-Gigglesgate</h3>
+					<p class="p-era-years">2016&ndash;present</p>
+					<p class="p-era-body">Yakko died. IRC became Matrix. Weekly talks, yearly game jam, "the golden age".</p>
+				</div>
+			</div>
+			<div class="p-lineage">
+				<span class="p-lineage-label">LOGO<br>LINEAGE</span>
+				<img src="/images/logo96.gif" alt="1996 logo" title="1996" width="89" height="20" class="on-white" loading="lazy">
+				<img src="/images/logo97.gif" alt="1997 logo, censored in protest" title="1997 &mdash; censored in protest" width="107" height="16" loading="lazy">
+				<img src="/images/logo98.jpeg" alt="1998 logo" title="1998" width="141" height="18" loading="lazy">
+				<img src="/images/logo01.jpg" alt="2001 logo" title="2001" width="80" height="28" loading="lazy">
+				<img src="/images/logo06.png" alt="2006 logo" title="2006 &mdash; 30th anniversary" width="145" height="18" loading="lazy">
+				<img src="/images/logo14.png" alt="2014 seal" title="2014" width="34" height="34" class="on-white is-round" loading="lazy">
+				<img src="/images/clubchip.png" alt="Club chip" title="club chip" width="42" height="26" loading="lazy">
+				<span class="p-lineage-arrow" aria-hidden="true">&rarr;</span>
+				<img src="/images/logo-alt-3.webp" alt="2026 wordmark" title="2026" width="56" height="16" class="is-inverted" loading="lazy">
+				<img src="/images/logo-current.webp" alt="2026 crow" title="2026" width="44" height="44" class="is-inverted" loading="lazy">
+			</div>
+		</section>
+
+	</div>
+
+	<aside class="p-col p-col-right" aria-label="Minutes and links">
+
+		<section class="p-panel s-top10">
+			<h2 class="p-panel-title">Top 10 Minutes</h2>
+			<ol class="p-top10">
+				{{- range $P.top10 }}
+				<li><a href="{{ .url }}">{{ .t }}</a> <span class="p-year">{{ .y }}</span></li>
+				{{- end }}
+			</ol>
+		</section>
+
+		<section class="p-panel s-latest">
+			<h2 class="p-panel-title p-split"><span>Latest Minutes</span><span class="p-aside-small">auto</span></h2>
+			<div class="p-latest">
+				{{- range $latest }}
+				{{- $iso := printf "%s-%s-%s" (substr . 0 4) (substr . 4 2) (substr . 6 2) }}
+				<div class="p-latest-row"><a href="/minutes/{{ . }}/"><time datetime="{{ $iso }}">{{ $iso }}</time></a><span>{{ lower ((time.AsTime $iso).Format "Mon") }}</span></div>
+				{{- end }}
+				<a class="p-latest-all" href="/minutes/">&raquo; all {{ $count }}</a> <a class="p-latest-all" href="/minutes/index.xml">&raquo; rss</a>
+			</div>
+		</section>
+
+		{{ partial "portal/stamps.html" . }}
+
+		<section class="p-panel s-linkus">
+			<h2 class="p-panel-title">Link to us</h2>
+			<div class="p-linkus">
+				<div class="p-linkus-badge"><img src="/images/logo-alt-3.webp" alt="Computer Club" width="74" height="14" loading="lazy"><span>WMU &middot; EST 1976</span></div>
+				<label class="p-linkus-label" for="portal-embed">88&times;31 button code</label>
+				<textarea id="portal-embed" readonly rows="3">{{ $embed }}</textarea>
+				<button type="button" id="portal-copy">copy html</button>
+			</div>
+		</section>
+
+		<section class="p-panel p-japes s-japes">
+			<img src="/images/japesclown.png" alt="japes, the club mascot" title="japes" width="64" height="64" loading="lazy">
+		</section>
+
+	</aside>
+
+</div>
+{{ end }}
+
+{{ define "scripts" }}
+<script type="application/json" id="term-data">{{ site.Data.terminal | jsonify | safeJS }}</script>
+<script src="{{ partial "portal/asset.html" "js/terminal.js" }}" defer></script>
+{{ end }}

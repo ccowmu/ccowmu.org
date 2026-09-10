@@ -1,0 +1,22 @@
+{{- $dir := printf "static/images/%s" .folder -}}
+{{- $overrides := dict -}}
+{{- range .overrides -}}
+	{{- $overrides = merge $overrides (dict .file .) -}}
+{{- end -}}
+{{- $items := slice -}}
+{{- if fileExists $dir -}}
+	{{- range (os.ReadDir $dir) -}}
+		{{- if and (not .IsDir) (findRE `(?i)\.(gif|png|webp|jpe?g|svg)$` .Name) -}}
+			{{- $stem := replaceRE `\.[^.]+$` "" .Name -}}
+			{{- $stem = replaceRE `(?i)(stamp|blinkie|button)$` "" $stem -}}
+			{{- $alt := replaceRE `([a-z])([A-Z])` "$1 $2" $stem | replaceRE `[-_]+` " " | lower -}}
+			{{- $o := index $overrides .Name | default dict -}}
+			{{- $items = $items | append (dict
+				"src" (printf "/images/%s/%s" $.folder .Name)
+				"alt" ($o.alt | default $alt)
+				"title" ($o.title | default ($o.alt | default $alt))
+				"url" ($o.url | default "")) -}}
+		{{- end -}}
+	{{- end -}}
+{{- end -}}
+{{- return $items -}}

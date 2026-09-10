@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{{ partial "portal/head.html" (dict "page" .) }}
+</head>
+<body>
+<a class="p-skip" href="#main">Skip to content</a>
+<div class="p-page" id="portal"
+	data-api="{{ site.Params.portalApiBase }}"
+	data-hits-seed="{{ site.Params.portalHitsSeed | default 23761 }}">
+<div class="p-frame">
+{{ partial "portal/chrome.html" (dict "isHome" false "navKey" site.Params.navKey "minutesCount" (len site.RegularPages)) }}
+<main id="main">
+{{ block "main" . }}{{ end }}
+</main>
+{{ partial "portal/foot.html" . }}
+</div>
+</div>
+<script src="{{ partial "portal/asset.html" "js/portal.js" }}" defer></script>
+{{ block "scripts" . }}{{ end }}
+</body>
+</html>

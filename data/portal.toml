@@ -1,0 +1,330 @@
+# HOW TO EDIT THIS FILE
+#
+# Blinkies (150x20) and stamps (99x56) are image files.
+# Put a file in the matching folder and it shows on the site:
+#   static/images/blinkies/
+#   static/images/stamps/
+# The file name becomes the alt text. To set a link or better alt text,
+# add an entry with the file name, like this:
+#
+# [[blinkies]]
+# file = "surfthenet.gif"
+# alt = "surf the net"
+# url = "https://example.com"
+#
+# The same shape works for [[stamps]].
+#
+# The featured table is the big panel on the home page. Change it for each event.
+# Each service tile uses one icon: chat, minutes, wiki or stream.
+# The stream table names the Twitch channel for the Live panel.
+# The terminal commands live in data/terminal.toml.
+
+topic = "Thursdays 6pm 2225 Kohrman | dues $10/yr | cybersecurity summit Nov 12 | new? read New_Member_Orientation on the wiki | milestone 1: get linux running | milestone 2: write a bot for #geeks | yakko lives in our hearts"
+
+servers = ["newyakko", "condor", "parrot", "tucan", "albatross"]
+workstations = ["nighthawk", "redjay", "greenjay", "bluejay"]
+
+[[nav]]
+key = "home"
+name = "Home"
+url = "/"
+
+[[nav]]
+key = "minutes"
+name = "Minutes"
+url = "/minutes/"
+
+[[nav]]
+key = "chat"
+name = "Chat"
+url = "/chat/"
+
+[[nav]]
+key = "wiki"
+name = "Wiki"
+url = "/wiki/Main_Page"
+
+[[nav]]
+key = "events"
+name = "Events"
+url = "https://experiencewmu.wmich.edu/organization/computer-club-at-wmu/events"
+external = true
+
+[[nav]]
+key = "stream"
+name = "Stream"
+url = "https://twitch.tv/ccawmu"
+external = true
+
+[[sections]]
+name = "Home"
+url = "/"
+
+[[sections]]
+name = "New Member Orientation"
+url = "/wiki/New_Member_Orientation"
+
+[[sections]]
+name = "Meeting Minutes"
+url = "/minutes/"
+count = true
+
+[[sections]]
+name = "Element / Matrix"
+url = "/chat/"
+
+[[sections]]
+name = "Servers"
+url = "/wiki/Main_Page#Servers:~:text=Servers"
+
+[[sections]]
+name = "CTF Writeups"
+url = "/wiki/CTF_Writeups"
+
+[[sections]]
+name = "Talks"
+url = "/wiki/Main_Page#:~:text=Talks"
+
+[[sections]]
+name = "Digital Bookshelf"
+url = "/wiki/Digital_Bookshelf"
+
+[[sections]]
+name = "Lineage"
+url = "/wiki/Lineage"
+
+[[sections]]
+name = "Constitution"
+url = "https://github.com/ccowmu/constitution"
+
+[[graveyard]]
+name = "shrek"
+note = "RIP"
+
+[[graveyard]]
+name = "vmhost2"
+note = "RIP"
+
+[[graveyard]]
+name = "dot"
+note = "RIP"
+
+[[graveyard]]
+name = "yakko"
+note = "94–17"
+
+[[blinkies]]
+file = "surfthenet.gif"
+alt = "surf the net"
+
+[[blinkies]]
+file = "clickclickclick.gif"
+alt = "click click click"
+
+[[blinkies]]
+file = "realmofsilliness.gif"
+alt = "i love the realm of silliness"
+
+[[blinkies]]
+file = "computernerd.gif"
+alt = "computer nerd"
+
+[[blinkies]]
+file = "worm.gif"
+alt = "worm crawling"
+
+[[blinkies]]
+file = "ctrlaltdelete.gif"
+alt = "ctrl alt delete"
+
+[[blinkies]]
+file = "wahoofish.gif"
+alt = "wahoo fish"
+
+[[stamps]]
+file = "4everonlineStamp.png"
+alt = "4ever online text"
+
+[[stamps]]
+file = "deletesystem32Stamp.gif"
+alt = "delete system32 text"
+
+[[stamps]]
+file = "dvdStamp.gif"
+alt = "dvd logo bouncing off edges"
+
+[[stamps]]
+file = "irenderStamp.gif"
+alt = "i render therefore i am"
+
+[[stamps]]
+file = "mmmbinaryStamp.gif"
+alt = "mmm binary"
+
+[[stamps]]
+file = "nosignalStamp.gif"
+alt = "static background with text: no signal"
+
+[[stamps]]
+file = "slowinternetStamp.gif"
+alt = "i hate slow internet"
+
+[[stamps]]
+file = "imAwesome.png"
+alt = "i am awesome nametag"
+
+[[stamps]]
+file = "smalldogStamp.gif"
+alt = "spinning small dogs"
+
+[[socials]]
+name = "Element"
+url = "/chat/"
+icon = "/images/logo-mark-primary.svg"
+meta = "#geeks"
+
+[[socials]]
+name = "GitHub"
+url = "https://github.com/ccowmu"
+icon = "/images/github-mark-white.png"
+meta = "ccowmu"
+
+[[socials]]
+name = "Twitch"
+url = "https://twitch.tv/ccawmu"
+icon = "/images/twitch.svg"
+meta = "ccawmu"
+
+[[socials]]
+name = "Flickr"
+url = "https://www.flickr.com/photos/ccawmu/"
+icon = "/images/flickr.png"
+meta = "ccawmu"
+
+[[socials]]
+name = "Linktree"
+url = "https://linktr.ee/ccawmu"
+icon = "/images/linktree.png"
+meta = "ccawmu"
+
+[[socials]]
+name = "Email"
+url = "mailto:rso_cclub@wmich.edu"
+icon = "/images/mail.png"
+meta = "rso_cclub"
+
+[[socials]]
+name = "Phone"
+url = "tel:+16165041337"
+icon = "/images/telephone.png"
+meta = "616 504 1337"
+
+[featured]
+badge = "★ Nov 12"
+ribbon = "Look at these geeks"
+image = "/images/group_photo_2026.webp"
+imageAlt = "Computer Club members outside Floyd Hall"
+caption = "group_photo_2026.jpg · see you at the summit"
+title = "WMU CYBERSECURITY SUMMIT 2026"
+when = "Thursday, November 12 · 8:00 AM to 3:30 PM · Student Center, 2nd floor ballroom"
+body = "Fifth annual summit. Talks, workshops and networking for students, IT staff and anyone who uses a computer. WRAVEN, Bronco Cybersecurity Club and WiCyS will be there. So will we!"
+
+[[featured.actions]]
+label = "REGISTER »"
+url = "https://secure.touchnet.com/C21782_ustores/web/store_main.jsp?STOREID=255"
+primary = true
+
+[[featured.actions]]
+label = "Details"
+url = "https://wmich.edu/it/cybersecurity-summit"
+
+[stream]
+channel = "ccawmu"
+blurb = "Work nights and CTFs from the room. Chat is bridged to #geeks."
+
+[[tiles]]
+name = "Element Chat"
+url = "/chat/"
+desc = "Our own Matrix homeserver. Start in #geeks."
+meta = "matrix.cclub.cs.wmich.edu"
+icon = "chat"
+class = "tile-matrix"
+hot = true
+
+[[tiles]]
+name = "Meeting Minutes"
+url = "/minutes/"
+desc = "Every Thursday since 1996, written down."
+meta = "MINUTES_COUNT files · rss"
+icon = "minutes"
+class = "tile-minutes"
+hot = false
+
+[[tiles]]
+name = "The Wiki"
+url = "/wiki/Main_Page"
+desc = "Servers, guides, KNOWLEDGE ARCANA, lore."
+meta = "mediawiki · members edit"
+icon = "wiki"
+class = "tile-wiki"
+hot = true
+
+[[tiles]]
+name = "Live Stream"
+url = "https://twitch.tv/ccawmu"
+external = true
+desc = "Work nights and CTFs from the room."
+meta = "twitch.tv/ccawmu"
+icon = "stream"
+class = "tile-stream"
+hot = true
+
+[[top10]]
+t = "Webpage Controversy of 1997"
+y = "1997"
+url = "/minutes/19970206/"
+
+[[top10]]
+t = "Suckered into Treasurer"
+y = "1997"
+url = "/minutes/19970123/"
+
+[[top10]]
+t = "Will the club vanish?"
+y = "1997"
+url = "/minutes/19971009/"
+
+[[top10]]
+t = "LAN party, beer talk"
+y = "2006"
+url = "/minutes/20060323/"
+
+[[top10]]
+t = "Riot sponsorship, Oculus PC"
+y = "2016"
+url = "/minutes/20160714/"
+
+[[top10]]
+t = "Yakko goes dark"
+y = "2017"
+url = "/minutes/20170511/"
+
+[[top10]]
+t = "First game jam proposed"
+y = "2018"
+url = "/minutes/20180913/"
+
+[[top10]]
+t = "Defcon raffle controversy"
+y = "2025"
+url = "/minutes/20250320/"
+
+[[top10]]
+t = "Election night"
+y = "2025"
+url = "/minutes/20250403/"
+
+[[top10]]
+t = "First minutes on file"
+y = "1996"
+url = "/minutes/19960118/"

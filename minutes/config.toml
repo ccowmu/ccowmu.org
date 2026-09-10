@@ -1,15 +1,56 @@
 baseURL = "https://cclub.cs.wmich.edu/minutes/"
+title = "Meeting Minutes"
+languageCode = "en-us"
 relativeURLs = false
-canonifyURLs = true
-disableKinds = ["term", "RSS", "sitemap"]
-[markup]
-  [markup.goldmark]
-    [markup.goldmark.renderer]
-      unsafe = true
+canonifyURLs = false
+disableKinds = ["term", "taxonomy"]
+
+[markup.goldmark.renderer]
+unsafe = true
+
+[minify.tdewolff.html]
+keepComments = true
+
 [permalinks]
-  minutes = "/:filename/"
+minutes = "/:contentbasename/"
+
+[services.rss]
+limit = 40
+
+[mediaTypes."application/json"]
+suffixes = ["json"]
+
+[outputFormats.searchindex]
+mediaType = "application/json"
+baseName = "search"
+isPlainText = true
+notAlternative = true
+
 [outputs]
-home = ["HTML", "JSON"]
+home = ["HTML", "RSS", "searchindex"]
+
+[module]
+[[module.mounts]]
+source = "content"
+target = "content"
+
+[[module.mounts]]
+source = "layouts"
+target = "layouts"
+
+[[module.mounts]]
+source = "../layouts/partials"
+target = "layouts/partials"
+
+[[module.mounts]]
+source = "../data"
+target = "data"
+
+[[module.mounts]]
+source = "../assets"
+target = "assets"
 
 [params]
-  underConstruction = true
+description = "Every Computer Club meeting since 1996, written down."
+navKey = "minutes"
+underConstruction = false

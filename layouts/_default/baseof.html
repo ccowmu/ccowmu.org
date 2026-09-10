@@ -1,34 +1,30 @@
+{{- $minutes := partial "portal/minutes-index.html" . -}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {{ partial "head.html" . }}
+{{ partial "portal/head.html" (dict "page" .) }}
 </head>
 <body>
-    {{ partial "header.html" . }}
-
-    {{ if .Site.Params.underConstruction }}
-    <div class="uc-banner" role="status" aria-live="polite" style="background:#ffbf69;color:#1a1a1a;border-bottom:1px solid rgba(0,0,0,.2);margin-top:var(--header-height);">
-        <div class="container" style="padding:.6rem 2rem;text-align:center;font-weight:600;">
-            🚧 This site is under construction. Some content is still being migrated. 🚧
-        </div>
-    </div>
-    {{ end }}
-
-    <main class="main-content">
-        {{ block "main" . }}{{ end }}
-    </main>
-
-    {{ partial "footer.html" . }}
-
-    <script src="{{ "js/main.js" | absURL }}" async></script>
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('{{ "sw.js" | absURL }}')
-                    .then(registration => { console.log('SW registered:', registration); })
-                    .catch(err => { console.log('SW registration failed:', err); });
-            });
-        }
-    </script>
+<a class="p-skip" href="#main">Skip to content</a>
+<div class="p-page" id="portal"
+	data-api="{{ site.Params.portalApiBase }}"
+	data-hits-seed="{{ site.Params.portalHitsSeed | default 23761 }}">
+<div class="p-frame">
+{{ partial "portal/chrome.html" (dict "isHome" .IsHome "navKey" (.Params.navKey | default (cond .IsHome "home" "")) "minutesCount" $minutes.count) }}
+<main id="main">
+{{ block "main" (dict "page" . "minutes" $minutes) }}{{ end }}
+</main>
+{{ partial "portal/foot.html" . }}
+</div>
+</div>
+<script src="{{ partial "portal/asset.html" "js/portal.js" }}" defer></script>
+{{ block "scripts" . }}{{ end }}
+<script>
+if ('serviceWorker' in navigator) {
+	addEventListener('load', function () {
+		navigator.serviceWorker.register('/sw.js').catch(function () {});
+	});
+}
+</script>
 </body>
-</html> 
+</html>

@@ -1,0 +1,167 @@
+# The terminal on the home page reads this file.
+# Each [[commands]] entry is one command. "out" is what it prints.
+# Set hidden = true to keep a command out of "help".
+# Write links as [text](url). Blank lines in "out" print as blank lines.
+
+prompt = "guest@newyakko:~$"
+motd = """
+newyakko login: guest
+Last login: Thu 18:00 on tty1
+Type help.
+"""
+
+[[commands]]
+name = "about"
+desc = "what this club is"
+out = """
+Computer Club at Western Michigan University. Founded 1976.
+An organic, laid-back place to learn. Curiosity counts as much as knowledge.
+Software, hardware, security, servers, and whatever you bring.
+We share the room with WRAVEN, a security research group.
+"""
+
+[[commands]]
+name = "meeting"
+desc = "when and where"
+out = """
+Thursdays, 6:00 PM, 2225 Kohrman Hall.
+Any major. No experience needed. Bring nothing.
+"""
+
+[[commands]]
+name = "join"
+desc = "how to become a member"
+out = """
+1. Show up on a Thursday.
+2. Pay $10 for the year. Cash at a meeting, or [paypal.me/cclub](https://paypal.me/cclub).
+3. Get a chat account and a shell.
+More: [/join/](/join/)
+"""
+
+[[commands]]
+name = "chat"
+desc = "the matrix homeserver"
+out = """
+We run our own Matrix homeserver: matrix.cclub.cs.wmich.edu
+Web client: [/chat/](/chat/)
+Start in #geeks.
+"""
+
+[[commands]]
+name = "servers"
+desc = "the rack"
+out = """
+newyakko   shells, web, matrix
+condor     virtual machines
+parrot     storage
+tucan      builds
+albatross  backups
+Ask in #geeks for a shell on newyakko.
+"""
+
+[[commands]]
+name = "minutes"
+desc = "every meeting since 1996"
+out = """
+Every Thursday meeting, written down since 1996.
+Search them: [/minutes/](/minutes/)
+"""
+
+[[commands]]
+name = "history"
+desc = "three eras"
+out = """
+1976-1993  The Dark Ages. Hand-wired computers. Records lost.
+1994-2015  The Yakko Era. One server, twenty years.
+2016-now   Post-Gigglesgate. Yakko died. IRC became Matrix.
+"""
+
+[[commands]]
+name = "wiki"
+desc = "guides, servers, lore"
+out = """
+[/wiki/](/wiki/Main_Page)
+New here? Read [New_Member_Orientation](/wiki/New_Member_Orientation).
+"""
+
+[[commands]]
+name = "finger"
+desc = "finger cclub"
+out = """
+Login: cclub        Name: Computer Club
+Directory: /home/cclub  Shell: /bin/zsh
+Office: 2225 Kohrman  Phone: see wiki
+On since Oct 1976 on tty1 from wmich.edu
+Mail last read Thu 18:00
+Plan:
+  thursdays 6pm. bring nothing.
+  $10/yr. any major.
+  ask for a shell on newyakko.
+"""
+
+[[commands]]
+name = "sudo"
+hidden = true
+out = """
+guest is not in the sudoers file. This incident will be reported to #geeks.
+"""
+
+[[commands]]
+name = "rm"
+hidden = true
+out = """
+rm: cannot remove '/': yakko already died once. Not again.
+"""
+
+[[commands]]
+name = "vim"
+hidden = true
+out = """
+~
+~
+~
+E37: No write since last change. You live here now. Try :q!
+"""
+
+[[commands]]
+name = "emacs"
+hidden = true
+out = """
+emacs: command not found. Did you mean: vim
+"""
+
+[[commands]]
+name = "yakko"
+hidden = true
+out = """
+yakko.cs.wmich.edu, 1994-2017. One server. Twenty years. Every project.
+Still up, in our hearts.
+"""
+
+[[commands]]
+name = "exit"
+hidden = true
+out = """
+There is no exit. Thursdays, 6pm.
+"""
+
+[[commands]]
+name = "ping"
+hidden = true
+out = """
+PING 2225.kohrman (6:00 PM): 56 data bytes
+64 bytes from thursday: icmp_seq=0 ttl=1976 time=see you there
+"""
+
+[[commands]]
+name = "fortune"
+hidden = true
+random = true
+out = """
+milestone 1: get linux running.
+milestone 2: write a bot for #geeks.
+RTFM. Then ask in #geeks.
+The wiki knows. Read the wiki.
+Half-drank sodas are not a project.
+It compiles. Ship it.
+"""

@@ -105,13 +105,21 @@ done
 rm -rf minutes_src
 echo "Minutes update complete."
 
+# Set BASE_URL to build for a local preview, for example http://localhost:1313/
+BASE_ARG=""
+MINUTES_BASE_ARG=""
+if [ -n "${BASE_URL:-}" ]; then
+	BASE_ARG="-b ${BASE_URL}"
+	MINUTES_BASE_ARG="-b ${BASE_URL%/}/minutes/"
+fi
+
 # Build minutes first
 echo "Building minutes..."
-hugo --minify --cleanDestinationDir -s minutes
+hugo --minify --cleanDestinationDir -s minutes $MINUTES_BASE_ARG
 
 # Build main site
 echo "Building main site..."
-hugo --minify --cleanDestinationDir
+hugo --minify --cleanDestinationDir $BASE_ARG
 
 # Copy minutes into main public
 echo "Copying minutes into public/minutes..."
@@ -123,6 +131,5 @@ cp -r minutes/public/* public/minutes/
 echo "Verifying outputs..."
 test -f public/index.html || { echo "Missing public/index.html"; exit 1; }
 test -d public/minutes || { echo "Missing public/minutes"; exit 1; }
-test -f public/hackathon/index.html || { echo "Missing public/hackathon/index.html"; exit 1; }
 
 echo "Build OK: see ./public"

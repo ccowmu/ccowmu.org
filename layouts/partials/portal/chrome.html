@@ -1,0 +1,81 @@
+{{- $P := site.Data.portal -}}
+{{- $navKey := .navKey -}}
+{{- $minutesCount := .minutesCount -}}
+{{- $binary := "" -}}
+{{- range $r := seq 0 7 -}}
+	{{- range $i := seq 0 89 -}}
+		{{- $binary = printf "%s%s" $binary (cond (lt (mod (add 7919 (mul $r 131) (mul $i 31)) 7) 3) "1" "0") -}}
+	{{- end -}}
+	{{- $binary = printf "%s\n" $binary -}}
+{{- end -}}
+<header class="p-header">
+	<div class="p-binary" aria-hidden="true">{{ $binary }}</div>
+	<img class="p-watermark" src="/images/logo-alt-2.webp" alt="" width="210" height="210" aria-hidden="true">
+	<a class="p-brand" href="/">
+		<img class="p-brand-logo" src="/images/logo-current.webp" alt="Computer Club crow" width="100" height="100">
+		<span>
+			{{ if .isHome }}<h1 class="p-brand-title">cclub.cs.wmich.edu</h1>{{ else }}<span class="p-brand-title">cclub.cs.wmich.edu</span>{{ end }}
+			<span class="p-brand-sub">WESTERN MICHIGAN UNIVERSITY &middot; MISCHIEF. MAYHEM. LINUX. &middot; EST. 1976</span>
+		</span>
+	</a>
+	<div class="p-meta">
+		<div>You are visitor <span class="p-odometer" id="portal-odometer" role="img" aria-label="counting"><span>0</span><span>0</span><span>0</span><span>0</span><span>0</span><span>0</span></span></div>
+		<div>{{ $minutesCount }} minutes filed since 1996</div>
+		<div class="p-meta-up" id="portal-matrix" data-host="matrix.cclub.cs.wmich.edu">&#10003; Matrix homeserver: <span>UP</span></div>
+		<div class="p-clock" id="portal-clock">--:--:-- EST</div>
+	</div>
+</header>
+
+<nav class="p-nav" aria-label="Main">
+	{{- range $P.nav }}
+	<a href="{{ .url }}"{{ if eq .key $navKey }} aria-current="page"{{ end }}{{ if .external }} rel="noopener"{{ end }}>{{ .name }}</a>
+	{{- end }}
+	<a class="p-nav-join" href="/join/">Join ($10/yr)</a>
+	<details class="p-a11y" id="a11y">
+		<summary aria-label="Display and accessibility options"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><circle cx="12" cy="4" r="2.2"/><path d="M3 8.5h18v2.2l-6.3.9v3.6l2.6 7.3-2.1.8L12 16.6l-3.2 6.7-2.1-.8 2.6-7.3v-3.6L3 10.7z"/></svg>Display</summary>
+		<form class="p-a11y-panel" id="a11y-form">
+			<h2>Display</h2>
+			<fieldset class="a-group">
+				<legend>Theme</legend>
+				<div class="a-swatches">
+					<label class="a-swatch"><input type="radio" name="theme" value="portal"><span class="a-chip" style="--c1:#7a45e6;--c2:#0d0618"></span>Default</label>
+					<label class="a-swatch"><input type="radio" name="theme" value="midnight"><span class="a-chip" style="--c1:#3b6fe0;--c2:#060c1c"></span>Freezer</label>
+					<label class="a-swatch"><input type="radio" name="theme" value="phosphor"><span class="a-chip" style="--c1:#1f9a3a;--c2:#020803"></span>Haxor</label>
+					<label class="a-swatch"><input type="radio" name="theme" value="amber"><span class="a-chip" style="--c1:#b8761a;--c2:#0a0600"></span>Potato</label>
+					<label class="a-swatch"><input type="radio" name="theme" value="bluescreen"><span class="a-chip" style="--c1:#5555ff;--c2:#0000aa"></span>Bluescreen</label>
+					<label class="a-swatch"><input type="radio" name="theme" value="vaporwave"><span class="a-chip" style="--c1:#ff2e97;--c2:#1a0533"></span>Miku</label>
+					<label class="a-swatch"><input type="radio" name="theme" value="paper"><span class="a-chip" style="--c1:#4b1fa0;--c2:#ffffff"></span>Flashbang</label>
+					<label class="a-swatch"><input type="radio" name="theme" value="rgb"><span class="a-chip" style="--c1:#45e680;--c2:#0d0618"></span>Gamer</label>
+				</div>
+			</fieldset>
+			<fieldset class="a-group">
+				<legend>Text size</legend>
+				<div class="a-segs">
+					<label class="a-seg"><input type="radio" name="scale" value="100"><span>100%</span></label>
+					<label class="a-seg"><input type="radio" name="scale" value="115"><span>115%</span></label>
+					<label class="a-seg"><input type="radio" name="scale" value="130"><span>130%</span></label>
+					<label class="a-seg"><input type="radio" name="scale" value="150"><span>150%</span></label>
+				</div>
+			</fieldset>
+			<label class="a-toggle"><input type="checkbox" name="motion"><span>Reduce motion</span><small>Stops animations and GIFs</small></label>
+			<label class="a-toggle"><input type="checkbox" name="cb"><span>Color-blind safe</span><small>Blue and orange for up and down</small></label>
+			<button type="reset">Reset to defaults</button>
+		</form>
+	</details>
+</nav>
+
+<div class="p-topic">
+	<span class="p-topic-label">[#geeks] topic:</span>
+	<div class="p-topic-track"><div class="p-topic-scroll"><span>{{ $P.topic }}</span><span aria-hidden="true">{{ $P.topic }}</span></div></div>
+	<span class="p-topic-label">set by officers</span>
+</div>
+
+<div class="p-blinkies">
+	{{- range partial "portal/image-set.html" (dict "folder" "blinkies" "overrides" $P.blinkies) }}
+	{{- if .url }}
+	<a href="{{ .url }}"{{ if hasPrefix .url "http" }} rel="noopener"{{ end }}><img class="p-blinkie" src="{{ .src }}" width="150" alt="{{ .alt }}" title="{{ .title }}"></a>
+	{{- else }}
+	<img class="p-blinkie" src="{{ .src }}" width="150" alt="{{ .alt }}" title="{{ .title }}">
+	{{- end }}
+	{{- end }}
+</div>

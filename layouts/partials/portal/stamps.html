@@ -1,0 +1,15 @@
+<section class="p-panel s-stamps">
+	<h2 class="p-panel-title">Stamps</h2>
+	<div class="p-stamps">
+		{{- range partial "portal/image-set.html" (dict "folder" "stamps" "overrides" site.Data.portal.stamps) }}
+		{{- if .url }}
+		<a class="p-stamp-img" href="{{ .url }}"{{ if hasPrefix .url "http" }} rel="noopener"{{ end }}><img src="{{ .src }}" width="99" height="56" alt="{{ .alt }}" title="{{ .title }}" loading="lazy"></a>
+		{{- else }}
+		<img class="p-stamp-img" src="{{ .src }}" width="99" height="56" alt="{{ .alt }}" title="{{ .title }}" loading="lazy">
+		{{- end }}
+		{{- end }}
+		<div class="p-stamp" title="Computer Club, 2026">
+			<div class="p-stamp-logo"><img src="/images/logo-alt-1.webp" alt="Computer Club" width="88" height="44" loading="lazy"></div>
+		</div>
+	</div>
+</section>

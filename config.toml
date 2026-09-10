@@ -1,14 +1,23 @@
 baseURL = "https://cclub.cs.wmich.edu/"
 languageCode = "en-us"
-title = "CCAWMU"
+title = "Computer Club at WMU"
 relativeURLs = false
 canonifyURLs = true
 enableRobotsTXT = true
-ignoreErrors = ["error-disable-taxonomy"]
+disableKinds = ["taxonomy", "term"]
 
 [markup.goldmark.renderer]
 unsafe = true
 
+# Keeps the view-source comment on the home page. Removing it deletes that.
+[minify.tdewolff.html]
+keepComments = true
+
 [params]
 	description = "WMU's Resident Hackerspace Since 1976."
-	underConstruction = true
+	underConstruction = false
+
+	portalApiBase = "/api"
+	portalHitsSeed = 23761
+	portalMinutesFallback = 813
+	twitchParents = ["cclub.cs.wmich.edu", "localhost"]
