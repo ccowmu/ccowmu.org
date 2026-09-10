@@ -15,3 +15,7 @@ Thumbs.db
 # IDE junk
 .vscode/
 .idea/
+
+# Minutes clone and lock file made by build.sh
+/minutes_src/
+/minutes/.hugo_build.lock
