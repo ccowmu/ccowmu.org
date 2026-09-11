@@ -19,5 +19,6 @@ keepComments = true
 
 	portalApiBase = "/api"
 	portalHitsSeed = 23761
+	portalTimeZone = "America/Detroit"
 	portalMinutesFallback = 813
 	twitchParents = ["cclub.cs.wmich.edu", "localhost"]

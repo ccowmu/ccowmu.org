@@ -64,14 +64,10 @@
 		return out;
 	}
 
-	function nextMeeting(now) {
-		var target = new Date(now.getTime());
-		target.setHours(18, 0, 0, 0);
-		var delta = (4 - target.getDay() + 7) % 7;
-		if (delta === 0 && target.getTime() <= now.getTime()) delta = 7;
-		target.setDate(target.getDate() + delta);
-		return target;
-	}
+	var clubTime = clubTimeLib.create(root.dataset.zone || 'America/Detroit');
+	var nextMeeting = clubTime.nextMeeting;
+	var meetingNow = clubTime.meetingNow;
+	window.clubTime = clubTime;
 
 	function tick() {
 		var now = new Date();
@@ -79,7 +75,7 @@
 			binaryEl.textContent = binary(Math.floor(now.getTime() / 900));
 		}
 		if (clockEl) {
-			clockEl.textContent = pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds()) + ' EST';
+			clockEl.textContent = clubTime.clock(now);
 		}
 		if (countdownEl) {
 			var ms = Math.max(0, nextMeeting(now) - now);
@@ -248,10 +244,6 @@
 
 	var stream = document.getElementById('stream');
 	var loadBtn = document.getElementById('stream-load');
-
-	function meetingNow(now) {
-		return now.getDay() === 4 && now.getHours() >= 18 && now.getHours() < 21;
-	}
 
 	if (stream) {
 		var liveCheck = function () {
