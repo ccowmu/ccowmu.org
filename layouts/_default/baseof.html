@@ -8,7 +8,8 @@
 <a class="p-skip" href="#main">Skip to content</a>
 <div class="p-page" id="portal"
 	data-api="{{ site.Params.portalApiBase }}"
-	data-hits-seed="{{ site.Params.portalHitsSeed | default 23761 }}">
+	data-hits-seed="{{ site.Params.portalHitsSeed | default 23761 }}"
+	data-zone="{{ site.Params.portalTimeZone | default "America/Detroit" }}">
 <div class="p-frame">
 {{ partial "portal/chrome.html" (dict "isHome" .IsHome "navKey" (.Params.navKey | default (cond .IsHome "home" "")) "minutesCount" $minutes.count) }}
 <main id="main">

@@ -240,7 +240,7 @@ url = "https://wmich.edu/it/cybersecurity-summit"
 
 [stream]
 channel = "ccawmu"
-blurb = "Work nights and CTFs from the room. Chat is bridged to #geeks."
+blurb = "observe club from anywhere"
 
 [[tiles]]
 name = "Element Chat"

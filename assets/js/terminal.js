@@ -52,6 +52,7 @@
 	}
 
 	function nextThursday() {
+		if (window.clubTime) return window.clubTime.nextMeeting(new Date());
 		var now = new Date();
 		var t = new Date(now.getTime());
 		t.setHours(18, 0, 0, 0);
@@ -59,6 +60,14 @@
 		if (delta === 0 && t <= now) delta = 7;
 		t.setDate(t.getDate() + delta);
 		return t;
+	}
+
+	function clubDate(date) {
+		var zone = window.clubTime ? window.clubTime.zone : undefined;
+		return new Intl.DateTimeFormat('en-US', {
+			timeZone: zone, weekday: 'short', month: 'short', day: 'numeric', year: 'numeric',
+			hour: 'numeric', minute: '2-digit', timeZoneName: 'short'
+		}).format(date);
 	}
 
 	var builtins = {
@@ -90,7 +99,7 @@
 			var d = Math.floor(ms / 86400000);
 			var h = Math.floor(ms / 3600000) % 24;
 			var m = Math.floor(ms / 60000) % 60;
-			print('Next meeting: ' + t.toDateString() + ' 6:00 PM');
+			print('Next meeting: ' + clubDate(t));
 			print('T-' + d + 'd ' + h + 'h ' + m + 'm');
 		},
 		ls: function () {
