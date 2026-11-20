@@ -99,6 +99,13 @@ a:hover {
 	outline-offset: 2px;
 }
 
+.p-defs {
+	position: absolute;
+	width: 0;
+	height: 0;
+	overflow: hidden;
+}
+
 .p-skip {
 	position: absolute;
 	left: -9999px;
@@ -731,29 +738,31 @@ a:hover {
 	background: var(--hover-bg);
 }
 
+/* Each icon sets one color, --icon. The plate and the border mix that color into the tile background,
+   so they follow every theme and holiday. Each theme makes these colors readable on --frame-bg. */
 .p-tile-icon {
+	--icon: var(--lilac);
 	width: 56px;
 	height: 56px;
 	flex: 0 0 auto;
+	color: var(--icon);
+	background: var(--frame-bg);
+	background: color-mix(in srgb, var(--icon) 14%, var(--frame-bg));
 	border: 1px solid var(--border);
+	border-color: color-mix(in srgb, var(--icon) 55%, var(--frame-bg));
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	font-family: var(--mono);
-	font-weight: 700;
-	letter-spacing: -1px;
-	text-shadow: 1px 1px 0 #000;
 }
 
 .p-tile-icon svg {
 	display: block;
-	filter: drop-shadow(1px 1px 0 #000);
 }
 
-.tile-matrix { background: var(--blue-bg); color: var(--blue); }
-.tile-minutes { background: var(--border-faint); color: var(--lilac); }
-.tile-wiki { background: var(--ink); color: var(--strong); }
-.tile-stream { background: #2a0d3a; color: #e08cff; }
+.tile-matrix { --icon: var(--purple-light); }
+.tile-minutes { --icon: var(--lilac); }
+.tile-wiki { --icon: var(--strong); }
+.tile-stream { --icon: var(--pink-light); }
 
 .p-tile-text {
 	min-width: 0;
@@ -1818,6 +1827,25 @@ a:hover {
 	--blue: #ffcc55; --blue-bg: #2a1a00; --star: 255, 210, 140; --star-tint: 255, 190, 90;
 }
 
+/* Potato mode. A filter in chrome.html drops everything except the nav to 3px pixels.
+   The nav stays sharp so that the Display menu stays readable. The topic scrolls at 2 frames per second. */
+:root[data-theme='amber'] .p-frame > :not(.p-nav):not(.p-defs) { filter: url('#potato'); }
+:root[data-theme='amber'] .p-topic-scroll { animation-timing-function: steps(56); }
+
+:root[data-theme='amber'] body::after {
+	content: '\2699  144p';
+	position: fixed;
+	right: 10px;
+	bottom: 10px;
+	z-index: 50;
+	padding: 3px 7px;
+	background: rgba(0, 0, 0, .8);
+	border: 1px solid var(--border);
+	color: #fff;
+	font: 700 11px var(--mono);
+	pointer-events: none;
+}
+
 :root[data-theme='bluescreen'] {
 	--screen: #000044; --hover-bg: #2222cc;
 	--void: #000066; --frame-bg: #0000aa; --panel-bg: #0000aa; --header-bg: #0000aa; --footer-bg: #000088;
@@ -1829,14 +1857,23 @@ a:hover {
 }
 
 :root[data-theme='vaporwave'] {
-	--hover-bg: #3a1060;
-	--void: #12002a; --frame-bg: #1a0533; --panel-bg: #24084a; --header-bg: #1f0640; --footer-bg: #14022c;
-	--border: #ff71ce; --border-dim: #b24aa0; --border-faint: #6a2a70;
-	--purple: #ff2e97; --purple-deep: #c23a9a; --purple-light: #ffb3e6; --lilac: #01cdfe;
-	--text: #fdf5ff; --text-dim: #e2c8f5; --text-muted: #b58ad6; --text-faint: #7a4f9a;
-	--green: #05ffa1; --gold: #fffb96; --pink: #ff2e97; --pink-light: #ffb3e6;
-	--blue: #01cdfe; --blue-bg: #1a0a3a; --star-tint: 1, 205, 254;
+	/* The Miku theme. Teal hair (#39c5bb), pink hair ties, and a charcoal outfit. The value stays 'vaporwave' so that saved choices keep working. */
+	--void: #0a0e10; --frame-bg: #111719; --panel-bg: #172022; --header-bg: #131b1d; --footer-bg: #0c1113;
+	--border: #1a978e; --border-dim: #116660; --border-faint: #173c3a;
+	--purple: #138a82; --purple-deep: #0d5f5a; --purple-light: #7fe3da; --lilac: #5fd8cf;
+	--text: #e8f6f5; --text-dim: #bed6d4; --text-muted: #8eabaa; --text-faint: #627e7c;
+	--pink: #e12885; --pink-light: #ff8fc8;
+	--blue: #86cecb; --blue-bg: #0f2a2a; --control: #39c5bb; --hover-bg: #1b3433;
+	--screen: #050a0b; --screen-text: #39c5bb;
+	--star: 200, 255, 250; --star-tint: 225, 40, 133;
 }
+
+:root[data-theme='vaporwave'] .p-binary { color: #1d6b66; }
+:root[data-theme='vaporwave'] .p-header { background-image: linear-gradient(rgba(57, 197, 187, .12) 1px, transparent 1px), linear-gradient(90deg, rgba(57, 197, 187, .12) 1px, transparent 1px); }
+:root[data-theme='vaporwave'] .p-nav { border-bottom-color: #39c5bb; }
+:root[data-theme='vaporwave'] .p-nav a,
+:root[data-theme='vaporwave'] .p-aside,
+:root[data-theme='vaporwave'] .p-aside-small { color: #e6fffd; }
 
 :root[data-theme='paper'] {
 	color-scheme: light;
@@ -1861,6 +1898,8 @@ a:hover {
 :root[data-theme='paper'] .a-chip { border-color: rgba(0, 0, 0, .2); }
 :root[data-theme='paper'] .p-stream-facade { background: var(--screen); }
 :root[data-theme='paper'] .p-scanlines { background: repeating-linear-gradient(transparent 0 2px, rgba(0, 0, 0, .03) 2px 3px); }
+:root[data-theme='paper'] .tile-matrix { --icon: var(--purple); }
+:root[data-theme='paper'] .tile-stream { --icon: var(--pink); }
 
 @property --purple { syntax: '<color>'; inherits: true; initial-value: #7a45e6; }
 @property --purple-deep { syntax: '<color>'; inherits: true; initial-value: #4b1fa0; }
@@ -2392,4 +2431,220 @@ a:hover {
 	font-family: var(--mono);
 	font-size: 10px;
 	vertical-align: 1px;
+}
+
+/* Holiday themes. prefs.js picks the holiday from the date and sets data-holiday on <html>.
+   The palettes do not set --green, --red or --rec, so the color-blind mode keeps working. */
+
+:root[data-holiday='halloween'] {
+	--void: #070304; --frame-bg: #0e0805; --panel-bg: #160b04; --header-bg: #120802; --footer-bg: #080402;
+	--border: #c25a10; --border-dim: #7a3608; --border-faint: #3d1c05;
+	--purple: #ff7518; --purple-deep: #b34700; --purple-light: #ffa64d; --lilac: #ffa64d;
+	--text: #ffe8d0; --text-dim: #e8c49c; --text-muted: #c0915c; --text-faint: #8f6a40;
+	--pink: #7d2fbf; --pink-light: #c58cff; --control: #a8521a; --hover-bg: #2a1405;
+	--star: 255, 170, 80; --star-tint: 190, 120, 255;
+}
+
+:root[data-holiday='thanksgiving'] {
+	--void: #0a0603; --frame-bg: #140c06; --panel-bg: #1c1108; --header-bg: #180e06; --footer-bg: #0c0703;
+	--border: #a0622a; --border-dim: #6b3f18; --border-faint: #3a220c;
+	--purple: #c4561a; --purple-deep: #8a3a0e; --purple-light: #f0a050; --lilac: #f5c06a;
+	--text: #fbebd5; --text-dim: #e2c9a6; --text-muted: #b8966a; --text-faint: #86684a;
+	--pink: #9b1d20; --pink-light: #e8707a; --control: #a0622a; --hover-bg: #2c1a0a;
+	--star: 255, 200, 120; --star-tint: 230, 120, 40;
+}
+
+:root[data-holiday='december'] {
+	--void: #020a06; --frame-bg: #06140c; --panel-bg: #0a1d12; --header-bg: #08180f; --footer-bg: #040e08;
+	--border: #1f8a4c; --border-dim: #146235; --border-faint: #0c3a20;
+	--purple: #c8102e; --purple-deep: #8a0b20; --purple-light: #ff6b7f; --lilac: #ffd36b;
+	--text: #f2fff5; --text-dim: #c9e8d2; --text-muted: #8fc0a0; --text-faint: #5f8f70;
+	--pink: #0f7a3a; --pink-light: #6be09a; --control: #2a9a5a; --hover-bg: #12301e;
+}
+
+:root[data-holiday='valentines'] {
+	--void: #12030a; --frame-bg: #1c0612; --panel-bg: #260a18; --header-bg: #220814; --footer-bg: #14040c;
+	--border: #e0457b; --border-dim: #9a2a52; --border-faint: #551630;
+	--purple: #ff3d7f; --purple-deep: #b0164f; --purple-light: #ff9ac0; --lilac: #ffb3d1;
+	--text: #ffeef5; --text-dim: #f2c8da; --text-muted: #c98aa6; --text-faint: #915a72;
+	--pink: #c8102e; --pink-light: #ff6b7f; --control: #e0457b; --hover-bg: #3a0e22;
+	--star: 255, 180, 210; --star-tint: 255, 80, 130;
+}
+
+:root[data-holiday='stpatricks'] {
+	--void: #020a04; --frame-bg: #051308; --panel-bg: #081c0d; --header-bg: #06180b; --footer-bg: #030c05;
+	--border: #2ea84a; --border-dim: #1d7033; --border-faint: #0f3d1b;
+	--purple: #16a34a; --purple-deep: #0b6e30; --purple-light: #6ee7a0; --lilac: #9ef2b8;
+	--text: #effff3; --text-dim: #c4ecd0; --text-muted: #8cc9a0; --text-faint: #5a8f6a;
+	--pink: #b8860b; --pink-light: #ffe08a; --control: #2ea84a; --hover-bg: #0e3018;
+	--star: 200, 255, 210; --star-tint: 255, 215, 0;
+}
+
+/* The palettes above outrank the prefers-contrast block near the top. This block puts high contrast back. */
+@media (prefers-contrast: more) {
+	:root[data-holiday] {
+		--text: #fff;
+		--text-dim: #f4f4f4;
+		--text-muted: #e0e0e0;
+		--text-faint: #c8c8c8;
+		--border-dim: var(--border);
+	}
+}
+
+:root[data-holiday] .p-binary { color: var(--border-dim); }
+:root[data-holiday] .p-nav { border-bottom-color: var(--border); }
+
+/* The background is a grid of one holiday element. It replaces the starfield and drifts one tile per loop. */
+
+:root[data-holiday] .p-page::before {
+	background-position: 0 0;
+	background-repeat: repeat;
+	background-size: 64px 64px;
+	animation: holiday-fall 8s linear infinite;
+}
+
+:root[data-holiday] .p-page::after {
+	display: none;
+}
+
+:root[data-holiday='halloween'] .p-page::before { background-image: url('/images/holidays/grid-bats.svg'); animation-name: holiday-drift; }
+:root[data-holiday='thanksgiving'] .p-page::before { background-image: url('/images/holidays/grid-leaves.svg'); animation-name: holiday-drift; }
+:root[data-holiday='december'] .p-page::before { background-image: url('/images/holidays/grid-snow.svg'); }
+:root[data-holiday='valentines'] .p-page::before { background-image: url('/images/holidays/grid-hearts.svg'); animation-name: holiday-rise; }
+:root[data-holiday='stpatricks'] .p-page::before { background-image: url('/images/holidays/grid-shamrocks.svg'); }
+
+@keyframes holiday-fall { to { background-position: 0 64px; } }
+@keyframes holiday-rise { to { background-position: 0 -64px; } }
+@keyframes holiday-drift { to { background-position: -64px 64px; } }
+
+/* Halloween: webs in the top corners of the frame. */
+
+:root[data-holiday='halloween'] .p-frame::before,
+:root[data-holiday='halloween'] .p-frame::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	width: 150px;
+	height: 150px;
+	background: url('/images/holidays/web.svg') 0 0 / contain no-repeat;
+	z-index: 3;
+	pointer-events: none;
+}
+
+:root[data-holiday='halloween'] .p-frame::before { left: 0; }
+:root[data-holiday='halloween'] .p-frame::after { right: 0; transform: scaleX(-1); }
+
+/* Hats on the crow. The logo is a 100px box at the top left of .p-brand.
+   The crow's head is near the top of that box, from x 42 to 62, so the hats sit mostly above the box.
+   The header gets more top padding so that it does not cut off the hats. */
+
+:root[data-holiday='december'] .p-header,
+:root[data-holiday='thanksgiving'] .p-header,
+:root[data-holiday='stpatricks'] .p-header,
+:root[data-holiday='valentines'] .p-header {
+	padding-top: 22px;
+}
+
+:root[data-holiday='december'] .p-brand::before,
+:root[data-holiday='thanksgiving'] .p-brand::before,
+:root[data-holiday='stpatricks'] .p-brand::before,
+:root[data-holiday='valentines'] .p-brand::before {
+	content: '';
+	position: absolute;
+	background: center / contain no-repeat;
+	z-index: 2;
+	pointer-events: none;
+}
+
+:root[data-holiday='december'] .p-brand::before {
+	top: -15px;
+	left: 37px;
+	width: 30px;
+	height: 24px;
+	background-image: url('/images/holidays/santa-hat.svg');
+	transform: rotate(-8deg);
+}
+
+:root[data-holiday='thanksgiving'] .p-brand::before,
+:root[data-holiday='stpatricks'] .p-brand::before {
+	top: -16px;
+	left: 38px;
+	width: 26px;
+	height: 22px;
+	transform: rotate(-8deg);
+}
+
+:root[data-holiday='thanksgiving'] .p-brand::before { background-image: url('/images/holidays/pilgrim-hat.svg'); }
+:root[data-holiday='stpatricks'] .p-brand::before { background-image: url('/images/holidays/leprechaun-hat.svg'); }
+
+:root[data-holiday='valentines'] .p-brand::before {
+	top: -14px;
+	left: 44px;
+	width: 18px;
+	height: 15px;
+	background-image: url('/images/holidays/heart.svg');
+	animation: bounce8 1s ease-in-out infinite;
+}
+
+/* December: a string of lights along the top of the header. The two halves blink in turn. */
+
+:root[data-holiday='december'] .p-header::before,
+:root[data-holiday='december'] .p-header::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	height: 22px;
+	background: url('/images/holidays/lights-a.svg') 0 0 / 96px 22px repeat-x;
+	animation: holiday-blink 1.6s steps(1) infinite;
+	pointer-events: none;
+	z-index: 1;
+}
+
+:root[data-holiday='december'] .p-header::after {
+	background-image: url('/images/holidays/lights-b.svg');
+	animation-delay: -.8s;
+}
+
+@keyframes holiday-blink {
+	50% { opacity: .3; }
+}
+
+/* On small screens the logo is 64px, so the hats and webs get smaller. */
+@media (max-width: 620px) {
+	:root[data-holiday='december'] .p-header,
+	:root[data-holiday='thanksgiving'] .p-header,
+	:root[data-holiday='stpatricks'] .p-header,
+	:root[data-holiday='valentines'] .p-header {
+		padding-top: 20px;
+	}
+
+	:root[data-holiday='december'] .p-brand::before {
+		top: -10px;
+		left: 24px;
+		width: 19px;
+		height: 15px;
+	}
+
+	:root[data-holiday='thanksgiving'] .p-brand::before,
+	:root[data-holiday='stpatricks'] .p-brand::before {
+		top: -10px;
+		left: 24px;
+		width: 17px;
+		height: 14px;
+	}
+
+	:root[data-holiday='valentines'] .p-brand::before {
+		top: -9px;
+		left: 28px;
+		width: 12px;
+		height: 10px;
+	}
+
+	:root[data-holiday='halloween'] .p-frame::before,
+	:root[data-holiday='halloween'] .p-frame::after {
+		width: 90px;
+		height: 90px;
+	}
 }

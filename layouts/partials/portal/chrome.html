@@ -8,6 +8,7 @@
 	{{- end -}}
 	{{- $binary = printf "%s\n" $binary -}}
 {{- end -}}
+<svg class="p-defs" aria-hidden="true" focusable="false"><filter id="potato" x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB"><feFlood x="0" y="0" width="1" height="1"/><feComposite width="2" height="2"/><feTile result="grid"/><feComposite in="SourceGraphic" in2="grid" operator="in"/><feOffset dx=".5" dy=".5"/><feMorphology operator="dilate" radius=".5"/></filter></svg>
 <header class="p-header">
 	<div class="p-binary" aria-hidden="true">{{ $binary }}</div>
 	<img class="p-watermark" src="/images/logo-alt-2.webp" alt="" width="210" height="210" aria-hidden="true">
@@ -43,7 +44,7 @@
 					<label class="a-swatch"><input type="radio" name="theme" value="phosphor"><span class="a-chip" style="--c1:#1f9a3a;--c2:#020803"></span>Haxor</label>
 					<label class="a-swatch"><input type="radio" name="theme" value="amber"><span class="a-chip" style="--c1:#b8761a;--c2:#0a0600"></span>Potato</label>
 					<label class="a-swatch"><input type="radio" name="theme" value="bluescreen"><span class="a-chip" style="--c1:#5555ff;--c2:#0000aa"></span>Bluescreen</label>
-					<label class="a-swatch"><input type="radio" name="theme" value="vaporwave"><span class="a-chip" style="--c1:#ff2e97;--c2:#1a0533"></span>Miku</label>
+					<label class="a-swatch"><input type="radio" name="theme" value="vaporwave"><span class="a-chip" style="--c1:#39c5bb;--c2:#e12885"></span>Miku</label>
 					<label class="a-swatch"><input type="radio" name="theme" value="paper"><span class="a-chip" style="--c1:#4b1fa0;--c2:#ffffff"></span>Flashbang</label>
 					<label class="a-swatch"><input type="radio" name="theme" value="rgb"><span class="a-chip" style="--c1:#45e680;--c2:#0d0618"></span>Gamer</label>
 				</div>
@@ -59,6 +60,7 @@
 			</fieldset>
 			<label class="a-toggle"><input type="checkbox" name="motion"><span>Reduce motion</span><small>Stops animations and GIFs</small></label>
 			<label class="a-toggle"><input type="checkbox" name="cb"><span>Color-blind safe</span><small>Blue and orange for up and down</small></label>
+			<label class="a-toggle"><input type="checkbox" name="holiday"><span>Holiday themes</span><small>Replace the default theme on holidays</small></label>
 			<button type="reset">Reset to defaults</button>
 		</form>
 	</details>

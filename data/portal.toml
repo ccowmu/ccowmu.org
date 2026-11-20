@@ -19,7 +19,7 @@
 # The stream table names the Twitch channel for the Live panel.
 # The terminal commands live in data/terminal.toml.
 
-topic = "Thursdays 6pm 2225 Kohrman | dues $10/yr | cybersecurity summit Nov 12 | new? read New_Member_Orientation on the wiki | milestone 1: get linux running | milestone 2: write a bot for #geeks | yakko lives in our hearts"
+topic = "Thursdays 6pm 2225 Kohrman | dues $10/yr | *shrinks into a corn cob* | new? read New_Member_Orientation on the wiki | milestone 1: get linux running | milestone 2: write a bot for #geeks | yakko lives in our hearts"
 
 servers = ["newyakko", "condor", "parrot", "tucan", "albatross"]
 workstations = ["nighthawk", "redjay", "greenjay", "bluejay"]
@@ -220,23 +220,23 @@ icon = "/images/telephone.png"
 meta = "616 504 1337"
 
 [featured]
-badge = "★ Nov 12"
+badge = "★ New"
 ribbon = "Look at these geeks"
 image = "/images/group_photo_2026.webp"
 imageAlt = "Computer Club members outside Floyd Hall"
-caption = "group_photo_2026.jpg · see you at the summit"
-title = "WMU CYBERSECURITY SUMMIT 2026"
-when = "Thursday, November 12 · 8:00 AM to 3:30 PM · Student Center, 2nd floor ballroom"
-body = "Fifth annual summit. Talks, workshops and networking for students, IT staff and anyone who uses a computer. WRAVEN, Bronco Cybersecurity Club and WiCyS will be there. So will we!"
+caption = "group_photo_2026.jpg"
+title = "VAULTWARDEN FOR MEMBERS"
+when = "Live now at cclub.cs.wmich.edu/vault. Sign in with your club login."
+body = "We host a password vault for every member now. It runs Vaultwarden, so the Bitwarden apps and browser extensions work with it. Stop reusing hunter2."
 
 [[featured.actions]]
-label = "REGISTER »"
-url = "https://secure.touchnet.com/C21782_ustores/web/store_main.jsp?STOREID=255"
+label = "OPEN THE VAULT »"
+url = "/vault/"
 primary = true
 
 [[featured.actions]]
-label = "Details"
-url = "https://wmich.edu/it/cybersecurity-summit"
+label = "Join ($10/yr)"
+url = "/join/"
 
 [stream]
 channel = "ccawmu"

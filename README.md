@@ -42,6 +42,31 @@ url = "https://example.com"
 
 The Display button in the nav opens theme, text size, reduced motion and color-blind options. Choices persist in the browser. The page also obeys the system settings for reduced motion and high contrast. To add a theme, add a `:root[data-theme='name']` block in `portal.css` and the name to the `THEMES` list in `static/js/prefs.js`.
 
+## Holiday themes
+
+The site changes its look on some holidays. The visitor's local date selects the holiday:
+
+| Holiday | Dates |
+|---|---|
+| `halloween` | October 1 to 31 |
+| `thanksgiving` | The 14 days before Thanksgiving, and Thanksgiving |
+| `december` | December 1 to 31 |
+| `valentines` | January 31 to February 14 |
+| `stpatricks` | March 3 to 17 |
+
+A holiday replaces only the Default theme. If a visitor picks a different theme, that theme stays. The "Holiday themes" switch in the Display menu turns the holidays off.
+
+To preview a holiday, add `?holiday=name` to the URL, for example http://localhost:1313/?holiday=halloween. Use `?holiday=none` to see the page with no holiday.
+
+To add a holiday:
+
+1. Add the name to `HOLIDAYS` and its dates to `holidayFor` in `assets/js/prefs.js`.
+2. Add a `:root[data-holiday='name']` block and a background grid in `assets/css/portal.css`.
+3. Put the images in `static/images/holidays/`.
+4. Add a test for the dates in `tests/prefs.test.js`.
+
+Do not set `--green`, `--red` or `--rec` in a holiday block. The server status and the color-blind mode use them.
+
 ## Tests
 
 ```bash
