@@ -40,6 +40,7 @@
 <script>
 (function () {
 	var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-	portalPrefs.apply(document.documentElement, portalPrefs.load(localStorage), reduce);
+	window.portalHoliday = portalPrefs.pickHoliday(new Date(), location.search);
+	portalPrefs.apply(document.documentElement, portalPrefs.load(localStorage), reduce, window.portalHoliday);
 })();
 </script>

@@ -10,6 +10,12 @@
 	var reduceQuery = matchMedia('(prefers-reduced-motion: reduce)');
 	var prefs = portalPrefs.load(localStorage);
 	var still = portalPrefs.motionOff(prefs, reduceQuery.matches);
+	var holiday = window.portalHoliday || null;
+
+	function applyPrefs() {
+		portalPrefs.apply(document.documentElement, prefs, reduceQuery.matches, holiday);
+		still = portalPrefs.motionOff(prefs, reduceQuery.matches);
+	}
 
 	function freezeGif(img) {
 		if (img.dataset.gif || !img.complete || !img.naturalWidth) return;
@@ -188,6 +194,7 @@
 		form.elements.scale.value = prefs.scale;
 		form.elements.motion.checked = portalPrefs.motionOff(prefs, reduceQuery.matches);
 		form.elements.cb.checked = prefs.cb;
+		form.elements.holiday.checked = prefs.holiday;
 	}
 
 	function readForm() {
@@ -197,15 +204,15 @@
 			theme: form.elements.theme.value,
 			scale: form.elements.scale.value,
 			motion: wantOff === systemOff ? 'system' : (wantOff ? 'off' : 'on'),
-			cb: form.elements.cb.checked
+			cb: form.elements.cb.checked,
+			holiday: form.elements.holiday.checked
 		};
 	}
 
 	function commit(next) {
 		prefs = portalPrefs.normalize(next);
 		portalPrefs.save(localStorage, prefs);
-		portalPrefs.apply(document.documentElement, prefs, reduceQuery.matches);
-		still = portalPrefs.motionOff(prefs, reduceQuery.matches);
+		applyPrefs();
 		setGifs(still);
 		if (still) tick();
 	}
@@ -235,8 +242,7 @@
 			if (menu.open && !menu.contains(e.target)) menu.open = false;
 		});
 		reduceQuery.addEventListener('change', function () {
-			portalPrefs.apply(document.documentElement, prefs, reduceQuery.matches);
-			still = portalPrefs.motionOff(prefs, reduceQuery.matches);
+			applyPrefs();
 			setGifs(still);
 			fillForm();
 		});
